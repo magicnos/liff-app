@@ -101,10 +101,10 @@ async function getData(userId, path){
 // メインの処理
 async function main(){
   const userId = await firstLiff();
-  createTimetable();
   const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = 'ここは成功';
   document.getElementById('c0').textContent = 'ここは成功';
+  createTimetable();
   setTimetable(timetableData);
 }
 
