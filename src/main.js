@@ -50,51 +50,8 @@ async function firstLiff(){
 }
 
 
-// 時間割枠組み作成
+// 時間割レイアウト調整
 function createTimetable(){
-  // 列（曜日）情報：2列ずつ（前後半）
-  const days = ["月", "火", "水", "木", "金"];
-  // 12限まで
-  const periods = 12;
-  // テーブル要素を取得
-  const table = document.getElementById("timetable");
-  // ---- ヘッダー行の作成 ----
-  const thead = document.createElement("thead");
-  const headerRow = document.createElement("tr");
-  // 「時限」列
-  const thTime = document.createElement("th");
-  thTime.textContent = "時限";
-  headerRow.appendChild(thTime);
-  // 各曜日（2列ずつ）
-  for (const day of days) {
-    for (let i = 0; i < 2; i++) {
-      const th = document.createElement("th");
-      th.textContent = day;
-      headerRow.appendChild(th);
-    }
-  }
-  thead.appendChild(headerRow);
-  table.appendChild(thead);
-
-  // ---- 本体（tbody）作成 ----
-  const tbody = document.createElement("tbody");
-  // 各限ごとの行
-  for (let i = 0; i < periods; i++) {
-    const tr = document.createElement("tr");
-    // 時限列
-    const tdPeriod = document.createElement("td");
-    tdPeriod.textContent = `${i + 1}限`;
-    tr.appendChild(tdPeriod);
-    // 各曜日×2列ぶんのセル
-    for (let j = 0; j < days.length * 2; j++) {
-      const td = document.createElement("td");
-      td.id = `c${i + j * periods}`; // 例：c0, c1, ..., c119
-      tr.appendChild(td);
-    }
-    tbody.appendChild(tr);
-  }
-  table.appendChild(tbody);
-
   // 時間割ヘッダーレイアウトを調整
   const header = document.getElementById("timetable");
   for (let i = 9; i >= 0; i-=2){
