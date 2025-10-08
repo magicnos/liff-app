@@ -85,7 +85,7 @@ function setAbsence(absenceData, timetableData){
   const table = document.getElementById('absence');
   for (let k = 1; k <= 5; k++){
     for (let i = 1; i <= 12; i+=2){
-      if (absenceData[(k-1)*6 + (i-1)/2 + 101] == '空きコマ'){
+      if (timetableData[(k-1)*6 + (i-1)/2 + 101] == '空きコマ'){
         table.rows[i].cells[k].innerText = '/';
       }else{
         table.rows[i].cells[k].innerText = absenceData[timetableData[(k-1)*6 + (i-1)/2 + 101]];
