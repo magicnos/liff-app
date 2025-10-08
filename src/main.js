@@ -50,17 +50,6 @@ async function firstLiff(){
 }
 
 
-// 時間割レイアウト調整
-function createTimetable(){
-  // 時間割ヘッダーレイアウトを調整
-  const header = document.getElementById("timetable");
-  for (let i = 9; i >= 0; i-=2){
-    const cell1 = header.rows[0].cells[i];
-    cell1.setAttribute("colspan", 2);
-    header.rows[0].deleteCell(i+1);
-  }
-}
-
 
 // 時間割に授業をセット
 function setTimetable(timetableData){
@@ -96,8 +85,7 @@ async function main(){
   const userId = await firstLiff();
   const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = 'テスト用';
-  createTimetable();
-  setTimetable(timetableData);
+  //setTimetable(timetableData);
 }
 
 
