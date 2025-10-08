@@ -105,27 +105,24 @@ function setButton(userId, timetableData, absenceData){
 
       if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
         const cell = table.rows[i].cells[k];
-        cell.textContent = ""; // 一旦空にする
 
         // 現象ボタン設置
         const button1 = document.createElement("button");
         button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
-        button1.style.marginRight = "15px";
+        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, cell);
         cell.appendChild(button1);
 
         // 欠時数(spanで囲うことで、後でここだけ変更できる)
         const span = document.createElement("span");
         span.className = "count";
         span.textContent = absenceData[className];
-        span.style.margin = "0 8px";
+        span.style.margin = "0 15px";
         cell.appendChild(span);
 
         // 増加ボタン設置
         const button2 = document.createElement("button");
         button2.textContent = "△";
         button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
-        button2.style.marginLeft = "15px";
         cell.appendChild(button2);
       }
     }
@@ -134,7 +131,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を減らす
-async function deleteAbsence(userId, className, absenceData, i, k){
+async function deleteAbsence(userId, className, absenceData, cell){
   if (absenceData[className] > 0){
     const docRef = doc(db, userId, 'absence');
   
@@ -143,14 +140,13 @@ async function deleteAbsence(userId, className, absenceData, i, k){
     });
 
     // 反映
-    const table = document.getElementById("absence");
-    const span = table.rows[i].cells[k].querySelector(".count");
+    const span = cell.querySelector(".count");
     span.textContent = absenceData[className] - 1;
   }
 }
 
 // 欠時数を増やす
-async function addAbsence(userId, className, absenceData, i, k){
+async function addAbsence(userId, className, absenceData, cell){
   const docRef = doc(db, userId, 'absence');
 
   await updateDoc(docRef, {
@@ -158,8 +154,7 @@ async function addAbsence(userId, className, absenceData, i, k){
   });
 
   // 反映
-  const table = document.getElementById("absence");
-  const span = table.rows[i].cells[k].querySelector(".count");
+  const span = cell.querySelector(".count");
   span.textContent = absenceData[className] + 1;
 }
 
