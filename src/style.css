@@ -1,12 +1,21 @@
 table {
   border-collapse: collapse;
   width: 100%;
+  margin-bottom: 20px;
+  table-layout: fixed; /* 列幅を固定 */
+}
+td, th {
+  border: 1px solid #aaa;
+  padding: 5px;
   text-align: center;
+  word-wrap: break-word; /* 長い文字は折り返す */
 }
-th, td {
-  border: 1px solid #000;
-  padding: 6px;
+.pay {
+  font-size: 12px;
 }
-th {
-  background-color: #f0f0f0;
+/* 時間割の横幅調整 1列目:時限、残り5列を均等 */
+col.time-col { width: 60px; }
+col.day-col { width: 10%; }
+.text {
+  font-size: 15px;
 }
