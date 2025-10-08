@@ -105,6 +105,7 @@ function setButton(userId, timetableData, absenceData){
 
       if (className != '空きコマ'){
         const cell = table.rows[i].cells[k];
+        cell.textContent = ""; // 一旦空にする
 
         // 現象ボタン設置
         const button1 = document.createElement("button");
