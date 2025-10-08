@@ -95,69 +95,114 @@ function setAbsence(absenceData, timetableData){
 }
 
 
-// 欠時数時間割に欠時増減ボタンを設置
+// 欠時数時間割にボタン設置
 function setButton(userId, timetableData, absenceData){
   const table = document.getElementById("absence");
 
   for (let k = 1; k <= 5; k++){
-    for (let i = 1; i <= 12; i+=2){
+    for (let i = 1; i <= 12; i += 2){
       const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
 
-      if (className != '空きコマ'){
+      if (className && className != '空きコマ'){
         const cell = table.rows[i].cells[k];
-        cell.textContent = ""; // 一旦空にする
+        cell.textContent = ""; // クリア
 
-        // 現象ボタン設置
-        const button1 = document.createElement("button");
-        button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, className, absenceData, cell);
-        cell.appendChild(button1);
+        // 減ボタン
+        const btnDown = document.createElement("button");
+        btnDown.textContent = "▽";
+        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, cell, btnDown, btnUp);
+        cell.appendChild(btnDown);
 
-        // 欠時数(spanで囲うことで、後でここだけ変更できる)
+        // 欠時数(span)
         const span = document.createElement("span");
         span.className = "count";
         span.textContent = absenceData[className];
-        span.style.margin = "0 15px";
+        span.style.margin = "0 20px";
         cell.appendChild(span);
 
-        // 増加ボタン設置
-        const button2 = document.createElement("button");
-        button2.textContent = "△";
-        button2.onclick = () => addAbsence(userId, className, absenceData, cell);
-        cell.appendChild(button2);
+        // 増ボタン
+        const btnUp = document.createElement("button");
+        btnUp.textContent = "△";
+        btnUp.onclick = () => addAbsence(userId, className, absenceData, cell, btnDown, btnUp);
+        cell.appendChild(btnUp);
       }
     }
   }
 }
 
+// 欠時を増やす(かなり安全版)
+async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+  // 現在のローカル欠時数を取得
+  const current = Number(absenceData[className] ?? 0);
+  // ローカルで新しい欠時数を定義
+  const newValue = current + 1;
 
-// 欠時数を減らす
-async function deleteAbsence(userId, className, absenceData, cell){
-  if (absenceData[className] > 0){
-    const docRef = doc(db, userId, 'absence');
-  
-    await updateDoc(docRef, {
-      [className]: absenceData[className] - 1
-    });
+  // ローカル欠時数とUIを即時更新
+  absenceData[className] = newValue;
+  const span = cell.querySelector(".count");
+  if (span) span.textContent = newValue;
 
-    // 反映
-    const span = cell.querySelector(".count");
-    span.textContent = absenceData[className] - 1;
+  // ボタンを無効化
+  if (btnDown) btnDown.disabled = true;
+  if (btnUp) btnUp.disabled = true;
+
+  // DBに触ってる
+  const docRef = doc(db, userId, 'absence');
+
+  try{
+    // DB更新
+    await updateDoc(docRef, { [className]: newValue });
+  }catch (err){
+    alert("更新に失敗しました。もう一度試してください。");
+
+    // DB更新失敗時値を元に戻す
+    absenceData[className] = current;
+    if (span) span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    if (btnDown) btnDown.disabled = false;
+    if (btnUp) btnUp.disabled = false;
   }
 }
 
-// 欠時数を増やす
-async function addAbsence(userId, className, absenceData, cell){
+
+// 欠時数を減らす(かなり安全版)
+async function deleteAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+  // 現在のローカル欠時数を取得
+  const current = Number(absenceData[className] ?? 0);
+  // 0以下なら変更しない
+  if (current <= 0) return;
+  // ローカルで新しい欠時数を定義
+  const newValue = current - 1;
+
+  // ローカル欠時数とUIを即時更新
+  absenceData[className] = newValue;
+  const span = cell.querySelector(".count");
+  if (span) span.textContent = newValue;
+
+  // ボタンを無効化
+  if (btnDown) btnDown.disabled = true;
+  if (btnUp) btnUp.disabled = true;
+
+  // DBに触ってる
   const docRef = doc(db, userId, 'absence');
 
-  await updateDoc(docRef, {
-    [className]: absenceData[className] + 1
-  });
+  try{
+    // DB更新
+    await updateDoc(docRef, { [className]: newValue });
+  }catch (err){
+    alert("更新に失敗しました。もう一度試してください。");
 
-  // 反映
-  const span = cell.querySelector(".count");
-  span.textContent = absenceData[className] + 1;
+    // DB更新失敗時値を元に戻す
+    absenceData[className] = current;
+    if (span) span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    if (btnDown) btnDown.disabled = false;
+    if (btnUp) btnUp.disabled = false;
+  }
 }
+
 
 
 
