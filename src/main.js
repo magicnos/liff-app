@@ -124,7 +124,6 @@ function inTimetable(){
   for (let col = 10; col >= 1; col--){
     for (let row = 11; row >= 0; row-=2){
       const cell1 = table.rows[row].cells[col];
-      const cell2 = table.rows[row + 1].cells[col];
       cell1.setAttribute("rowspan", 2);
       table.rows[row + 1].deleteCell(col);
     }
@@ -146,14 +145,21 @@ function setTimetable(timetableData){
 
 // Firestoreからデータ取得
 async function getData(path){
-  const ref  = await getDocs(collection(db, path.split("/")));
+  const parts = path.split("/");
+  const ref = collection(db, ...parts);
 
   const snapshot = await getDocs(ref);
-  if (snapshot.exists()){
-    return snapshot.data();
-  }else{
+  if (snapshot.empty){
     return null;
   }
+
+  // ドキュメントをオブジェクト配列に整形して返す
+  const data = snapshot.docs.map(doc => ({
+    id: doc.id,
+    ...doc.data()
+  }));
+
+  return data;
 }
 
 
