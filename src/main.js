@@ -95,6 +95,22 @@ function headerTimetable(){
 }
 
 
+// 時間割内レイアウトを調整
+function inTimetable(){
+  // 2時間連続セルを結合
+  const table = document.getElementById("timetable");
+  for (let col = 10; col >= 1; col--){
+    for (let row = 11; row >= 0; row-=2){
+      const cell1 = table.rows[row].cells[col];
+      const cell2 = table.rows[row + 1].cells[col];
+      cell1.setAttribute("rowspan", 2);
+      table.rows[row + 1].deleteCell(col);
+    }
+  }
+}
+
+
 createTimetable();
 headerTimetable();
+inTimetable();
 main();
