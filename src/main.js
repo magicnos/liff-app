@@ -111,7 +111,7 @@ function setButton(userId, timetableData, absenceData){
         button1.textContent = "▽";
         button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
         button1.style.marginRight = "15px";
-        cell.insertBefore(button1, cell.firstChild)
+        cell.insertBefore(button1, cell.firstChild);
 
         // ボタン2を設置
         const button2 = document.createElement("button");
@@ -133,11 +133,25 @@ function deleteAbsence(userId, className, absenceData, i, k){
     updateDoc(docRef, {
       [className]: absenceData[className] - 1
     });
+
+    // 反映
+    const cell = document.getElementById("absence");
+    // ボタン1
+    const button1 = document.createElement("button");  
+    button1.textContent = "▽";
+    button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+    button1.style.marginRight = "15px";
+    cell.appendChild(button1);
+    // 欠時数
+    cell.rows[i].cells[k].innerText = absenceData[className] - 1;
+    // ボタン2
+    const button2 = document.createElement("button");
+    button2.textContent = "△";
+    button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+    button2.style.marginLeft = "15px";
+    cell.appendChild(button2);
   }
 
-  // 反映
-  const table = document.getElementById("absence");
-  table.rows[i].cells[k].innerText = absenceData[className] - 1;
 }
 
 // 欠時数を増やす
@@ -149,8 +163,21 @@ function addAbsence(userId, className, absenceData, i, k){
   });
 
   // 反映
-  const table = document.getElementById("absence");
-  table.rows[i].cells[k].innerText = absenceData[className] + 1;
+  const cell = document.getElementById("absence");
+  // ボタン1
+  const button1 = document.createElement("button");  
+  button1.textContent = "▽";
+  button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+  button1.style.marginRight = "15px";
+  cell.appendChild(button1);
+  // 欠時数
+  cell.rows[i].cells[k].innerText = absenceData[className] + 1;
+  // ボタン2
+  const button2 = document.createElement("button");
+  button2.textContent = "△";
+  button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+  button2.style.marginLeft = "15px";
+  cell.appendChild(button2);
 }
 
 
