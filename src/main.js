@@ -129,11 +129,11 @@ function setTimetable(timetableData){
 
 // Firestoreからデータ取得(userId/documentのみ)
 async function getData(userId, path){
-  const ref = doc(db, userId, path);
-  const snap = await getDoc(ref);
+  const docRef = doc(db, userId, path);
+  const snap = await getDoc(docRef);
 
   if (snap.exists()){
-    return snap.data();  // オブジェクト型で返る
+    return snap.data(); 
   }else{
     return null;
   }
