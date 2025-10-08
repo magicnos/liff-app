@@ -105,18 +105,26 @@ function setButton(userId, timetableData, absenceData){
 
       if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
         const cell = table.rows[i].cells[k];
+        cell.textContent = ""; // 一旦空にする
 
-        // ボタン1を設置
-        const button1 = document.createElement("button");  
+        // 現象ボタン設置
+        const button1 = document.createElement("button");
         button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+        button1.onclick = () => deleteAbsence(userId, className, absenceData, i, k);
         button1.style.marginRight = "15px";
-        cell.insertBefore(button1, cell.firstChild);
+        cell.appendChild(button1);
 
-        // ボタン2を設置
+        // 欠時数(spanで囲うことで、後でここだけ変更できる)
+        const span = document.createElement("span");
+        span.className = "count";
+        span.textContent = absenceData[className];
+        span.style.margin = "0 8px";
+        cell.appendChild(span);
+
+        // 増加ボタン設置
         const button2 = document.createElement("button");
         button2.textContent = "△";
-        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+        button2.onclick = () => addAbsence(userId, className, absenceData, i, k);
         button2.style.marginLeft = "15px";
         cell.appendChild(button2);
       }
@@ -126,59 +134,33 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を減らす
-function deleteAbsence(userId, className, absenceData, i, k){
+async function deleteAbsence(userId, className, absenceData, i, k){
   if (absenceData[className] > 0){
     const docRef = doc(db, userId, 'absence');
   
-    updateDoc(docRef, {
+    await updateDoc(docRef, {
       [className]: absenceData[className] - 1
     });
 
     // 反映
     const table = document.getElementById("absence");
-    const cell = table.rows[i].cells[k];
-    // ボタン1
-    const button1 = document.createElement("button");
-    button1.textContent = "▽";
-    button1.onclick = () => deleteAbsence(userId, className, absenceData, i, k);
-    button1.style.marginRight = "15px";
-    cell.insertBefore(button1, cell.firstChild);
-    // 欠時数
-    cell.innerText = absenceData[className] - 1;
-    // ボタン2
-    const button2 = document.createElement("button");
-    button2.textContent = "△";
-    button2.onclick = () => addAbsence(userId, className, absenceData, i, k);
-    button2.style.marginLeft = "15px";
-    cell.appendChild(button2);
+    const span = table.rows[i].cells[k].querySelector(".count");
+    span.textContent = absenceData[className] - 1;
   }
 }
 
 // 欠時数を増やす
-function addAbsence(userId, className, absenceData, i, k){
+async function addAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
-  updateDoc(docRef, {
+  await updateDoc(docRef, {
     [className]: absenceData[className] + 1
   });
 
   // 反映
   const table = document.getElementById("absence");
-  const cell = table.rows[i].cells[k];
-  // ボタン1
-  const button1 = document.createElement("button");  
-  button1.textContent = "▽";
-  button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
-  button1.style.marginRight = "15px";
-  cell.insertBefore(button1, cell.firstChild);
-  // 欠時数
-  cell.innerText = absenceData[className] + 1;
-  // ボタン2
-  const button2 = document.createElement("button");
-  button2.textContent = "△";
-  button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
-  button2.style.marginLeft = "15px";
-  cell.appendChild(button2);
+  const span = table.rows[i].cells[k].querySelector(".count");
+  span.textContent = absenceData[className] + 1;
 }
 
 
