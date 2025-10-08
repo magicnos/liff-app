@@ -85,7 +85,7 @@ async function main(){
   const userId = await firstLiff();
   const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = 'テスト用';
-  //setTimetable(timetableData);
+  setTimetable(timetableData);
 }
 
 
