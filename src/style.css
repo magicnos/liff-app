@@ -9,7 +9,7 @@ td, th {
   padding: 5px;
   text-align: center;
   word-wrap: break-word; /* 長い文字は折り返す */
-  font-size: 15px;
+  font-size: 20px; /* ここがテーブル内のテキストサイズの基本 */
 }
 /* 時間割の横幅調整 1列目:時限、残り5列を均等 */
 col.time-col {
@@ -18,16 +18,19 @@ col.time-col {
 col.day-col {
   width: 20%;
 }
+/* 時間割セル全部のclass */
+.cellText{
+  font-size: 200%;
+}
 
 #absence button {
   font-size: 20px;      /* 文字を大きく */
-  width: 30px;          /* 横幅 */
-  height: 30px;         /* 高さ */
+  width: 50px;          /* 横幅 */
+  height: 50px;         /* 高さ */
   border-radius: 10px;  /* 丸み */
   border: none;
-  background-color: #4CAF50;
-  color: white;
-  cursor: pointer;
+  background-color: #3cb371;
+  color: black;
 }
 
 #absence button:hover {
