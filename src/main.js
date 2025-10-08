@@ -95,9 +95,8 @@ async function getData(userId, path){
 async function main(){
   const userId = await firstLiff();
   const timetableData = await getData(userId, 'timetable');
-  document.getElementById('test').textContent = 'ここは成功';
+  document.getElementById('test').textContent = 'テスト用';
   createTimetable();
-  document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
 
