@@ -59,16 +59,6 @@ function createTimetable(){
     cell1.setAttribute("colspan", 2);
     header.rows[0].deleteCell(i+1);
   }
-
-  // 2時間連続セルを結合
-  const cell = document.getElementById("timetable");
-  for (let col = 10; col >= 1; col--){
-    for (let row = 11; row >= 0; row-=2){
-      const cell1 = cell.rows[row].cells[col];
-      cell1.setAttribute("rowspan", 2);
-      cell.rows[row + 1].deleteCell(col);
-    }
-  }
 }
 
 
@@ -76,9 +66,9 @@ function createTimetable(){
 function setTimetable(timetableData){
   for (let i = 0; i < 30; i++){
     if (timetableData[i] != '空きコマ'){
-      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6].innerText = timetableData[i+101];
+      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6+1].innerText = timetableData[i+101];
     }else{
-      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6].innerText = "〇";
+      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6+1].innerText = "〇";
     }
   }
 }
