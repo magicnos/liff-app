@@ -14,7 +14,7 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
   authDomain: "linebot-799ed.firebaseapp.com",
-  projectId: "linebot-799ed"
+  projectId: "linebot-799ed",
 };
 
 // Firebase初期化
