@@ -110,7 +110,7 @@ function setButton(userId, timetableData, absenceData){
         // 現象ボタン設置
         const button1 = document.createElement("button");
         button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, className, absenceData, i, k);
+        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
         button1.style.marginRight = "15px";
         cell.appendChild(button1);
 
@@ -124,7 +124,7 @@ function setButton(userId, timetableData, absenceData){
         // 増加ボタン設置
         const button2 = document.createElement("button");
         button2.textContent = "△";
-        button2.onclick = () => addAbsence(userId, className, absenceData, i, k);
+        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
         button2.style.marginLeft = "15px";
         cell.appendChild(button2);
       }
