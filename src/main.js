@@ -168,7 +168,7 @@ const userId = firstLiff();
 createTimetable();
 headerTimetable();
 inTimetable();
-const timetableData = getData(`${userId}/timetable`);
+const timetableData = await getData(`${userId}/timetable`);
 document.getElementById('test').textContent = timetableData;
 setTimetable(timetableData);
 
