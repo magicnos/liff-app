@@ -65,10 +65,10 @@ function createTimetable(){
 // 時間割に授業をセット
 function setTimetable(timetableData){
   const table = document.getElementById('timetable');
-  for (let i = 1; i <= 6; i++){
-    for (let k = 1; k <= 5; k++){
-      if (timetableData[(i-1)*6 + k-1] != '空きコマ'){
-        table.rows[i].cells[k].innerText = timetableData[(i-1)*6 + k-1];
+  for (let i = 1; i <= 12; i+=2){
+    for (let k = 1; k <= 10; k+=2){
+      if (timetableData[((i-1)/2)*6 + (k-1)/2] != '空きコマ'){
+        table.rows[i].cells[k].innerText = timetableData[((i-1)/2)*6 + (k-1)/2];
       }else{
         table.rows[i].cells[k].innerText = '/';
       }
