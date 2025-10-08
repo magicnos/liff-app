@@ -1,7 +1,30 @@
 import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
+// --- Firebase SDK読み込み ---
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  getDocs,
+  query,
+  where
+} from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+
+// firebase(DB)の初期化
+// (apiKey, authDomain, projectId)
+const firebaseConfig = {
+  apiKey: 'AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg',
+  authDomain: "linebot-799ed.firebaseapp.com",
+  projectId: 'linebot-799ed'
+};
+// Firebase初期化
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+
 
 // liff初期化とプロフィール取得
-async function main(){
+async function firstLiff(){
   const liffId = "2008192386-zPDXa2d8";
 
   try{
@@ -18,6 +41,8 @@ async function main(){
     const profile = await liff.getProfile();
     document.getElementById("username").textContent = profile.displayName;
     document.getElementById("userid").textContent = profile.userId;
+
+    return profile.userId;
   } catch (error){
     alert("エラーが起きました。再度開きなおすか、下記のエラー内容をお知らせください。\n" + "LIFF初期化に失敗しました: " + error);
   }
@@ -82,18 +107,15 @@ function createTimetable(){
   table.appendChild(tbody);
 }
 
-
 // 時間割ヘッダーレイアウトを調整
 function headerTimetable(){
   const table = document.getElementById("timetable");
   for (let i = 9; i >= 0; i-=2){
     const cell1 = table.rows[0].cells[i];
-    const cell2 = table.rows[0].cells[i+1];
     cell1.setAttribute("colspan", 2);
     table.rows[0].deleteCell(i+1);
   }
 }
-
 
 // 時間割内レイアウトを調整
 function inTimetable(){
@@ -109,8 +131,38 @@ function inTimetable(){
   }
 }
 
+// 時間割に授業をセット
+function setTimetable(timetableData){
+  for (let i = 0; i < 30; i++){
+    if (timetableData[i] != '空きコマ'){
+      document.getElementById(`c${(i*2) + 12*(Math.floor(i/6))}`).textContent = timetableData[i];
+    }else{
+      document.getElementById(`c${(i*2) + 12*(Math.floor(i/6))}`).textContent = '〇';
+    }
+  }
+}
 
+
+
+
+// Firestoreからデータ取得
+async function getData(path){
+  const ref  = await getDocs(collection(db, path.split("/")));
+
+  const snapshot = await getDocs(ref);
+  if (snapshot.exists()){
+    return snapshot.data();
+  }else{
+    return null;
+  }
+}
+
+
+
+const userId = firstLiff();
 createTimetable();
 headerTimetable();
 inTimetable();
-main();
+const timetableData = getData(`${userId}/timetable`);
+setTimetable(timetableData);
+

@@ -14,8 +14,12 @@ td, th {
   font-size: 12px;
 }
 /* 時間割の横幅調整 1列目:時限、残り5列を均等 */
-col.time-col { width: 60px; }
-col.day-col { width: 10%; }
+col.time-col {
+  width: 60px;
+}
+col.day-col {
+  width: 10%;
+}
 .text {
   font-size: 15px;
 }
