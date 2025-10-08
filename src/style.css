@@ -20,7 +20,7 @@ col.day-col {
 }
 /* 時間割セル全部のclass */
 .cellText{
-  font-size: 200%;
+  font-size: 150%;
 }
 
 #absence button {
@@ -38,6 +38,7 @@ col.day-col {
 }
 
 #absence .count {
+  font-size: 120%;
   font-weight: bold;
   margin: 0 20px;
   display: inline-block;
