@@ -127,15 +127,15 @@ function setButton(userId, timetableData, absenceData){
 
 // 欠時数を減らす
 function deleteAbsence(userId, className, absenceData, i, k){
-  const docRef = doc(db, userId, 'absence');
-
-  if (absenceData[className] >= 0){
+  if (absenceData[className] > 0){
+    const docRef = doc(db, userId, 'absence');
+  
     updateDoc(docRef, {
       [className]: absenceData[className] - 1
     });
 
     // 反映
-    const cell = document.getElementById("absence");
+    const cell = table.rows[i].cells[k];
     // ボタン1
     const button1 = document.createElement("button");  
     button1.textContent = "▽";
@@ -163,7 +163,7 @@ function addAbsence(userId, className, absenceData, i, k){
   });
 
   // 反映
-  const cell = document.getElementById("absence");
+  const cell = table.rows[i].cells[k];
   // ボタン1
   const button1 = document.createElement("button");  
   button1.textContent = "▽";
