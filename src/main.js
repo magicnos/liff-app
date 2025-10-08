@@ -14,7 +14,7 @@ import {
 const firebaseConfig = {
   apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
   authDomain: "linebot-799ed.firebaseapp.com",
-  projectId: "linebot-799ed",
+  projectId: "linebot-799ed"
 };
 
 // Firebase初期化
@@ -33,7 +33,7 @@ async function firstLiff(){
 
     // ログインしてなければログイン
     if (!liff.isLoggedIn()){
-      liff.login({ redirectUri: window.location.href });
+      liff.login();
       return;
     }
 
@@ -51,25 +51,19 @@ async function firstLiff(){
 
 // 時間割枠組み作成
 function createTimetable(){
-
   // 列（曜日）情報：2列ずつ（前後半）
   const days = ["月", "火", "水", "木", "金"];
-
   // 12限まで
   const periods = 12;
-
   // テーブル要素を取得
   const table = document.getElementById("timetable");
-
   // ---- ヘッダー行の作成 ----
   const thead = document.createElement("thead");
   const headerRow = document.createElement("tr");
-
   // 「時限」列
   const thTime = document.createElement("th");
   thTime.textContent = "時限";
   headerRow.appendChild(thTime);
-
   // 各曜日（2列ずつ）
   for (const day of days) {
     for (let i = 0; i < 2; i++) {
@@ -78,57 +72,47 @@ function createTimetable(){
       headerRow.appendChild(th);
     }
   }
-
   thead.appendChild(headerRow);
   table.appendChild(thead);
 
   // ---- 本体（tbody）作成 ----
   const tbody = document.createElement("tbody");
-
   // 各限ごとの行
   for (let i = 0; i < periods; i++) {
     const tr = document.createElement("tr");
-
     // 時限列
     const tdPeriod = document.createElement("td");
     tdPeriod.textContent = `${i + 1}限`;
     tr.appendChild(tdPeriod);
-
     // 各曜日×2列ぶんのセル
     for (let j = 0; j < days.length * 2; j++) {
       const td = document.createElement("td");
       td.id = `c${i + j * periods}`; // 例：c0, c1, ..., c119
       tr.appendChild(td);
     }
-
     tbody.appendChild(tr);
   }
-
   table.appendChild(tbody);
-}
 
-// 時間割ヘッダーレイアウトを調整
-function headerTimetable(){
-  const table = document.getElementById("timetable");
+  // 時間割ヘッダーレイアウトを調整
+  const header = document.getElementById("timetable");
   for (let i = 9; i >= 0; i-=2){
-    const cell1 = table.rows[0].cells[i];
+    const cell1 = header.rows[0].cells[i];
     cell1.setAttribute("colspan", 2);
-    table.rows[0].deleteCell(i+1);
+    header.rows[0].deleteCell(i+1);
   }
-}
 
-// 時間割内レイアウトを調整
-function inTimetable(){
   // 2時間連続セルを結合
-  const table = document.getElementById("timetable");
+  const cell = document.getElementById("timetable");
   for (let col = 10; col >= 1; col--){
     for (let row = 11; row >= 0; row-=2){
-      const cell1 = table.rows[row].cells[col];
+      const cell1 = cell.rows[row].cells[col];
       cell1.setAttribute("rowspan", 2);
-      table.rows[row + 1].deleteCell(col);
+      cell.rows[row + 1].deleteCell(col);
     }
   }
 }
+
 
 // 時間割に授業をセット
 function setTimetable(timetableData){
@@ -142,23 +126,16 @@ function setTimetable(timetableData){
 }
 
 
+// Firestoreからデータ取得(userId/documentのみ)
+async function getData(userId, path){
+  const ref = doc(db, userId, path);
+  const snap = await getDoc(ref);
 
-// Firestoreからデータ取得
-async function getData(path){
-  const ref = collection(db, ...path.split("/"))
-
-  const snapshot = await getDocs(ref);
-  if (snapshot.empty){
+  if (snap.exists()){
+    return snap.data();  // オブジェクト型で返る
+  }else{
     return null;
   }
-
-  // データを配列化
-  let data = [];
-  for (let i = 101; i <= 130; i++){
-    data.push(snapshot[i]);
-  }
-
-  return data;
 }
 
 
@@ -167,9 +144,7 @@ async function getData(path){
 async function main(){
   const userId = await firstLiff();
   createTimetable();
-  headerTimetable();
-  inTimetable();
-  const timetableData = await getData(`users${userId}/timetable`);
+  const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
