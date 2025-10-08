@@ -50,6 +50,19 @@ async function firstLiff(){
 }
 
 
+// Firestoreからデータ取得(userId/documentのみ)
+async function getData(userId, path){
+  const docRef = doc(db, userId, path);
+  const snap = await getDoc(docRef);
+
+  if (snap.exists()){
+    return snap.data(); 
+  }else{
+    return null;
+  }
+}
+
+
 
 // 時間割に授業をセット
 function setTimetable(timetableData){
@@ -66,26 +79,35 @@ function setTimetable(timetableData){
 }
 
 
-// Firestoreからデータ取得(userId/documentのみ)
-async function getData(userId, path){
-  const docRef = doc(db, userId, path);
-  const snap = await getDoc(docRef);
 
-  if (snap.exists()){
-    return snap.data(); 
-  }else{
-    return null;
+// 時間割に欠時数をセット
+function setTimetable(absenceData, timetableData){
+  const table = document.getElementById('absence');
+  for (let k = 1; k <= 5; k++){
+    for (let i = 1; i <= 12; i+=2){
+      if (absenceData[(k-1)*6 + (i-1)/2 + 101] == '空きコマ'){
+        table.rows[i].cells[k].innerText = '/';
+      }else{
+        table.rows[i].cells[k].innerText = absenceData[timetableData[(k-1)*6 + (i-1)/2 + 101]];
+      }
+    }
   }
 }
 
 
 
+
 // メインの処理
 async function main(){
+  // userId取得
   const userId = await firstLiff();
+
+  // ユーザーの時間割情報と欠時数情報を取得
   const timetableData = await getData(userId, 'timetable');
-  document.getElementById('test').textContent = 'テスト用';
+  const absenceData = await getData(userId, 'absence');
+
   setTimetable(timetableData);
+  setAbsence(absenceData);
 }
 
 
