@@ -144,7 +144,6 @@ function setTimetable(timetableData){
 
 
 
-
 // Firestoreからデータ取得
 async function getData(path){
   const ref  = await getDocs(collection(db, path.split("/")));
@@ -164,5 +163,6 @@ createTimetable();
 headerTimetable();
 inTimetable();
 const timetableData = getData(`${userId}/timetable`);
+document.getElementById('c1').textContent = timetableData;
 setTimetable(timetableData);
 
