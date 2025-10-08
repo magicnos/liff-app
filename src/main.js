@@ -126,7 +126,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を減らす
-function addAbsence(userId, className, absenceData, i, k){
+function deleteAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
   if (absenceData[className] >= 0){
@@ -141,7 +141,7 @@ function addAbsence(userId, className, absenceData, i, k){
 }
 
 // 欠時数を増やす
-function deleteAbsence(userId, className, absenceData, i, k){
+function addAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
   updateDoc(docRef, {
