@@ -33,7 +33,7 @@ async function firstLiff(){
 
     // ログインしてなければログイン
     if (!liff.isLoggedIn()){
-      liff.login();
+      liff.login({ redirectUri: window.location.href });
       return;
     }
 
@@ -152,11 +152,11 @@ async function getData(path){
     return null;
   }
 
-  // ドキュメントをオブジェクト配列に整形して返す
-  const data = snapshot.docs.map(doc => ({
-    id: doc.id,
-    ...doc.data()
-  }));
+  // データを配列化
+  let data = [];
+  for (let i = 101; i <= 130; i++){
+    data.push(snapshot[i]);
+  }
 
   return data;
 }
@@ -169,7 +169,7 @@ async function main(){
   createTimetable();
   headerTimetable();
   inTimetable();
-  const timetableData = await getData(`${userId}/timetable`);
+  const timetableData = await getData(`users/${userId}/timetable`);
   document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
