@@ -145,8 +145,7 @@ function setTimetable(timetableData){
 
 // Firestoreからデータ取得
 async function getData(path){
-  const parts = path.split("/");
-  const ref = collection(db, ...parts);
+  const ref = collection(db, ...path.split("/"))
 
   const snapshot = await getDocs(ref);
   if (snapshot.empty){
@@ -164,11 +163,16 @@ async function getData(path){
 
 
 
-const userId = firstLiff();
-createTimetable();
-headerTimetable();
-inTimetable();
-const timetableData = await getData(`${userId}/timetable`);
-document.getElementById('test').textContent = timetableData;
-setTimetable(timetableData);
+// メインの処理
+async function main(){
+  const userId = await firstLiff();
+  createTimetable();
+  headerTimetable();
+  inTimetable();
+  const timetableData = await getData(`${userId}/timetable`);
+  document.getElementById('test').textContent = JSON.stringify(timetableData);
+  setTimetable(timetableData);
+}
 
+
+main();
