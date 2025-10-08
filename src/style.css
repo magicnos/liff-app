@@ -18,6 +18,27 @@ col.time-col {
 col.day-col {
   width: 20%;
 }
-.cellText {
-  font-size: 150%;
+
+#absence button {
+  font-size: 20px;      /* 文字を大きく */
+  width: 30px;          /* 横幅 */
+  height: 30px;         /* 高さ */
+  border-radius: 10px;  /* 丸み */
+  border: none;
+  background-color: #4CAF50;
+  color: white;
+  cursor: pointer;
+}
+
+#absence button:hover {
+  background-color: #45a049;
+}
+
+#absence .count {
+  font-size: 200%;
+  font-weight: bold;
+  margin: 0 20px;
+  display: inline-block;
+  min-width: 30px; /* 数字の幅が変わってもズレにくい */
+  text-align: center;
 }

@@ -117,7 +117,6 @@ function setButton(userId, timetableData, absenceData){
         const span = document.createElement("span");
         span.className = "count";
         span.textContent = absenceData[className];
-        span.style.margin = "0 20px";
         cell.appendChild(span);
 
         // 増ボタン
