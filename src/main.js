@@ -94,6 +94,7 @@ async function main(){
   const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = 'ここは成功';
   createTimetable();
+  document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
 
