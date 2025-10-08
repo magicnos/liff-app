@@ -81,7 +81,7 @@ function setTimetable(timetableData){
 
 
 // 時間割に欠時数をセット
-function setTimetable(absenceData, timetableData){
+function setAbsence(absenceData, timetableData){
   const table = document.getElementById('absence');
   for (let k = 1; k <= 5; k++){
     for (let i = 1; i <= 12; i+=2){
@@ -96,7 +96,6 @@ function setTimetable(absenceData, timetableData){
 
 
 
-
 // メインの処理
 async function main(){
   // userId取得
@@ -107,7 +106,7 @@ async function main(){
   const absenceData = await getData(userId, 'absence');
 
   setTimetable(timetableData);
-  setAbsence(absenceData);
+  setAbsence(absenceData, timetableData);
 }
 
 
