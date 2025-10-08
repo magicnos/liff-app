@@ -63,12 +63,13 @@ function createTimetable(){
 
 
 // 時間割に授業をセット
-async function setTimetable(timetableData){
+function setTimetable(timetableData){
+  const table = document.getElementById('timetable');
   for (let i = 0; i < 30; i++){
     if (timetableData[i+101] != '空きコマ'){
-      document.getElementById('timetable').rows[i%6+1].cells[2*(Math.floor(i/6))+1].innerText = timetableData[i+101];
+      table.rows[i%6+1].cells[2*(Math.floor(i/6))+1].innerText = timetableData[i+101];
     }else{
-      document.getElementById('timetable').rows[i%6+1].cells[2*(Math.floor(i/6))+1].innerText = '/';
+      table.rows[i%6+1].cells[2*(Math.floor(i/6))+1].innerText = '/';
     }
   }
 }
@@ -95,7 +96,7 @@ async function main(){
   document.getElementById('test').textContent = 'ここは成功';
   createTimetable();
   document.getElementById('test').textContent = JSON.stringify(timetableData);
-  await setTimetable(timetableData);
+  setTimetable(timetableData);
 }
 
 
