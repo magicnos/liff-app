@@ -10,13 +10,13 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 
-// firebase(DB)の初期化
 // (apiKey, authDomain, projectId)
 const firebaseConfig = {
-  apiKey: 'AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg',
+  apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
   authDomain: "linebot-799ed.firebaseapp.com",
-  projectId: 'linebot-799ed'
+  projectId: "linebot-799ed"
 };
+
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
@@ -169,7 +169,7 @@ async function main(){
   createTimetable();
   headerTimetable();
   inTimetable();
-  const timetableData = await getData(`${userId}/timetable`);
+  const timetableData = await getData(`users${userId}/timetable`);
   document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
