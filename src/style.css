@@ -5,10 +5,11 @@ table {
   table-layout: fixed; /* 列幅を固定 */
 }
 td, th {
-  border: 1px solid #aaa;
+  border: 3px solid #aaa;
   padding: 5px;
   text-align: center;
   word-wrap: break-word; /* 長い文字は折り返す */
+  font-size: 15px;
 }
 /* 時間割の横幅調整 1列目:時限、残り5列を均等 */
 col.time-col {
@@ -18,5 +19,5 @@ col.day-col {
   width: 20%;
 }
 .cellText {
-  font-size: 15px;
+  font-size: 150%;
 }
