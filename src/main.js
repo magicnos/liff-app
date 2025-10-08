@@ -169,7 +169,7 @@ async function main(){
   createTimetable();
   headerTimetable();
   inTimetable();
-  const timetableData = await getData(`users/${userId}/timetable`);
+  const timetableData = await getData(`${userId}/timetable`);
   document.getElementById('test').textContent = JSON.stringify(timetableData);
   setTimetable(timetableData);
 }
