@@ -4,26 +4,22 @@ import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
 async function main(){
   const liffId = "2008192386-zPDXa2d8";
 
-  try {
-    // ② LIFF初期化
+  try{
+    // LIFF初期化
     await liff.init({ liffId });
-    console.log("LIFF init success");
 
-    // ③ ログインしてなければログイン
-    if (!liff.isLoggedIn()) {
+    // ログインしてなければログイン
+    if (!liff.isLoggedIn()){
       liff.login();
       return;
     }
 
-    // ④ ユーザープロフィール取得
+    // ユーザープロフィール取得
     const profile = await liff.getProfile();
     document.getElementById("username").textContent = profile.displayName;
     document.getElementById("userid").textContent = profile.userId;
-
-    console.log("Logged in as:", profile.displayName);
-  } catch (error) {
-    console.error("LIFF initialization failed", error);
-    alert("LIFF初期化に失敗しました: " + error);
+  } catch (error){
+    alert("エラーが起きました。再度開きなおすか、下記のエラー内容をお知らせください。\n" + "LIFF初期化に失敗しました: " + error);
   }
 }
 
@@ -87,5 +83,18 @@ function createTimetable(){
 }
 
 
+// 時間割ヘッダーレイアウトを調整
+function headerTimetable(){
+  const table = document.getElementById("timetable");
+  for (let i = 9; i >= 0; i-=2){
+    const cell1 = table.rows[0].cells[i];
+    const cell2 = table.rows[0].cells[i+1];
+    cell1.setAttribute("colspan", 2);
+    table.rows[0].deleteCell(i+1);
+  }
+}
+
+
 createTimetable();
+headerTimetable();
 main();
