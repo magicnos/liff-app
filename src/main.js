@@ -103,8 +103,8 @@ async function main(){
   const userId = await firstLiff();
   const timetableData = await getData(userId, 'timetable');
   document.getElementById('test').textContent = 'ここは成功';
-  document.getElementById('c0').textContent = 'ここは成功';
-  //createTimetable();
+  document.getElementById('timetable').rows[0].cells[1].innerText = "変更後の内容";
+  createTimetable();
   setTimetable(timetableData);
 }
 
