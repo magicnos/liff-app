@@ -95,6 +95,59 @@ function setAbsence(absenceData, timetableData){
 }
 
 
+// 欠時数時間割に欠時増減ボタンを設置
+function setButton(userId, timetableData, absenceData){
+  const table = document.getElementById("absence");
+
+  for (let k = 1; k <= 5; k++){
+    for (let i = 1; i <= 12; i+=2){
+
+      if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
+        const cell = table.rows[i].cells[k];
+
+        // ボタン1を設置
+        const button1 = document.createElement("button");  
+        button1.textContent = "▽";
+        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData);
+        cell.insertBefore(button1, cell.firstChild)
+
+        // ボタン2を設置
+        const button2 = document.createElement("button");
+        button2.textContent = "△";
+        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData);
+        cell.appendChild(button2);
+      }
+    }
+  }
+}
+
+
+// 欠時数を減らす
+async function addAbsence(userId, className, absenceData){
+  const docRef = doc(db, userId, 'absence');
+
+  await updateDoc(docRef, {
+    [className]: absenceData[className] - 1
+  });
+
+  // リロードして反映
+  location.reload();
+}
+
+// 欠時数を増やす
+async function deleteAbsence(userId, className, absenceData){
+  const docRef = doc(db, userId, 'absence');
+
+  await updateDoc(docRef, {
+    [className]: absenceData[className] + 1
+  });
+
+  // リロードして反映
+  location.reload();
+}
+
+
+
 
 // メインの処理
 async function main(){
@@ -105,8 +158,12 @@ async function main(){
   const timetableData = await getData(userId, 'timetable');
   const absenceData = await getData(userId, 'absence');
 
+  // 時間割に時間割と欠時数を表示
   setTimetable(timetableData);
   setAbsence(absenceData, timetableData);
+
+  // 欠時数時間割に欠時変更ボタンを設置
+  setButton(userId, timetableData, absenceData);
 }
 
 
