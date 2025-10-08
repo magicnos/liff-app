@@ -4,7 +4,8 @@ import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebas
 import {
   getFirestore,
   collection,
-  getDocs,
+  getDoc,
+  doc,
   query,
   where
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
