@@ -7,7 +7,8 @@ import {
   getDoc,
   doc,
   query,
-  where
+  where,
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 
 
@@ -108,13 +109,15 @@ function setButton(userId, timetableData, absenceData){
         // ボタン1を設置
         const button1 = document.createElement("button");  
         button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData);
+        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+        button1.style.marginRight = "15px";
         cell.insertBefore(button1, cell.firstChild)
 
         // ボタン2を設置
         const button2 = document.createElement("button");
         button2.textContent = "△";
-        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData);
+        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+        button2.style.marginLeft = "15px";
         cell.appendChild(button2);
       }
     }
@@ -123,27 +126,27 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を減らす
-async function addAbsence(userId, className, absenceData){
+async function addAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
   await updateDoc(docRef, {
     [className]: absenceData[className] - 1
   });
 
-  // リロードして反映
-  location.reload();
+  // 反映
+  able.rows[i].cells[k].innerText = absenceData[className] - 1;
 }
 
 // 欠時数を増やす
-async function deleteAbsence(userId, className, absenceData){
+async function deleteAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
   await updateDoc(docRef, {
     [className]: absenceData[className] + 1
   });
 
-  // リロードして反映
-  location.reload();
+  // 反映
+  able.rows[i].cells[k].innerText = absenceData[className] + 1;
 }
 
 
