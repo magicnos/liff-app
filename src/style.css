@@ -25,8 +25,8 @@ col.day-col {
 
 #absence button {
   font-size: 20px;      /* 文字を大きく */
-  width: 50px;          /* 横幅 */
-  height: 50px;         /* 高さ */
+  width: 40px;          /* 横幅 */
+  height: 40px;         /* 高さ */
   border-radius: 10px;  /* 丸み */
   border: none;
   background-color: #3cb371;
