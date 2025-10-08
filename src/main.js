@@ -66,9 +66,9 @@ function createTimetable(){
 function setTimetable(timetableData){
   for (let i = 0; i < 30; i++){
     if (timetableData[i] != '空きコマ'){
-      document.getElementById('timetable').rows[i%6+1].cells[Math.floor(i/6)].innerText = timetableData[i+101];
+      document.getElementById('timetable').rows[i%6+1].cells[Math.floor(i/6)+1].innerText = timetableData[i+101];
     }else{
-      document.getElementById('timetable').rows[i%6+1].cells[Math.floor(i/6)].innerText = "〇";
+      document.getElementById('timetable').rows[i%6+1].cells[Math.floor(i/6)+1].innerText = "〇";
     }
   }
 }
