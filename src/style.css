@@ -15,7 +15,7 @@ td, th {
 }
 /* 時間割の横幅調整 1列目:時限、残り5列を均等 */
 col.time-col {
-  width: 60px;
+  width: 80px;
 }
 col.day-col {
   width: 20%;
