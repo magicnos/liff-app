@@ -80,7 +80,6 @@ function setTimetable(timetableData){
 }
 
 
-
 // 時間割に欠時数をセット
 function setAbsence(absenceData, timetableData){
   const table = document.getElementById('absence');
@@ -102,14 +101,15 @@ function setButton(userId, timetableData, absenceData){
 
   for (let k = 1; k <= 5; k++){
     for (let i = 1; i <= 12; i+=2){
+      const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
 
-      if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
+      if (className != '空きコマ'){
         const cell = table.rows[i].cells[k];
 
         // 現象ボタン設置
         const button1 = document.createElement("button");
         button1.textContent = "▽";
-        button1.onclick = () => deleteAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, cell);
+        button1.onclick = () => deleteAbsence(userId, className, absenceData, cell);
         cell.appendChild(button1);
 
         // 欠時数(spanで囲うことで、後でここだけ変更できる)
@@ -122,7 +122,7 @@ function setButton(userId, timetableData, absenceData){
         // 増加ボタン設置
         const button2 = document.createElement("button");
         button2.textContent = "△";
-        button2.onclick = () => addAbsence(userId, timetableData[(k-1)*6 + (i-1)/2 + 101], absenceData, i, k);
+        button2.onclick = () => addAbsence(userId, className, absenceData, cell);
         cell.appendChild(button2);
       }
     }
