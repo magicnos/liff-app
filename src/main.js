@@ -76,11 +76,9 @@ function createTimetable(){
 function setTimetable(timetableData){
   for (let i = 0; i < 30; i++){
     if (timetableData[i] != '空きコマ'){
-      document.getElementById('timetable').rows[1].cells[1].innerText = "変更後の内容";
-      document.getElementById(`c${(i*2) + 12*(Math.floor(i/6))}`).textContent = timetableData[i];
+      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6].innerText = timetableData[i+101];
     }else{
-      document.getElementById('timetable').rows[1].cells[1].innerText = "変更後の内容";
-      document.getElementById(`c${(i*2) + 12*(Math.floor(i/6))}`).textContent = '〇';
+      document.getElementById('timetable').rows[Math.floor(i/6)+1].cells[i%6].innerText = "〇";
     }
   }
 }
