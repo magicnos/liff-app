@@ -169,6 +169,6 @@ createTimetable();
 headerTimetable();
 inTimetable();
 const timetableData = getData(`${userId}/timetable`);
-document.getElementById('c1').textContent = timetableData;
+document.getElementById('test').textContent = timetableData;
 setTimetable(timetableData);
 
