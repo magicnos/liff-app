@@ -126,27 +126,31 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を減らす
-async function addAbsence(userId, className, absenceData, i, k){
+function addAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
-  await updateDoc(docRef, {
-    [className]: absenceData[className] - 1
-  });
+  if (absenceData[className] >= 0){
+    updateDoc(docRef, {
+      [className]: absenceData[className] - 1
+    });
+  }
 
   // 反映
-  able.rows[i].cells[k].innerText = absenceData[className] - 1;
+  const table = document.getElementById("absence");
+  table.rows[i].cells[k].innerText = absenceData[className] - 1;
 }
 
 // 欠時数を増やす
-async function deleteAbsence(userId, className, absenceData, i, k){
+function deleteAbsence(userId, className, absenceData, i, k){
   const docRef = doc(db, userId, 'absence');
 
-  await updateDoc(docRef, {
+  updateDoc(docRef, {
     [className]: absenceData[className] + 1
   });
 
   // 反映
-  able.rows[i].cells[k].innerText = absenceData[className] + 1;
+  const table = document.getElementById("absence");
+  table.rows[i].cells[k].innerText = absenceData[className] + 1;
 }
 
 
