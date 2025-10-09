@@ -146,7 +146,7 @@ function setButton(userId, timetableData, absenceData){
         // ×8ボタンup
         const eightBtnUp = document.createElement("button");
         eightBtnUp.textContent = "×8";
-        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, cel);
+        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, cell);
         cell.appendChild(eightBtnUp);
       }
     }
