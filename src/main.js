@@ -156,36 +156,82 @@ function setButton(userId, timetableData, absenceData){
 
 // 欠時を増やす(かなり安全版)
 async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
-  // 現在のローカル欠時数を取得
-  const current = Number(absenceData[className] ?? 0);
-  // ローカルで新しい欠時数を定義
-  const newValue = current + 1;
+  // 授業情報取得
+  const classData = getData2('timetable_name', className);
 
-  // ローカル欠時数とUIを即時更新
-  absenceData[className] = newValue;
-  const span = cell.querySelector(".count");
-  if (span) span.textContent = newValue;
+  // 2単位族
+  if (classData.credit == 2 || classData.credit == 1){
+    // 現在のローカル欠時数を取得
+    const current = Number(absenceData[className] ?? 0);
+    // ローカルで新しい欠時数を定義
+    const newValue = current + 1;
 
-  // ボタンを無効化
-  if (btnDown) btnDown.disabled = true;
-  if (btnUp) btnUp.disabled = true;
+    // ローカル欠時数とUIを即時更新
+    absenceData[className] = newValue;
+    const span = cell.querySelector(".count");
+    if (span) span.textContent = newValue;
 
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
+    // ボタンを無効化
+    if (btnDown) btnDown.disabled = true;
+    if (btnUp) btnUp.disabled = true;
 
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
+    // DBに触ってる
+    const docRef = doc(db, userId, 'absence');
 
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    if (span) span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    if (btnDown) btnDown.disabled = false;
-    if (btnUp) btnUp.disabled = false;
+    try{
+      // DB更新
+      await updateDoc(docRef, { [className]: newValue });
+    }catch (err){
+      alert("更新に失敗しました。もう一度試してください。");
+
+      // DB更新失敗時値を元に戻す
+      absenceData[className] = current;
+      if (span) span.textContent = current;
+    }finally{
+      // ボタン再有効化
+      if (btnDown) btnDown.disabled = false;
+      if (btnUp) btnUp.disabled = false;
+    }
+  // 4単位
+  }else{
+    // 現在のローカル欠時数を取得
+    const current = Number(absenceData[className] ?? 0);
+    // ローカルで新しい欠時数を定義
+    const newValue = current + 1;
+
+    // ローカル欠時数とUIを即時更新
+    absenceData[classData.week1 * 6 + classData.hour] = newValue;
+    absenceData[classData.week2 * 6 + classData.hour] = newValue;
+    const table = document.getElementById("absence");
+    const cell1 = table.rows[classData.hour].cells[classData.week1];
+    const cell2 = table.rows[classData.hour].cells[classData.week2];
+    const span1 = cell1.querySelector(".count");
+    const span2 = cell2.querySelector(".count");
+    if (span1) span1.textContent = newValue;
+    if (span2) span2.textContent = newValue;
+
+    // ボタンを無効化
+    btnDown.disabled = true;
+    btnUp.disabled = true;
+
+    // DBに触ってる
+    const docRef = doc(db, userId, 'absence');
+
+    try{
+      // DB更新
+      await updateDoc(docRef, { [className]: newValue });
+    }catch (err){
+      alert("更新に失敗しました。もう一度試してください。");
+
+      // DB更新失敗時値を元に戻す
+      absenceData[className] = current;
+      if (span1) span1.textContent = current;
+      if (span2) span2.textContent = current;
+    }finally{
+      // ボタン再有効化
+      btnDown.disabled = false;
+      btnUp.disabled = false;
+    }
   }
 }
 
