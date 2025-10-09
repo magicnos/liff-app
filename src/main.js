@@ -155,7 +155,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時を増やす(かなり安全版)
-async function addAbsence(userId, className, absenceData, cell){
+async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
   // 現在のローカル欠時数を取得
   const current = Number(absenceData[className] ?? 0);
   // ローカルで新しい欠時数を定義
@@ -165,6 +165,10 @@ async function addAbsence(userId, className, absenceData, cell){
   absenceData[className] = newValue;
   const span = cell.querySelector(".count");
   if (span) span.textContent = newValue;
+
+  // ボタンを無効化
+  if (btnDown) btnDown.disabled = true;
+  if (btnUp) btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -178,6 +182,10 @@ async function addAbsence(userId, className, absenceData, cell){
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
     if (span) span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    if (btnDown) btnDown.disabled = false;
+    if (btnUp) btnUp.disabled = false;
   }
 }
 
@@ -221,7 +229,7 @@ async function deleteAbsence(userId, className, absenceData, cell, btnDown, btnU
 
 
 // 欠時数を減らす×8(かなり安全版)
-async function eightDeleteAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+async function eightDeleteAbsence(userId, className, absenceData, cell){
   // 現在のローカル欠時数を取得
   const current = Number(absenceData[className] ?? 0);
   // 0以下なら変更しない
@@ -233,10 +241,6 @@ async function eightDeleteAbsence(userId, className, absenceData, cell, btnDown,
   absenceData[className] = newValue;
   const span = cell.querySelector(".count");
   if (span) span.textContent = newValue;
-
-  // ボタンを無効化
-  if (btnDown) btnDown.disabled = true;
-  if (btnUp) btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -250,10 +254,6 @@ async function eightDeleteAbsence(userId, className, absenceData, cell, btnDown,
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
     if (span) span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    if (btnDown) btnDown.disabled = false;
-    if (btnUp) btnUp.disabled = false;
   }
 }
 
