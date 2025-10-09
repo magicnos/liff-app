@@ -121,9 +121,9 @@ function setButton(userId, timetableData, absenceData){
 
         // ×8ボタンdown
         const eightBtnDown = document.createElement("button");
-        btnDown.textContent = "×8";
-        btnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, cell, btnDown, btnUp);
-        cell.appendChild(btnDown);
+        eightBtnDown.textContent = "×8";
+        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, cell);
+        cell.appendChild(eightBtnDown);
 
         // 減ボタン
         const btnDown = document.createElement("button");
@@ -145,9 +145,9 @@ function setButton(userId, timetableData, absenceData){
 
         // ×8ボタンup
         const eightBtnUp = document.createElement("button");
-        btnDown.textContent = "×8";
-        btnDown.onclick = () => eightAddAbsence(userId, className, absenceData, cell, btnDown, btnUp);
-        cell.appendChild(btnDown);
+        eightBtnUp.textContent = "×8";
+        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, cel);
+        cell.appendChild(eightBtnUp);
       }
     }
   }
@@ -155,7 +155,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時を増やす(かなり安全版)
-async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+async function addAbsence(userId, className, absenceData, cell){
   // 現在のローカル欠時数を取得
   const current = Number(absenceData[className] ?? 0);
   // ローカルで新しい欠時数を定義
@@ -165,10 +165,6 @@ async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
   absenceData[className] = newValue;
   const span = cell.querySelector(".count");
   if (span) span.textContent = newValue;
-
-  // ボタンを無効化
-  if (btnDown) btnDown.disabled = true;
-  if (btnUp) btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -182,10 +178,6 @@ async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
     if (span) span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    if (btnDown) btnDown.disabled = false;
-    if (btnUp) btnUp.disabled = false;
   }
 }
 
@@ -267,7 +259,7 @@ async function eightDeleteAbsence(userId, className, absenceData, cell, btnDown,
 
 
 // 欠時を増やす×8(かなり安全版)
-async function eightAddAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+async function eightAddAbsence(userId, className, absenceData, cell){
   // 現在のローカル欠時数を取得
   const current = Number(absenceData[className] ?? 0);
   // ローカルで新しい欠時数を定義
@@ -277,10 +269,6 @@ async function eightAddAbsence(userId, className, absenceData, cell, btnDown, bt
   absenceData[className] = newValue;
   const span = cell.querySelector(".count");
   if (span) span.textContent = newValue;
-
-  // ボタンを無効化
-  if (btnDown) btnDown.disabled = true;
-  if (btnUp) btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -294,10 +282,6 @@ async function eightAddAbsence(userId, className, absenceData, cell, btnDown, bt
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
     if (span) span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    if (btnDown) btnDown.disabled = false;
-    if (btnUp) btnUp.disabled = false;
   }
 }
 
