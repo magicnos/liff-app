@@ -63,6 +63,18 @@ async function getData(userId, path){
   }
 }
 
+// Firestoreからデータ取得(path1/path2のみ)
+async function getData2(path1, path2){
+  const docRef = doc(db, path1, path2);
+  const snap = await getDoc(docRef);
+
+  if (snap.exists()){
+    return snap.data(); 
+  }else{
+    return null;
+  }
+}
+
 
 
 // 時間割に授業をセット
@@ -140,6 +152,7 @@ function setButton(userId, timetableData, absenceData){
     }
   }
 }
+
 
 // 欠時を増やす(かなり安全版)
 async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
