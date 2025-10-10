@@ -237,30 +237,22 @@ function absenceScale(){
 }
 
 
-// 時間割授業モーダル
-function timetableModal(){
-  // すべての時間割セルにイベント登録
+// セルをタップしたらモーダルを開く
+function attachCellEvents(){
   const cells = document.querySelectorAll('.cellText');
+  const modal = document.getElementById('modal');
+  const content = document.getElementById('modal-content');
+
   cells.forEach(cell => {
-    cell.addEventListener('click', async (e) => {
-      // idと時間割iを定義
-      const id = cell.id;
-      const i = Number(id.slice(1));
-
-      // Firestoreからデータ取得
-      const data = await getData('timetable_week', i);
-
-      // モーダルに内容を作る
-      let html = `<h3>${'月火水木金'[Math.floor(i/6)]}:${(i%6)*2 + 1},${(i%6)*2 + 2}限</h3>`;
-      data.forEach(subject => {
-        html += `<p>${subject}</p>`;
-      });
-
-      // モーダルに表示
-      const modal = document.getElementById("modal");
-      const content = document.getElementById("modal-content");
-      content.innerHTML = html;
+    cell.addEventListener('click', () => {
+      // モーダル内の中身を固定テキストに
+      content.innerHTML = `
+        <span id="closeModal">&times;</span>
+        <h3>授業内容</h3>
+        <p>ここに授業の詳細を表示できます</p>
+      `;
       modal.style.display = 'block';
+      initModal(); // 再度閉じるボタンにイベントを設定
     });
   });
 }
@@ -268,9 +260,9 @@ function timetableModal(){
 
 // modalId - モーダル本体のID
 // closeBtnId - モーダルを閉じるボタン（×）のID
-function initModal(modalId, closeBtnId){
-  const modal = document.getElementById(modalId);
-  const span = document.getElementById(closeBtnId);
+function initModal(){
+  const modal = document.getElementById('modal');
+  const span = document.getElementById('closeModal');
 
   // ×ボタンクリックで閉じる
   span.addEventListener('click', () => {
@@ -279,7 +271,7 @@ function initModal(modalId, closeBtnId){
 
   // モーダル外クリックで閉じる
   window.addEventListener('click', (event) => {
-    if (event.target == modal){
+    if (event.target === modal) {
       modal.style.display = 'none';
     }
   });
@@ -308,8 +300,8 @@ async function main(){
   setButton(userId, timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal('modal', 'closeModal');
-  timetableModal();
+  initModal();
+  attachCellEvents();
 }
 
 
