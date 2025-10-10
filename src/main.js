@@ -159,8 +159,10 @@ function setButton(userId, timetableData, absenceData){
 async function addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
+  // 欠時数増減倍率取得
+  const scale = absenceScale();
   // ローカルで新しい欠時数を定義
-  const newValue = current + 1;
+  const newValue = current + scale;
 
   // ローカル欠時数とUI更新
   absenceData[className] = newValue;
@@ -195,8 +197,10 @@ async function deleteAbsence(userId, className, absenceData, timetableData, btnD
   const current = absenceData[className];
   // 0以下なら変更しない
   if (current <= 0) return;
+  // 欠時数増減倍率取得
+  const scale = absenceScale();
   // ローカルで新しい欠時数を定義
-  const newValue = current - 1;
+  const newValue = current - scale;
 
   // ローカル欠時数とUIを即時更新
   absenceData[className] = newValue;
@@ -291,6 +295,14 @@ function changeAbsence(timetableData, absenceData){
       }
     }
   }
+}
+
+// 欠時数増減倍率数取得
+function absenceScale(){
+  // name="color" のラジオボタンのうち、チェックされているものを取得
+  const selected = document.querySelector('input[name="absenceScale"]:checked');
+
+  return Number(selected.value);
 }
 
 

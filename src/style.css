@@ -45,3 +45,8 @@ col.day-col {
   min-width: 30px; /* 数字の幅が変わってもズレにくい */
   text-align: center;
 }
+
+input[type="radio"] {
+  transform: scale(1.5); /* 1.5倍に拡大 */
+  margin: 5px;
+}

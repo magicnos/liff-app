@@ -13,18 +13,6 @@
     <br>
     <h1>あなたの時間割</h1>
 
-    <form>
-      <label>
-        <input type="radio" name="option" value="A"> A
-      </label>
-      <label>
-        <input type="radio" name="option" value="B"> B
-      </label>
-      <label>
-        <input type="radio" name="option" value="C"> C
-      </label>
-    </form>
-
     <div class="timetable">
       <table id="timetable">
         <colgroup>
@@ -118,6 +106,21 @@
 
     <br>
     <h1>あなたの欠時数</h1>
+
+    <form>
+      <label>
+        <input type="radio" name="absenceScale" value="1" checked> ×1
+      </label>
+      <label>
+        <input type="radio" name="absenceScale" value="2"> ×2
+      </label>
+      <label>
+        <input type="radio" name="absenceScale" value="4"> ×4
+      </label>
+      <label>
+        <input type="radio" name="absenceScale" value="8"> ×8
+      </label>
+    </form>
 
     <div class="absence">
       <table id="absence">
