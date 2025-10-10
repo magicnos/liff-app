@@ -280,7 +280,7 @@ function attachCellEvents(){
         <p>セル位置: 行 ${row}, 列 ${col}</p>
       `;
       for (let k = 0; k < data.length; k++){
-        html += `<p>${data[k]}</p>`
+        html += `<p>${data[k]}</p>`;
       }
       body.innerHTML = html;
 
