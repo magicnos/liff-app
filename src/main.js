@@ -239,11 +239,13 @@ function absenceScale(){
 
 // 時間割授業モーダル
 async function timetableModal(e, userId){
+  // 自分か親でclassを探す
+  const cell = e.target.closest('.cellText');
   // cellTextクラス以外をクリックしたら無視
-  if (!e.target.classList.contains('cellText')) return;
+  if (!cell) return;
 
   // セルのid
-  const id = e.target.id;
+  const id = cell.id;
 
   // idを時限データiに
   const i = Number(id.slice(1)) + 101;
