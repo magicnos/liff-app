@@ -122,13 +122,13 @@ function setButton(userId, timetableData, absenceData){
         // ×8ボタンdown
         const eightBtnDown = document.createElement("button");
         eightBtnDown.textContent = "×8";
-        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, cell);
+        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData);
         cell.appendChild(eightBtnDown);
 
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, cell, btnDown, btnUp);
+        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, btnDown, btnUp);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
@@ -140,13 +140,13 @@ function setButton(userId, timetableData, absenceData){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => addAbsence(userId, className, absenceData, cell, btnDown, btnUp);
+        btnUp.onclick = () => addAbsence(userId, className, absenceData, btnDown, btnUp);
         cell.appendChild(btnUp);
 
         // ×8ボタンup
         const eightBtnUp = document.createElement("button");
         eightBtnUp.textContent = "×8";
-        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, cell);
+        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData);
         cell.appendChild(eightBtnUp);
       }
     }
@@ -154,17 +154,21 @@ function setButton(userId, timetableData, absenceData){
 }
 
 
-// 欠時を増やす(かなり安全版)
-async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+
+// 欠時を増やす
+async function addAbsence(userId, className, absenceData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
-  const current = Number(absenceData[className] ?? 0);
+  const current = absenceData[className];
   // ローカルで新しい欠時数を定義
   const newValue = current + 1;
 
-  // ローカル欠時数とUIを即時更新
+  // ローカル欠時数とUI更新
   absenceData[className] = newValue;
-  const span = cell.querySelector(".count");
-  if (span) span.textContent = newValue;
+  changeAbsence(timetableData, absenceData);
+
+  // ボタンを無効化
+  btnDown.disabled = true;
+  btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -177,15 +181,19 @@ async function addAbsence(userId, className, absenceData, cell, btnDown, btnUp){
 
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
-    if (span) span.textContent = current;
+    span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    btnDown.disabled = false;
+    btnUp.disabled = false;
   }
 }
 
 
-// 欠時数を減らす(かなり安全版)
-async function deleteAbsence(userId, className, absenceData, cell, btnDown, btnUp){
+// 欠時数を減らす
+async function deleteAbsence(userId, className, absenceData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
-  const current = Number(absenceData[className] ?? 0);
+  const current = absenceData[className];
   // 0以下なら変更しない
   if (current <= 0) return;
   // ローカルで新しい欠時数を定義
@@ -193,12 +201,11 @@ async function deleteAbsence(userId, className, absenceData, cell, btnDown, btnU
 
   // ローカル欠時数とUIを即時更新
   absenceData[className] = newValue;
-  const span = cell.querySelector(".count");
-  if (span) span.textContent = newValue;
+  changeAbsence(timetableData, absenceData);
 
   // ボタンを無効化
-  if (btnDown) btnDown.disabled = true;
-  if (btnUp) btnUp.disabled = true;
+  btnDown.disabled = true;
+  btnUp.disabled = true;
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -211,28 +218,27 @@ async function deleteAbsence(userId, className, absenceData, cell, btnDown, btnU
 
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
-    if (span) span.textContent = current;
+    span.textContent = current;
   }finally{
     // ボタン再有効化
-    if (btnDown) btnDown.disabled = false;
-    if (btnUp) btnUp.disabled = false;
+    btnDown.disabled = false;
+    btnUp.disabled = false;
   }
 }
 
 
-// 欠時数を減らす×8(かなり安全版)
-async function eightDeleteAbsence(userId, className, absenceData, cell){
+// 欠時数を減らす×8
+async function eightDeleteAbsence(userId, className, absenceData){
   // 現在のローカル欠時数を取得
-  const current = Number(absenceData[className] ?? 0);
-  // 0以下なら変更しない
+  const current = absenceData[className];
+  // 7以下なら変更しない
   if (current <= 7) return;
   // ローカルで新しい欠時数を定義
   const newValue = current - 8;
 
   // ローカル欠時数とUIを即時更新
   absenceData[className] = newValue;
-  const span = cell.querySelector(".count");
-  if (span) span.textContent = newValue;
+  changeAbsence(timetableData, absenceData);
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -245,22 +251,21 @@ async function eightDeleteAbsence(userId, className, absenceData, cell){
 
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
-    if (span) span.textContent = current;
+    span.textContent = current;
   }
 }
 
 
-// 欠時を増やす×8(かなり安全版)
-async function eightAddAbsence(userId, className, absenceData, cell){
+// 欠時を増やす×8
+async function eightAddAbsence(userId, className, absenceData){
   // 現在のローカル欠時数を取得
-  const current = Number(absenceData[className] ?? 0);
+  const current = absenceData[className];
   // ローカルで新しい欠時数を定義
   const newValue = current + 8;
 
   // ローカル欠時数とUIを即時更新
   absenceData[className] = newValue;
-  const span = cell.querySelector(".count");
-  if (span) span.textContent = newValue;
+  changeAbsence(timetableData, absenceData);
 
   // DBに触ってる
   const docRef = doc(db, userId, 'absence');
@@ -273,7 +278,22 @@ async function eightAddAbsence(userId, className, absenceData, cell){
 
     // DB更新失敗時値を元に戻す
     absenceData[className] = current;
-    if (span) span.textContent = current;
+    span.textContent = current;
+  }
+}
+
+
+// UI欠時数を変更する
+function changeAbsence(timetableData, absenceData){
+  const table = document.getElementById('absence');
+  for (let k = 1; k <= 5; k++){
+    for (let i = 1; i <= 12; i+=2){
+      if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
+        const cell = table.rows[i].cells[k];
+        const span = cell.querySelector(".count");
+        span.textContent = absenceData[timetableData[(k-1)*6 + (i-1)/2 + 101]];
+      }
+    }
   }
 }
 
