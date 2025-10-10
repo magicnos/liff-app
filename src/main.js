@@ -270,15 +270,19 @@ function attachCellEvents(){
       const row = cell.parentElement.rowIndex;
       const col = cell.cellIndex;
 
-      const data = getData('timetable_week', (Math.floor(row/2))%6 + (col-1)*6);
+      // 時間割番号と授業群を取得
+      const i = (Math.floor(row/2))%6 + (col-1)*6;
+      const data = getData('timetable_week', i);
 
-      // 固定内容に行列情報を追加
-      body.innerHTML = `
+      // モーダルに授業名を追加
+      let html = `
         <h3>授業内容</h3>
-        <p>ここに授業の詳細情報を表示します。</p>
         <p>セル位置: 行 ${row}, 列 ${col}</p>
-        <p>${Math.floor((row/2))%6 + (col-1)*6}</p>
       `;
+      for (let k = 0; k < data.length; k++){
+        html += `<p>${data[k]}</p>`
+      }
+      body.innerHTML = html;
 
       // モーダル表示
       modal.style.display = 'block';
