@@ -272,7 +272,7 @@ function attachCellEvents(){
 
       // 時間割番号と授業群を取得
       const i = (Math.floor(row/2)) + (col-1)*6;
-      const data = await getData('timetable_week', String(i));
+      const data = await getData('timetable_week', String(i+101));
 
       // モーダルに授業名を追加
       let html = `
@@ -280,9 +280,9 @@ function attachCellEvents(){
         <p>セル位置: 行 ${row}, 列 ${col}</p>
         <p>セル位置: ${i}</p>
       `;
-      // for (let k = 0; k < Object.keys(data).length; k++){
-      //   html += `<p>${data[k]}</p>`;
-      // }
+      for (let k = 0; k < Object.keys(data).length; k++){
+        html += `<p>${data[k]}</p>`;
+      }
       body.innerHTML = html;
 
       // モーダル表示
