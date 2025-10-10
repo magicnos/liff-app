@@ -48,5 +48,5 @@ col.day-col {
 
 input[type="radio"] {
   transform: scale(1.5); /* 1.5倍に拡大 */
-  margin: 5px;
+  margin: 10px;
 }

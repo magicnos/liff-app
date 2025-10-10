@@ -119,11 +119,11 @@ function setButton(userId, timetableData, absenceData){
         const cell = table.rows[i].cells[k];
         cell.textContent = ""; // クリア
 
-        // ×8ボタンdown
-        const eightBtnDown = document.createElement("button");
-        eightBtnDown.textContent = "×8";
-        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, timetableData);
-        cell.appendChild(eightBtnDown);
+        // // ×8ボタンdown
+        // const eightBtnDown = document.createElement("button");
+        // eightBtnDown.textContent = "×8";
+        // eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, timetableData);
+        // cell.appendChild(eightBtnDown);
 
         // 減ボタン
         const btnDown = document.createElement("button");
@@ -143,11 +143,11 @@ function setButton(userId, timetableData, absenceData){
         btnUp.onclick = () => addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp);
         cell.appendChild(btnUp);
 
-        // ×8ボタンup
-        const eightBtnUp = document.createElement("button");
-        eightBtnUp.textContent = "×8";
-        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, timetableData);
-        cell.appendChild(eightBtnUp);
+        // // ×8ボタンup
+        // const eightBtnUp = document.createElement("button");
+        // eightBtnUp.textContent = "×8";
+        // eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, timetableData);
+        // cell.appendChild(eightBtnUp);
       }
     }
   }
@@ -230,58 +230,58 @@ async function deleteAbsence(userId, className, absenceData, timetableData, btnD
 }
 
 // 欠時数を減らす×8
-async function eightDeleteAbsence(userId, className, absenceData, timetableData){
-  // 現在のローカル欠時数を取得
-  const current = absenceData[className];
-  // 7以下なら変更しない
-  if (current <= 7) return;
-  // ローカルで新しい欠時数を定義
-  const newValue = current - 8;
+// async function eightDeleteAbsence(userId, className, absenceData, timetableData){
+//   // 現在のローカル欠時数を取得
+//   const current = absenceData[className];
+//   // 7以下なら変更しない
+//   if (current <= 7) return;
+//   // ローカルで新しい欠時数を定義
+//   const newValue = current - 8;
 
-  // ローカル欠時数とUIを即時更新
-  absenceData[className] = newValue;
-  changeAbsence(timetableData, absenceData);
+//   // ローカル欠時数とUIを即時更新
+//   absenceData[className] = newValue;
+//   changeAbsence(timetableData, absenceData);
 
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
+//   // DBに触ってる
+//   const docRef = doc(db, userId, 'absence');
 
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
+//   try{
+//     // DB更新
+//     await updateDoc(docRef, { [className]: newValue });
+//   }catch (err){
+//     alert("更新に失敗しました。もう一度試してください。");
 
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    span.textContent = current;
-  }
-}
+//     // DB更新失敗時値を元に戻す
+//     absenceData[className] = current;
+//     span.textContent = current;
+//   }
+// }
 
 // 欠時を増やす×8
-async function eightAddAbsence(userId, className, absenceData, timetableData){
-  // 現在のローカル欠時数を取得
-  const current = absenceData[className];
-  // ローカルで新しい欠時数を定義
-  const newValue = current + 8;
+// async function eightAddAbsence(userId, className, absenceData, timetableData){
+//   // 現在のローカル欠時数を取得
+//   const current = absenceData[className];
+//   // ローカルで新しい欠時数を定義
+//   const newValue = current + 8;
 
-  // ローカル欠時数とUIを即時更新
-  absenceData[className] = newValue;
-  changeAbsence(timetableData, absenceData);
+//   // ローカル欠時数とUIを即時更新
+//   absenceData[className] = newValue;
+//   changeAbsence(timetableData, absenceData);
 
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
+//   // DBに触ってる
+//   const docRef = doc(db, userId, 'absence');
 
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
+//   try{
+//     // DB更新
+//     await updateDoc(docRef, { [className]: newValue });
+//   }catch (err){
+//     alert("更新に失敗しました。もう一度試してください。");
 
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    span.textContent = current;
-  }
-}
+//     // DB更新失敗時値を元に戻す
+//     absenceData[className] = current;
+//     span.textContent = current;
+//   }
+// }
 
 // UI欠時数を変更する
 function changeAbsence(timetableData, absenceData){
