@@ -16,7 +16,6 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 let db, auth;
 
 
-
 // DB初期化処理
 async function initFirebaseAndLiff(){
   // Firebase初期化
@@ -62,7 +61,6 @@ async function firstLiff(){
 }
 
 
-
 // Firestoreからデータ取得(コレクション/ドキュメント)
 async function getData(path1, path2){
   const docRef = doc(db, path1, path2);
@@ -74,7 +72,6 @@ async function getData(path1, path2){
     return null;
   }
 }
-
 
 
 // 時間割に授業をセット
@@ -240,6 +237,37 @@ function absenceScale(){
 }
 
 
+// 時間割授業モーダル
+async function timetableModal(e, userId){
+  // cellTextクラス以外をクリックしたら無視
+  if (!e.target.classList.contains('cellText')) return;
+
+  // セルのid
+  const id = e.target.id;
+
+  // idを時限データiに
+  id[0] = '';
+  const i = Number(id) + 101;
+
+  // Firestoreからデータ取得
+  const data = await getData('timetable_week', i);
+
+  // HTMLを生成
+  let html = `<h3>${'月火水木金'[Math.floor(i/6)]}:${(i%6)*2},${(i%6)*2+1}限</h3>`;
+  for (let k = 0; k < data.length; k++){
+    html += `<p>${data[k]}</p>`;
+  }
+
+  // モーダルに挿入して表示
+  const modal = document.getElementById("modal");
+  const content = document.getElementById("modal-content");
+  content.innerHTML = html;
+  modal.classList.remove("hidden");
+}
+
+
+
+
 
 
 // メインの処理
@@ -259,6 +287,11 @@ async function main(){
 
   // 欠時数時間割に欠時変更ボタンを設置
   setButton(userId, timetableData, absenceData);
+
+  // 時間割クリックイベントに関数を登録
+  document.getElementById("timetable").addEventListener("click", (e) => {
+    showClassDetail(e, userId);
+  });
 }
 
 
