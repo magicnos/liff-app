@@ -266,9 +266,7 @@ function timetableModal(){
 }
 
 
-
 // modalId - モーダル本体のID
-// openBtnId - モーダルを開くボタンのID
 // closeBtnId - モーダルを閉じるボタン（×）のID
 function initModal(modalId, closeBtnId){
   const modal = document.getElementById(modalId);
@@ -310,8 +308,8 @@ async function main(){
   setButton(userId, timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal('modal', 'openModal', 'closeModal');
-  timetableModal(timetableData);
+  initModal('modal', 'closeModal');
+  timetableModal();
 }
 
 
