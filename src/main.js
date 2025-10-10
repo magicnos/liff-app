@@ -267,14 +267,17 @@ function attachCellEvents(){
       const body = document.getElementById("modal-body");
 
       // タップされたセルの行・列番号を取得
-      const rowIndex = cell.parentElement.rowIndex;
-      const colIndex = cell.cellIndex;
+      const row = cell.parentElement.rowIndex;
+      const col = cell.cellIndex;
+
+      const data = getData(`timetable_week/${(row-2)%6 + Math.floor(col/6)}`);
 
       // 固定内容に行列情報を追加
       body.innerHTML = `
         <h3>授業内容</h3>
         <p>ここに授業の詳細情報を表示します。</p>
         <p>セル位置: 行 ${rowIndex + 1}, 列 ${colIndex + 1}</p>
+        <p>${data}</p>
       `;
 
       // モーダル表示
