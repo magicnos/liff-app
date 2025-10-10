@@ -262,7 +262,7 @@ function attachCellEvents(){
   const cells = timetable.querySelectorAll('.cellText');
 
   cells.forEach(cell => {
-    cell.addEventListener('click', () => {
+    cell.addEventListener('click', async () => {
       const modal = document.getElementById("modal");
       const body = document.getElementById("modal-body");
 
@@ -272,11 +272,11 @@ function attachCellEvents(){
 
       // 時間割番号と授業群を取得
       const i = (Math.floor(row/2))%6 + (col-1)*6;
-      const data = getData('timetable_week', i);
+      const data = await getData('timetable_week', i);
 
       // モーダルに授業名を追加
       let html = `
-        <h3>授業内容</h3>
+        <h3>授業一覧</h3>
         <p>セル位置: 行 ${row}, 列 ${col}</p>
       `;
       for (let k = 0; k < data.length; k++){
