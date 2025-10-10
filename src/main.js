@@ -257,21 +257,32 @@ function initModal(){
 
 // セルをタップしたらモーダルを開く
 function attachCellEvents(){
-  const cells = document.querySelectorAll('.cellText');
+  // timetableテーブル内のセルのみ取得
+  const timetable = document.getElementById('timetable');
+  const cells = timetable.querySelectorAll('.cellText');
 
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
       const modal = document.getElementById("modal");
       const body = document.getElementById("modal-body");
 
-      // 固定内容をセット
-      body.innerHTML = "<h3>授業内容</h3><p>ここに授業の詳細情報を表示します。</p>";
+      // タップされたセルの行・列番号を取得
+      const rowIndex = cell.parentElement.rowIndex;
+      const colIndex = cell.cellIndex;
+
+      // 固定内容に行列情報を追加
+      body.innerHTML = `
+        <h3>授業内容</h3>
+        <p>ここに授業の詳細情報を表示します。</p>
+        <p>セル位置: 行 ${rowIndex + 1}, 列 ${colIndex + 1}</p>
+      `;
 
       // モーダル表示
       modal.style.display = 'block';
     });
   });
 }
+
 
 
 
