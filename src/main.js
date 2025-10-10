@@ -13,23 +13,29 @@ import {
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 
+let db, auth;
 
 
-// (apiKey, authDomain, projectId)
-const firebaseConfig = {
-  apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
-  authDomain: "linebot-799ed.firebaseapp.com",
-  projectId: "linebot-799ed"
-};
 
-// Firebase初期化
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+// DB初期化処理
+async function initFirebaseAndLiff(){
+  // Firebase初期化
+  // (apiKey, authDomain, projectId)
+  const firebaseConfig = {
+    apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
+    authDomain: "linebot-799ed.firebaseapp.com",
+    projectId: "linebot-799ed"
+  };
 
-// DBにAuthでログイン
-const auth = getAuth();
-await signInAnonymously(auth);
+  const app = initializeApp(firebaseConfig);
+  db = getFirestore(app);
+  auth = getAuth();
 
+  // 匿名ログイン
+  await signInAnonymously(auth);
+
+  return { db, auth };
+}
 
 
 // liff初期化とプロフィール取得
@@ -294,6 +300,8 @@ function changeAbsence(timetableData, absenceData){
 
 // メインの処理
 async function main(){
+  const {db, auth} = await initFirebaseAndLiff();
+
   // userId取得
   const userId = await firstLiff();
 
