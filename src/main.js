@@ -257,7 +257,7 @@ function initModal(){
 
 // セルをタップしたらモーダルを開く
 function attachCellEvents(){
-  // timetableテーブル内のセルのみ取得
+  // timetableテーブルだけ取得
   const timetable = document.getElementById('timetable');
   const cells = timetable.querySelectorAll('.cellText');
 
