@@ -10,12 +10,8 @@ import {
   where,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-
-// DBにAuthでログイン
-const auth = getAuth();
-await signInAnonymously(auth);
 
 
 
@@ -29,6 +25,10 @@ const firebaseConfig = {
 // Firebase初期化
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+
+// DBにAuthでログイン
+const auth = getAuth();
+await signInAnonymously(auth);
 
 
 
