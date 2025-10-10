@@ -276,7 +276,7 @@ function attachCellEvents(){
       body.innerHTML = `
         <h3>授業内容</h3>
         <p>ここに授業の詳細情報を表示します。</p>
-        <p>セル位置: 行 ${row + 1}, 列 ${col + 1}</p>
+        <p>セル位置: 行 ${row}, 列 ${col}</p>
         <p>${(row-2)%6 + (col-1)*6}</p>
       `;
 
