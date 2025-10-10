@@ -48,5 +48,10 @@ col.day-col {
 
 input[type="radio"] {
   transform: scale(1.5); /* 1.5倍に拡大 */
-  margin: 10px;
+  margin: 5px;
+}
+
+label {
+  display: inline-block;  /* ブロック扱いにして横並びでもmarginが効く */
+  margin-right: 12px;     /* セット同士の間を20px空ける */
 }
