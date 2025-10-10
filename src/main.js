@@ -270,7 +270,7 @@ function attachCellEvents(){
       const row = cell.parentElement.rowIndex;
       const col = cell.cellIndex;
 
-      const data = getData(`timetable_week/${(row-2)%6 + Math.floor(col/6)}`);
+      const data = getData('timetable_week', (row-2)%6 + Math.floor(col/6));
 
       // 固定内容に行列情報を追加
       body.innerHTML = `
