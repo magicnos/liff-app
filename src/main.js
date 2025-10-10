@@ -183,10 +183,10 @@ async function addAbsence(userId, className, absenceData, timetableData, btnDown
 async function deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
-  // 0以下なら変更しない
-  if (current - scale < 0) return;
   // 欠時数増減倍率取得
   const scale = absenceScale();
+  // 0以下なら変更しない
+  if (current - scale < 0) return;
   // ローカルで新しい欠時数を定義
   const newValue = current - scale;
 
