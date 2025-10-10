@@ -74,21 +74,6 @@ label.absenceScale {
 /* ----------------------------------------
    モーダル関連
 ---------------------------------------- */
-.open-modal {
-  position: fixed;
-  bottom: 15%;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 260px; height: 60px;
-  font-size: 20px;
-  font-weight: bold;
-  color: #fff;
-  background: #333;
-  border-radius: 16px;
-  cursor: pointer;
-  text-align: center;
-}
-
 .modal {
   display: none;
   position: fixed;
