@@ -256,7 +256,7 @@ function initModal(){
 }
 
 // セルをタップしたらモーダルを開く
-async function attachCellEvents(){
+function attachCellEvents(){
   // timetableテーブルだけ取得
   const timetable = document.getElementById('timetable');
   const cells = timetable.querySelectorAll('.cellText');
@@ -271,15 +271,15 @@ async function attachCellEvents(){
       const col = cell.cellIndex;
 
       // 時間割番号と授業群を取得
-      const i = (Math.floor(row/2))%6 + (col-1)*6;
-      const data = await getData('timetable_week', i);
+      const i = (Math.floor(row/2)) + (col-1)*6;
+      const data = await getData('timetable_week', String(i));
 
       // モーダルに授業名を追加
       let html = `
         <h3>授業一覧</h3>
         <p>セル位置: 行 ${row}, 列 ${col}</p>
       `;
-      for (let k = 0; k < data.length; k++){
+      for (let k = 0; k < Object.keys(data).length; k++){
         html += `<p>${data[k]}</p>`;
       }
       body.innerHTML = html;
