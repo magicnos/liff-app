@@ -238,7 +238,7 @@ function absenceScale(){
 
 
 // 時間割授業モーダル
-async function timetableModal(e, userId){
+async function timetableModal(e){
   // 自分か親でclassを探す
   const cell = e.target.closest('.cellText');
   // cellTextクラス以外をクリックしたら無視
@@ -267,6 +267,34 @@ async function timetableModal(e, userId){
 }
 
 
+// modalId - モーダル本体のID
+// openBtnId - モーダルを開くボタンのID
+// closeBtnId - モーダルを閉じるボタン（×）のID
+function initModal(modalId, openBtnId, closeBtnId){
+  const modal = document.getElementById(modalId);
+  const btn = document.getElementById(openBtnId);
+  const span = document.getElementById(closeBtnId);
+
+  // ボタンがクリックされた時にモーダルを表示
+  btn.addEventListener('click', () => {
+    modal.style.display = 'block';
+  });
+
+  // ×ボタンがクリックされた時にモーダルを非表示
+  span.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+
+  // モーダルの外側クリックで閉じる
+  window.addEventListener('click', (event) => {
+    if (event.target == modal){
+      modal.style.display = 'none';
+    }
+  });
+}
+
+
+
 
 
 
@@ -289,10 +317,8 @@ async function main(){
   // 欠時数時間割に欠時変更ボタンを設置
   setButton(userId, timetableData, absenceData);
 
-  // 時間割クリックイベントに関数を登録
-  document.getElementById("timetable").addEventListener("click", (e) => {
-    timetableModal(e, userId);
-  });
+  // 時間割モーダル
+  initModal('modal', 'openModal', 'closeModal');
 }
 
 

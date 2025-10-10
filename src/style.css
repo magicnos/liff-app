@@ -1,36 +1,52 @@
+/* ----------------------------------------
+   全体・フォント・基本設定
+---------------------------------------- */
+body {
+  font-family: Arial, sans-serif;
+  margin: 15px;
+  background-color: #fafafa;
+  color: #222;
+}
+
+/* ----------------------------------------
+   テーブル設定
+---------------------------------------- */
 table {
   border-collapse: collapse;
   width: 100%;
   margin-bottom: 20px;
-  table-layout: fixed; /* 列幅を固定 */
-}
-td, th {
-  border: 3px solid #aaa;
-  padding: 5px;
-  text-align: center;
-  word-wrap: break-word; /* 長い文字は折り返す */
-  font-size: 20px; /* ここがテーブル内のテキストサイズの基本 */
-}
-/* 時間割の横幅調整 1列目:時限、残り5列を均等 */
-col.time-col {
-  width: 80px;
-}
-col.day-col {
-  width: 20%;
-}
-/* 時間割セル全部のclass */
-.cellText{
-  font-size: 150%;
+  table-layout: fixed; /* 列幅固定 */
 }
 
+th, td {
+  border: 2px solid #bbb;
+  padding: 6px;
+  text-align: center;
+  word-wrap: break-word;
+  font-size: 18px;
+}
+
+col.time-col { width: 60px; }
+col.day-col { width: 20%; }
+
+.cellText {
+  font-size: 160%;
+  cursor: pointer;
+}
+
+/* ----------------------------------------
+   欠時テーブルボタン・カウント
+---------------------------------------- */
 #absence button {
-  font-size: 20px;      /* 文字を大きく */
-  width: 40px;          /* 横幅 */
-  height: 40px;         /* 高さ */
-  border-radius: 10px;  /* 丸み */
+  font-size: 22px;
+  width: 45px;
+  height: 45px;
+  border-radius: 12px;
   border: none;
-  background-color: #3cb371;
-  color: black;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  margin: 0 4px;
 }
 
 #absence button:hover {
@@ -38,24 +54,73 @@ col.day-col {
 }
 
 #absence .count {
-  font-size: 120%;
-  font-weight: 550; /* 文字の太さ */
-  margin: 0 15px;
+  font-size: 130%;
+  font-weight: 600;
+  margin: 0 12px;
   display: inline-block;
-  min-width: 30px; /* 数字の幅が変わってもズレにくい */
+  min-width: 32px;
   text-align: center;
 }
 
-input[type="radio"] {
-  transform: scale(1.7); /* 拡大 */
-  margin: 5px;
+/* 欠時数ラジオボタン */
+input[type="radio"] { transform: scale(1.8); margin: 6px; }
+
+label.absenceScale {
+  display: inline-block;
+  margin-right: 14px;
+  font-size: 26px;
 }
 
-label {
-  display: inline-block;  /* ブロック扱いにして横並びでもmarginが効く */
-  margin-right: 12px;     /* セット同士の間を20px空ける */
+/* ----------------------------------------
+   モーダル関連
+---------------------------------------- */
+.open-modal {
+  position: fixed;
+  bottom: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px; height: 60px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  background: #333;
+  border-radius: 16px;
+  cursor: pointer;
+  text-align: center;
 }
 
-.absenceScale {
-  font-size: 25px;
+.modal {
+  display: none;
+  position: fixed;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.modal-content {
+  position: fixed;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 20px;
+  width: 320px; max-width: 90%;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid #aaa;
+  border-radius: 12px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  text-align: center;
+}
+
+/* モーダル閉じるボタン */
+#closeModal {
+  position: absolute;
+  top: -15px; right: -15px;
+  width: 38px; height: 38px;
+  font-size: 26px; font-weight: bold;
+  color: #fff;
+  background-color: #555;
+  border-radius: 50%;
+  display: flex; justify-content: center; align-items: center;
+  cursor: pointer;
 }
