@@ -47,7 +47,7 @@ col.day-col {
 }
 
 input[type="radio"] {
-  transform: scale(3); /* 1.5倍に拡大 */
+  transform: scale(2.0); /* 拡大 */
   margin: 5px;
 }
 
@@ -57,5 +57,5 @@ label {
 }
 
 .absenceScale {
-  font-size: 20px;
+  font-size: 35px;
 }
