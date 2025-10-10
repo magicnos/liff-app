@@ -278,10 +278,11 @@ function attachCellEvents(){
       let html = `
         <h3>授業一覧</h3>
         <p>セル位置: 行 ${row}, 列 ${col}</p>
+        <p>セル位置: ${i}</p>
       `;
-      for (let k = 0; k < Object.keys(data).length; k++){
-        html += `<p>${data[k]}</p>`;
-      }
+      // for (let k = 0; k < Object.keys(data).length; k++){
+      //   html += `<p>${data[k]}</p>`;
+      // }
       body.innerHTML = html;
 
       // モーダル表示
