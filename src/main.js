@@ -270,14 +270,14 @@ function attachCellEvents(){
       const row = cell.parentElement.rowIndex;
       const col = cell.cellIndex;
 
-      const data = getData('timetable_week', (row-2)%6 + Math.floor(col/6));
+      const data = getData('timetable_week', (row-2)%6 + (col-1)*6);
 
       // 固定内容に行列情報を追加
       body.innerHTML = `
         <h3>授業内容</h3>
         <p>ここに授業の詳細情報を表示します。</p>
         <p>セル位置: 行 ${row + 1}, 列 ${col + 1}</p>
-        <p>${(row-2)%6 + Math.floor(col/6)}</p>
+        <p>${(row-2)%6 + (col-1)*6}</p>
       `;
 
       // モーダル表示
