@@ -246,8 +246,7 @@ async function timetableModal(e, userId){
   const id = e.target.id;
 
   // idを時限データiに
-  id[0] = '';
-  const i = Number(id) + 101;
+  const i = Number(id.slice(1)) + 101;
 
   // Firestoreからデータ取得
   const data = await getData('timetable_week', i);
@@ -273,7 +272,7 @@ async function timetableModal(e, userId){
 // メインの処理
 async function main(){
   // DB初期化
-  initFirebaseAndLiff();
+  await initFirebaseAndLiff();
   // userId取得
   const userId = await firstLiff();
 
@@ -290,7 +289,7 @@ async function main(){
 
   // 時間割クリックイベントに関数を登録
   document.getElementById("timetable").addEventListener("click", (e) => {
-    showClassDetail(e, userId);
+    timetableModal(e, userId);
   });
 }
 
