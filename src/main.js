@@ -277,7 +277,7 @@ function attachCellEvents(){
         <h3>授業内容</h3>
         <p>ここに授業の詳細情報を表示します。</p>
         <p>セル位置: 行 ${rowIndex + 1}, 列 ${colIndex + 1}</p>
-        <p>${data}</p>
+        <p>${(row-2)%6 + Math.floor(col/6)}</p>
       `;
 
       // モーダル表示
