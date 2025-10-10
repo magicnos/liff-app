@@ -122,13 +122,13 @@ function setButton(userId, timetableData, absenceData){
         // ×8ボタンdown
         const eightBtnDown = document.createElement("button");
         eightBtnDown.textContent = "×8";
-        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData);
+        eightBtnDown.onclick = () => eightDeleteAbsence(userId, className, absenceData, timetableData);
         cell.appendChild(eightBtnDown);
 
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, btnDown, btnUp);
+        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
@@ -140,13 +140,13 @@ function setButton(userId, timetableData, absenceData){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => addAbsence(userId, className, absenceData, btnDown, btnUp);
+        btnUp.onclick = () => addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp);
         cell.appendChild(btnUp);
 
         // ×8ボタンup
         const eightBtnUp = document.createElement("button");
         eightBtnUp.textContent = "×8";
-        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData);
+        eightBtnUp.onclick = () => eightAddAbsence(userId, className, absenceData, timetableData);
         cell.appendChild(eightBtnUp);
       }
     }
@@ -156,7 +156,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時を増やす
-async function addAbsence(userId, className, absenceData, btnDown, btnUp){
+async function addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // ローカルで新しい欠時数を定義
@@ -191,7 +191,7 @@ async function addAbsence(userId, className, absenceData, btnDown, btnUp){
 
 
 // 欠時数を減らす
-async function deleteAbsence(userId, className, absenceData, btnDown, btnUp){
+async function deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // 0以下なら変更しない
@@ -228,7 +228,7 @@ async function deleteAbsence(userId, className, absenceData, btnDown, btnUp){
 
 
 // 欠時数を減らす×8
-async function eightDeleteAbsence(userId, className, absenceData){
+async function eightDeleteAbsence(userId, className, absenceData, timetableData){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // 7以下なら変更しない
@@ -257,7 +257,7 @@ async function eightDeleteAbsence(userId, className, absenceData){
 
 
 // 欠時を増やす×8
-async function eightAddAbsence(userId, className, absenceData){
+async function eightAddAbsence(userId, className, absenceData, timetableData){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // ローカルで新しい欠時数を定義
