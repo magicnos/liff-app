@@ -258,13 +258,17 @@ function initModal(){
 // セルをタップしたらモーダルを開く
 function attachCellEvents(){
   const cells = document.querySelectorAll('.cellText');
-  const modal = document.getElementById('modal');
-  const content = document.getElementById('modal-content');
 
   cells.forEach(cell => {
     cell.addEventListener('click', () => {
+      const modal = document.getElementById("modal");
+      const body = document.getElementById("modal-body");
+
+      // 固定内容をセット
+      body.innerHTML = "<h3>授業内容</h3><p>ここに授業の詳細情報を表示します。</p>";
+
+      // モーダル表示
       modal.style.display = 'block';
-      initModal(); // 再度閉じるボタンにイベントを設定
     });
   });
 }
