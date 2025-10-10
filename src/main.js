@@ -33,8 +33,6 @@ async function initFirebaseAndLiff(){
 
   // 匿名ログイン
   await signInAnonymously(auth);
-
-  return { db, auth };
 }
 
 
@@ -300,8 +298,8 @@ function changeAbsence(timetableData, absenceData){
 
 // メインの処理
 async function main(){
-  const {db, auth} = await initFirebaseAndLiff();
-
+  // DB初期化
+  initFirebaseAndLiff();
   // userId取得
   const userId = await firstLiff();
 
