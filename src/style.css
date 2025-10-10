@@ -74,32 +74,33 @@ label.absenceScale {
 /* ----------------------------------------
    モーダル関連
 ---------------------------------------- */
+/* モーダル全体 */
 .modal {
-  display: none;
+  display: none; /* 初期非表示 */
   position: fixed;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
+  z-index: 1000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
   background-color: rgba(0,0,0,0.5);
+  overflow: auto;
 }
 
+/* モーダル内のコンテンツ */
 .modal-content {
   background-color: #fff;
-  margin: 10% auto;
+  margin: 15% auto;
   padding: 20px;
   border-radius: 8px;
-  width: 90%; /* モバイル向け */
+  width: 90%;      /* モバイル向け */
   max-width: 400px;
+  text-align: center;
 }
 
-/* モーダル閉じるボタン */
+/* 閉じるボタン */
 #closeModal {
-  position: absolute;
-  top: -15px; right: -15px;
-  width: 38px; height: 38px;
-  font-size: 26px; font-weight: bold;
-  color: #fff;
-  background-color: #555;
-  border-radius: 50%;
-  display: flex; justify-content: center; align-items: center;
+  float: right;
+  font-size: 24px;
   cursor: pointer;
 }

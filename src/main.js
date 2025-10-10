@@ -237,29 +237,7 @@ function absenceScale(){
 }
 
 
-// セルをタップしたらモーダルを開く
-function attachCellEvents(){
-  const cells = document.querySelectorAll('.cellText');
-  const modal = document.getElementById('modal');
-  const content = document.getElementById('modal-content');
-
-  cells.forEach(cell => {
-    cell.addEventListener('click', () => {
-      // モーダル内の中身を固定テキストに
-      content.innerHTML = `
-        <span id="closeModal">&times;</span>
-        <h3>授業内容</h3>
-        <p>ここに授業の詳細を表示できます</p>
-      `;
-      modal.style.display = 'block';
-      initModal(); // 再度閉じるボタンにイベントを設定
-    });
-  });
-}
-
-
-// modalId - モーダル本体のID
-// closeBtnId - モーダルを閉じるボタン（×）のID
+// モーダルの初期化
 function initModal(){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
@@ -271,9 +249,23 @@ function initModal(){
 
   // モーダル外クリックで閉じる
   window.addEventListener('click', (event) => {
-    if (event.target === modal) {
+    if (event.target == modal){
       modal.style.display = 'none';
     }
+  });
+}
+
+// セルをタップしたらモーダルを開く
+function attachCellEvents(){
+  const cells = document.querySelectorAll('.cellText');
+  const modal = document.getElementById('modal');
+  const content = document.getElementById('modal-content');
+
+  cells.forEach(cell => {
+    cell.addEventListener('click', () => {
+      modal.style.display = 'block';
+      initModal(); // 再度閉じるボタンにイベントを設定
+    });
   });
 }
 
