@@ -40,7 +40,7 @@ col.day-col {
 #absence .count {
   font-size: 120%;
   font-weight: 550; /* 文字の太さ */
-  margin: 0 20px;
+  margin: 0 15px;
   display: inline-block;
   min-width: 30px; /* 数字の幅が変わってもズレにくい */
   text-align: center;

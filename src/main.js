@@ -10,6 +10,13 @@ import {
   where,
   updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+import { getAuth, signInAnonymously } from "firebase/auth";
+
+
+// DBにAuthでログイン
+const auth = getAuth();
+await signInAnonymously(auth);
+
 
 
 // (apiKey, authDomain, projectId)
@@ -51,20 +58,9 @@ async function firstLiff(){
 }
 
 
-// Firestoreからデータ取得(userId/documentのみ)
-async function getData(userId, path){
-  const docRef = doc(db, userId, path);
-  const snap = await getDoc(docRef);
 
-  if (snap.exists()){
-    return snap.data(); 
-  }else{
-    return null;
-  }
-}
-
-// Firestoreからデータ取得(path1/path2のみ)
-async function getData2(path1, path2){
+// Firestoreからデータ取得(コレクション/ドキュメント)
+async function getData(path1, path2){
   const docRef = doc(db, path1, path2);
   const snap = await getDoc(docRef);
 
@@ -189,7 +185,6 @@ async function addAbsence(userId, className, absenceData, timetableData, btnDown
   }
 }
 
-
 // 欠時数を減らす
 async function deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
   // 現在のローカル欠時数を取得
@@ -226,7 +221,6 @@ async function deleteAbsence(userId, className, absenceData, timetableData, btnD
   }
 }
 
-
 // 欠時数を減らす×8
 async function eightDeleteAbsence(userId, className, absenceData, timetableData){
   // 現在のローカル欠時数を取得
@@ -255,7 +249,6 @@ async function eightDeleteAbsence(userId, className, absenceData, timetableData)
   }
 }
 
-
 // 欠時を増やす×8
 async function eightAddAbsence(userId, className, absenceData, timetableData){
   // 現在のローカル欠時数を取得
@@ -281,7 +274,6 @@ async function eightAddAbsence(userId, className, absenceData, timetableData){
     span.textContent = current;
   }
 }
-
 
 // UI欠時数を変更する
 function changeAbsence(timetableData, absenceData){
