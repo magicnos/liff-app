@@ -250,6 +250,12 @@ function attachCellEvents(){
   });
 }
 
+
+/*
+まず、時間割登録だけできるようにして(欠時登録用の変数を消しちゃってもいい)
+それから、欠時数登録を実装
+*/
+
 // 時間割変更
 async function changeTimetable(userId, id, timetableDoc){
   // ボタンIdを配列に(時間割番号, 授業番号)
@@ -259,9 +265,11 @@ async function changeTimetable(userId, id, timetableDoc){
   const timetableDocRef = doc(db, userId, 'timetable');
   const absenceDocRef = doc(db, userId, 'absence');
 
-
+  // -- 新規追加授業名取得 --
   // 曜日別時間割データ取得
   const timetableData = await getData('timetable_week', String(Number(btnId[0]) + 101));
+  const newClassName = timetableData[btnId[1]];
+  // ----
 
   // 現在の時間割配列を作成
   let currentTimetable = [];
@@ -279,7 +287,6 @@ async function changeTimetable(userId, id, timetableDoc){
   let de2 = '';
   const i = btnId[0];
   const currentClassName = currentTimetable[i];
-  const newClassName = timetableData[btnId[1]];
 
 
   // 以下同じ授業でないとして、時間割変更
@@ -344,6 +351,13 @@ async function changeTimetable(userId, id, timetableDoc){
     await updateDoc(timetableDocRef, timetables);
   }
 
+  // UI反映のために新規時間割をreturnする
+  return currentTimetable;
+}
+
+
+// 一時的な欠時数のやつ
+async function kari(){
   // 以下同じ授業でないとして、欠時数変更
   if (newClassName != currentClassName){
     // 欠時削除
@@ -372,10 +386,6 @@ async function changeTimetable(userId, id, timetableDoc){
       await updateDoc(absenceDocRef, newAbsence);
     }
   }
-
-
-  // UI反映のために新規時間割をreturnする
-  return currentTimetable;
 }
 
 
