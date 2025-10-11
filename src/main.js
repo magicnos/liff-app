@@ -192,7 +192,6 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
 function initModal(userId){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
-  const btnClass = document.querySelectorAll('.modal-btn');
 
   // ×ボタンクリックで閉じる
   span.addEventListener('click', () => {
@@ -207,12 +206,12 @@ function initModal(userId){
   });
 
   // モーダル内授業ボタン
-  btnClass.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const id = btn.id;
+  modal.addEventListener('click', e => {
+    if (e.target.classList.contains('btnClass')){
+      const id = e.target.id;
       changeTimetable(userId, id);
       modal.style.display = 'none';
-    });
+    }
   });
 }
 
