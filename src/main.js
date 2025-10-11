@@ -253,7 +253,7 @@ function attachCellEvents(){
 // 時間割変更
 async function changeTimetable(userId, id){
   // ボタンIdを配列に(時間割番号, 授業番号)
-  const btnId = id.slice(1).slice('-');
+  const btnId = id.slice(1).split('-');
 
   // DBに触ってる
   const docRef = doc(db, userId, 'timetable');
@@ -271,7 +271,7 @@ async function changeTimetable(userId, id){
   //   alert("更新に失敗しました。もう一度試してください。");
   // }
 
-  document.getElementById("username").textContent = `${btnId[0]} / ${btnId[1]}} / ${id}`;
+  document.getElementById("username").textContent = `${timetable[btnId[1]]}`;
 }
 
 
