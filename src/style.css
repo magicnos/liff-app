@@ -104,3 +104,15 @@ label.absenceScale {
   font-size: 24px;
   cursor: pointer;
 }
+
+/* 授業ボタン */
+.modal-btn {
+  padding: 8px 16px;
+  border: none;
+  border-radius: 6px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  display: block; /* ← これで改行 */
+  margin: 10px 0; /* 上下の余白 */
+}

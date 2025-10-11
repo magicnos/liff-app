@@ -52,7 +52,7 @@ async function firstLiff(){
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
     document.getElementById("username").textContent = profile.displayName;
-    document.getElementById("userid").textContent = profile.userId;
+    document.getElementById("userId").textContent = profile.userId;
 
     return profile.userId;
   } catch (error){
@@ -119,7 +119,7 @@ function setButton(userId, timetableData, absenceData){
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, -1);
+        btnDown.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, -1);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
@@ -131,7 +131,7 @@ function setButton(userId, timetableData, absenceData){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, 1);
+        btnUp.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, 1);
         cell.appendChild(btnUp);
       }
     }
@@ -141,7 +141,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を変える
-async function changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
+async function changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // 欠時数増減倍率取得(name="absenceScale" のラジオボタンのうち、チェックされているものを取得)
@@ -189,7 +189,7 @@ async function changeAbsence2(userId, className, absenceData, timetableData, btn
 }
 
 // モーダルの初期化
-function initModal(){
+function initModal(userId){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
   const btnClass = document.querySelectorAll('.modal-btn');
@@ -210,8 +210,8 @@ function initModal(){
   btnClass.forEach(btn => {
     btn.addEventListener('click', () => {
       const id = btn.id;
-      alert(id);
-      // kari(id);
+      changeTimetable(userId, id);
+      modal.style.display = 'none';
     });
   });
 }
@@ -251,6 +251,11 @@ function attachCellEvents(){
   });
 }
 
+// 時間割変更
+function changeTimetable(userId, id){
+  document.getElementById("username").textContent = `${userId} / ${id}`;
+}
+
 
 
 
@@ -274,7 +279,7 @@ async function main(){
   setButton(userId, timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal();
+  initModal(userId);
   attachCellEvents();
 }
 
