@@ -119,7 +119,7 @@ function setButton(userId, timetableData, absenceData){
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp);
+        btnDown.onclick = () => changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, -1);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
@@ -131,7 +131,7 @@ function setButton(userId, timetableData, absenceData){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp);
+        btnUp.onclick = () => changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, 1);
         cell.appendChild(btnUp);
       }
     }
@@ -186,6 +186,43 @@ async function deleteAbsence(userId, className, absenceData, timetableData, btnD
   if (current - scale < 0) return;
   // ローカルで新しい欠時数を定義
   const newValue = current - scale;
+
+  // ローカル欠時数とUIを即時更新
+  absenceData[className] = newValue;
+  changeAbsence(timetableData, absenceData);
+
+  // ボタンを無効化
+  btnDown.disabled = true;
+  btnUp.disabled = true;
+
+  // DBに触ってる
+  const docRef = doc(db, userId, 'absence');
+
+  try{
+    // DB更新
+    await updateDoc(docRef, { [className]: newValue });
+  }catch (err){
+    alert("更新に失敗しました。もう一度試してください。");
+
+    // DB更新失敗時値を元に戻す
+    absenceData[className] = current;
+    span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    btnDown.disabled = false;
+    btnUp.disabled = false;
+  }
+}
+
+async function changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
+  // 現在のローカル欠時数を取得
+  const current = absenceData[className];
+  // 欠時数増減倍率取得
+  const scale = absenceScale();
+  // 0以下なら変更しない
+  if (current - scale < 0 && operation == -1) return;
+  // ローカルで新しい欠時数を定義
+  const newValue = current + scale*operation;
 
   // ローカル欠時数とUIを即時更新
   absenceData[className] = newValue;
@@ -289,7 +326,6 @@ function attachCellEvents(){
     });
   });
 }
-
 
 
 
