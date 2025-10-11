@@ -3,11 +3,8 @@ import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import {
   getFirestore,
-  collection,
   getDoc,
   doc,
-  query,
-  where,
   updateDoc,
   deleteField
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
@@ -210,8 +207,8 @@ function initModal(userId, timetableDoc){
   modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      const newTimetable = await changeTimetable(userId, id, timetableDoc);
-      setTimetable(newTimetable);
+      // const newTimetable = await changeTimetable(userId, id, timetableDoc);
+      // setTimetable(newTimetable);
       modal.style.display = 'none';
     }
   });
@@ -239,7 +236,8 @@ function attachCellEvents(){
       // モーダルに授業名を追加
       let html = `
         <h3>授業一覧</h3>
-        <p>セル位置: 行 ${row}, 列 ${col}</p>
+        <h3>セル位置: 行 ${row}, 列 ${col}</h3>
+        <h3>まだボタンをタップしても時間割は変わらないよ</h3>
       `;
       for (let k = 0; k < Object.keys(data).length; k++){
         html += `<button id="m${i},${k}" class="modal-btn">${data[k]}</button>`;
@@ -258,7 +256,9 @@ async function changeTimetable(userId, id, timetableDoc){
   const btnId = id.slice(1).split(',');
 
   // DBに触ってる
-  const docRef = doc(db, userId, 'timetable');
+  const timetableDocRef = doc(db, userId, 'timetable');
+  const absenceDocRef = doc(db, userId, 'absence');
+
 
   // 曜日別時間割データ取得
   const timetableData = await getData('timetable_week', String(Number(btnId[0]) + 101));
@@ -286,8 +286,8 @@ async function changeTimetable(userId, id, timetableDoc){
   if (newClassName != currentClassName){
 
     // 必要なドキュメントをまとめて取得
-    newDoc = getData('timetable_name', newClassName); // 新規授業情報
-    currentDoc = getData('timetable_name', currentClassName); // 既存授業情報
+    newDoc = await getData('timetable_name', newClassName); // 新規授業情報
+    currentDoc = await getData('timetable_name', currentClassName); // 既存授業情報
 
     // 単位数をまとめて取得
     newCredit = newDoc.credit; // 新規授業単位数
@@ -313,9 +313,9 @@ async function changeTimetable(userId, id, timetableDoc){
       // 既存授業単位数で分岐
       if (currentCredit == 4){
         // もう片方の単位数で分岐
-        if (getData('timetable_name', timetable[elseI]).obj.credit == 4){
+        if (await getData('timetable_name', currentTimetable[elseI]).credit == 4){
           // もう片方の4単位を、全部空きコマにする
-          const deltaElse = getData('timetable_name', timetable[elseI]);
+          const deltaElse = await getData('timetable_name', currentTimetable[elseI]);
           currentTimetable[deltaElse.week1*6 + deltaElse.hour] = '空きコマ';
           currentTimetable[deltaElse.week2*6 + deltaElse.hour] = '空きコマ';
 
@@ -341,7 +341,7 @@ async function changeTimetable(userId, id, timetableDoc){
     for (let k = 0; k < 30; k++){
       timetables[k+101] = currentTimetable[k];
     }
-    await updateDoc(docRef, timetables);
+    await updateDoc(timetableDocRef, timetables);
   }
 
   // 以下同じ授業でないとして、欠時数変更
@@ -350,26 +350,26 @@ async function changeTimetable(userId, id, timetableDoc){
     if (newCredit == 4){
       if (de1 != de2){
         if (de1 != '空きコマ'){
-          await updateDoc(docRef, { de1: deleteField() });
+          await updateDoc(absenceDocRef, { [de1]: deleteField() });
         }
         if (de2 != '空きコマ'){
-          await updateDoc(docRef, { de2: deleteField() });
+          await updateDoc(absenceDocRef, { [de2]: deleteField() });
         }
       }else{
         if (de1 != '空きコマ'){
-          await updateDoc(docRef, { de1: deleteField() });
+          await updateDoc(absenceDocRef, { [de1]: deleteField() });
         }
       }
     }else{
       if (currentCredit != 0){
-        await updateDoc(docRef, { currentClassName: deleteField() });
+        await updateDoc(absenceDocRef, { [currentClassName]: deleteField() });
       }
     }
 
     // 欠時追加
     if (newClassName != '空きコマ'){
-      newAbsence = { newClassName: 0 };
-      await updateDoc(docRef, newAbsence);
+      newAbsence = { [newClassName]: 0 };
+      await updateDoc(absenceDocRef, newAbsence);
     }
   }
 
