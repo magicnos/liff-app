@@ -188,7 +188,6 @@ async function changeAbsence2(userId, className, absenceData, timetableData, btn
   }
 }
 
-
 // モーダルの初期化
 function initModal(){
   const modal = document.getElementById('modal');
@@ -232,7 +231,7 @@ function attachCellEvents(){
         <p>セル位置: 行 ${row}, 列 ${col}</p>
       `;
       for (let k = 0; k < Object.keys(data).length; k++){
-        html += `<p>${data[k]}</p>`;
+        html += `<button id="m${i}-${k}" class="modal-btn">${data[k]}</button>`;
       }
       body.innerHTML = html;
 
