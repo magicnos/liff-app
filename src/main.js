@@ -251,8 +251,27 @@ function attachCellEvents(){
 }
 
 // 時間割変更
-function changeTimetable(userId, id){
-  document.getElementById("username").textContent = `${userId} / ${id}`;
+async function changeTimetable(userId, id){
+  // ボタンIdを配列に(時間割番号, 授業番号)
+  const btnId = id.slice(1).slice('-');
+
+  // DBに触ってる
+  const docRef = doc(db, userId, 'timetable');
+
+  // 曜日別時間割データ取得
+  const timetable = getData('timetable_week', btnId[0]);
+
+  // UI更新
+
+
+  // try{
+  //   // DB更新
+  //   // await updateDoc(docRef, { [Number(btnId)+101]: timetable[btnId[1]] });
+  // }catch (err){
+  //   alert("更新に失敗しました。もう一度試してください。");
+  // }
+
+  document.getElementById("username").textContent = `${timetable[btnId[1]]}`;
 }
 
 
