@@ -192,6 +192,7 @@ async function changeAbsence2(userId, className, absenceData, timetableData, btn
 function initModal(){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
+  const btnClass = document.querySelectorAll('.modal-btn');
 
   // ×ボタンクリックで閉じる
   span.addEventListener('click', () => {
@@ -203,6 +204,15 @@ function initModal(){
     if (event.target == modal){
       modal.style.display = 'none';
     }
+  });
+
+  // モーダル内授業ボタン
+  btnClass.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const id = btn.id;
+      alert(id);
+      // kari(id);
+    });
   });
 }
 
