@@ -207,10 +207,10 @@ function initModal(userId, timetableDoc){
   });
 
   // モーダル内授業ボタン
-  modal.addEventListener('click', e => {
+  modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      const newTimetable = changeTimetable(userId, id, timetableDoc);
+      const newTimetable = await changeTimetable(userId, id, timetableDoc);
       setTimetable(newTimetable);
       modal.style.display = 'none';
     }
