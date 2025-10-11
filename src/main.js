@@ -271,7 +271,7 @@ async function changeTimetable(userId, id){
   //   alert("更新に失敗しました。もう一度試してください。");
   // }
 
-  document.getElementById("username").textContent = `${timetable[btnId[1]]}`;
+  document.getElementById("username").textContent = `${btnId[0]} / ${btnId[1]}}`;
 }
 
 
