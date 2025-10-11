@@ -140,119 +140,20 @@ function setButton(userId, timetableData, absenceData){
 
 
 
-// 欠時を増やす
-async function addAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
-  // 現在のローカル欠時数を取得
-  const current = absenceData[className];
-  // 欠時数増減倍率取得
-  const scale = absenceScale();
-  // ローカルで新しい欠時数を定義
-  const newValue = current + scale;
-
-  // ローカル欠時数とUI更新
-  absenceData[className] = newValue;
-  changeAbsence(timetableData, absenceData);
-
-  // ボタンを無効化
-  btnDown.disabled = true;
-  btnUp.disabled = true;
-
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
-
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
-
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    btnDown.disabled = false;
-    btnUp.disabled = false;
-  }
-}
-
-// 欠時数を減らす
-async function deleteAbsence(userId, className, absenceData, timetableData, btnDown, btnUp){
-  // 現在のローカル欠時数を取得
-  const current = absenceData[className];
-  // 欠時数増減倍率取得
-  const scale = absenceScale();
-  // 0以下なら変更しない
-  if (current - scale < 0) return;
-  // ローカルで新しい欠時数を定義
-  const newValue = current - scale;
-
-  // ローカル欠時数とUIを即時更新
-  absenceData[className] = newValue;
-  changeAbsence(timetableData, absenceData);
-
-  // ボタンを無効化
-  btnDown.disabled = true;
-  btnUp.disabled = true;
-
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
-
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
-
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    btnDown.disabled = false;
-    btnUp.disabled = false;
-  }
-}
-
+// 欠時数を変える
 async function changeAbsence2(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
-  // 欠時数増減倍率取得
-  const scale = absenceScale();
+  // 欠時数増減倍率取得(name="absenceScale" のラジオボタンのうち、チェックされているものを取得)
+  const scale = Number(document.querySelector('input[name="absenceScale"]:checked').value);
   // 0以下なら変更しない
   if (current - scale < 0 && operation == -1) return;
   // ローカルで新しい欠時数を定義
   const newValue = current + scale*operation;
 
-  // ローカル欠時数とUIを即時更新
+  // ローカル欠時数変更
   absenceData[className] = newValue;
-  changeAbsence(timetableData, absenceData);
-
-  // ボタンを無効化
-  btnDown.disabled = true;
-  btnUp.disabled = true;
-
-  // DBに触ってる
-  const docRef = doc(db, userId, 'absence');
-
-  try{
-    // DB更新
-    await updateDoc(docRef, { [className]: newValue });
-  }catch (err){
-    alert("更新に失敗しました。もう一度試してください。");
-
-    // DB更新失敗時値を元に戻す
-    absenceData[className] = current;
-    span.textContent = current;
-  }finally{
-    // ボタン再有効化
-    btnDown.disabled = false;
-    btnUp.disabled = false;
-  }
-}
-
-// UI欠時数を変更する
-function changeAbsence(timetableData, absenceData){
+  // UI欠時数を変更
   const table = document.getElementById('absence');
   for (let k = 1; k <= 5; k++){
     for (let i = 1; i <= 12; i+=2){
@@ -263,14 +164,28 @@ function changeAbsence(timetableData, absenceData){
       }
     }
   }
-}
 
-// 欠時数増減倍率数取得
-function absenceScale(){
-  // name="color" のラジオボタンのうち、チェックされているものを取得
-  const selected = document.querySelector('input[name="absenceScale"]:checked');
+  // ボタンを無効化
+  btnDown.disabled = true;
+  btnUp.disabled = true;
 
-  return Number(selected.value);
+  // DBに触ってる
+  const docRef = doc(db, userId, 'absence');
+
+  try{
+    // DB更新
+    await updateDoc(docRef, { [className]: newValue });
+  }catch (err){
+    alert("更新に失敗しました。もう一度試してください。");
+
+    // DB更新失敗時値を元に戻す
+    absenceData[className] = current;
+    span.textContent = current;
+  }finally{
+    // ボタン再有効化
+    btnDown.disabled = false;
+    btnUp.disabled = false;
+  }
 }
 
 
