@@ -207,7 +207,7 @@ function initModal(userId){
 
   // モーダル内授業ボタン
   modal.addEventListener('click', e => {
-    if (e.target.classList.contains('btnClass')){
+    if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
       changeTimetable(userId, id);
       modal.style.display = 'none';
