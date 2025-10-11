@@ -8,7 +8,8 @@ import {
   doc,
   query,
   where,
-  updateDoc
+  updateDoc,
+  deleteField
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
@@ -189,7 +190,7 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
 }
 
 // モーダルの初期化
-function initModal(userId){
+function initModal(userId, timetableDoc){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
 
@@ -209,7 +210,8 @@ function initModal(userId){
   modal.addEventListener('click', e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      changeTimetable(userId, id);
+      const newTimetable = changeTimetable(userId, id, timetableDoc);
+      setTimetable(newTimetable);
       modal.style.display = 'none';
     }
   });
@@ -251,7 +253,7 @@ function attachCellEvents(){
 }
 
 // 時間割変更
-async function changeTimetable(userId, id){
+async function changeTimetable(userId, id, timetableDoc){
   // ボタンIdを配列に(時間割番号, 授業番号)
   const btnId = id.slice(1).split(',');
 
@@ -259,20 +261,123 @@ async function changeTimetable(userId, id){
   const docRef = doc(db, userId, 'timetable');
 
   // 曜日別時間割データ取得
-  const timetable = await getData('timetable_week', String(Number(btnId[0]) + 101));
+  const timetableData = await getData('timetable_week', String(Number(btnId[0]) + 101));
 
-  // UI更新
+  // 現在の時間割配列を作成
+  let currentTimetable = [];
+  for (let t = 101; t < 131; t++){
+    currentTimetable.push(timetableDoc[t]);
+  }
+
+  // キャッシュにしておく
+  let newDoc = {};
+  let currentDoc = {};
+  let newCredit = 0;
+  let currentCredit = 0;
+  let elseI = 0;
+  let de1 = '';
+  let de2 = '';
+  const i = btnId[0];
+  const currentClassName = currentTimetable[i];
+  const newClassName = timetableData[btnId[1]];
 
 
-  // try{
-  //   // DB更新
-  //   // await updateDoc(docRef, { [Number(btnId)+101]: timetable[btnId[1]] });
-  // }catch (err){
-  //   alert("更新に失敗しました。もう一度試してください。");
-  // }
+  // 以下同じ授業でないとして、時間割変更
+  if (newClassName != currentClassName){
 
-  document.getElementById("username").textContent = `${timetable[btnId[1]]}`;
+    // 必要なドキュメントをまとめて取得
+    newDoc = getData('timetable_name', newClassName); // 新規授業情報
+    currentDoc = getData('timetable_name', currentClassName); // 既存授業情報
+
+    // 単位数をまとめて取得
+    newCredit = newDoc.credit; // 新規授業単位数
+    currentCredit = currentDoc.credit; // 既存授業単位数
+
+    // 既存授業が4単位の時、もう片方の場所を定義しておく
+    if (currentCredit == 4){
+      const currentWeek1 = currentDoc.week1;
+      const currentWeek2 = currentDoc.week2;
+      const currentHour = currentDoc.hour;
+      if (i == currentWeek1*6 + currentHour){
+        elseI = currentWeek2*6 + currentHour;
+      }else{
+        elseI = currentWeek1*6 + currentHour;
+      }
+    }
+
+    // 配列操作
+    if (newCredit == 4){
+      // 空きコマにする前に保存しておく
+      de1 = currentTimetable[i];
+      de2 = currentTimetable[elseI];
+      // 既存授業単位数で分岐
+      if (currentCredit == 4){
+        // もう片方の単位数で分岐
+        if (getData('timetable_name', timetable[elseI]).obj.credit == 4){
+          // もう片方の4単位を、全部空きコマにする
+          const deltaElse = getData('timetable_name', timetable[elseI]);
+          currentTimetable[deltaElse.week1*6 + deltaElse.hour] = '空きコマ';
+          currentTimetable[deltaElse.week2*6 + deltaElse.hour] = '空きコマ';
+
+          // 既存授業のもう片方を空きコマにする
+          currentTimetable[elseI] = '空きコマ';
+        }
+      }
+
+      // 授業登録
+      currentTimetable[newDoc.week1*6 + newDoc.hour] = newClassName;
+      currentTimetable[newDoc.week2*6 + newDoc.hour] = newClassName;
+    }else{
+      if (currentCredit == 4){
+        currentTimetable[elseI] = '空きコマ';
+      }
+    }
+
+    // 一律で登録箇所に登録
+    currentTimetable[i] = newClassName;
+
+    // DB更新
+    const timetables = {};
+    for (let k = 0; k < 30; k++){
+      timetables[k+101] = currentTimetable[k];
+    }
+    await updateDoc(docRef, timetables);
+  }
+
+  // 以下同じ授業でないとして、欠時数変更
+  if (newClassName != currentClassName){
+    // 欠時削除
+    if (newCredit == 4){
+      if (de1 != de2){
+        if (de1 != '空きコマ'){
+          await updateDoc(docRef, { de1: deleteField() });
+        }
+        if (de2 != '空きコマ'){
+          await updateDoc(docRef, { de2: deleteField() });
+        }
+      }else{
+        if (de1 != '空きコマ'){
+          await updateDoc(docRef, { de1: deleteField() });
+        }
+      }
+    }else{
+      if (currentCredit != 0){
+        await updateDoc(docRef, { currentClassName: deleteField() });
+      }
+    }
+
+    // 欠時追加
+    if (newClassName != '空きコマ'){
+      newAbsence = { newClassName: 0 };
+      await updateDoc(docRef, newAbsence);
+    }
+  }
+
+
+  // UI反映のために新規時間割をreturnする
+  return currentTimetable;
 }
+
 
 
 
@@ -297,7 +402,7 @@ async function main(){
   setButton(userId, timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal(userId);
+  initModal(userId, timetableData);
   attachCellEvents();
 }
 
