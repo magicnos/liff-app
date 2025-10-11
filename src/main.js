@@ -207,8 +207,8 @@ function initModal(userId, timetableDoc){
   modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      const newTimetable = await changeTimetable(userId, id, timetableDoc);
-      setTimetable(newTimetable);
+      // const newTimetable = await changeTimetable(userId, id, timetableDoc);
+      // setTimetable(newTimetable);
       modal.style.display = 'none';
     }
   });
