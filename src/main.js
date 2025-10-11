@@ -259,7 +259,7 @@ async function changeTimetable(userId, id){
   const docRef = doc(db, userId, 'timetable');
 
   // 曜日別時間割データ取得
-  const timetable = getData('timetable_week', Number(btnId[0]) + 101);
+  const timetable = getData('timetable_week', String(Number(btnId[0]) + 101));
 
   // UI更新
 
