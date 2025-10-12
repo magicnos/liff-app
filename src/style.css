@@ -1,4 +1,6 @@
-/* ====== 全体設定 ====== */
+/* =========================
+   ====== 全体設定 ======
+   ========================= */
 body {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
   margin: 12px;
@@ -22,13 +24,22 @@ h2 {
   margin: 4px 0;
 }
 
+/* 通常テキスト */
+p,
+.absenceNomalText {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #555;
+}
+
 .absenceNomalText {
   font-weight: 600;
   color: #333;
-  text-align: center;
 }
 
-/* ====== 時間割テーブル ====== */
+/* =========================
+   ====== 時間割テーブル ======
+   ========================= */
 table {
   table-layout: fixed;
   width: 100%;
@@ -57,6 +68,12 @@ th, td {
   word-break: break-word;
 }
 
+th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+}
+
 .cellText {
   cursor: pointer;
   transition: background-color 0.2s ease;
@@ -66,13 +83,9 @@ th, td {
   background-color: #e8f5e9;
 }
 
-th {
-  background-color: #f0f0f0;
-  font-weight: 600;
-  color: #333;
-}
-
-/* ====== 欠時管理部分 ====== */
+/* =========================
+   ====== 欠時管理部分 ======
+   ========================= */
 .absence {
   background-color: #fff;
   margin-top: 20px;
@@ -81,6 +94,7 @@ th {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
+/* ラジオボタン */
 .radio-group {
   display: flex;
   flex-wrap: wrap;
@@ -90,14 +104,14 @@ th {
 }
 
 .radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
   background: #f3f3f3;
   border-radius: 20px;
   padding: 6px 10px;
   cursor: pointer;
   font-size: 27px;
-  display: flex;
-  align-items: center;
-  gap: 4px;
   transition: background-color 0.2s ease;
 }
 
@@ -107,11 +121,18 @@ th {
 
 .radio-group input {
   accent-color: #06C755;
-  width: 27px;
+  width: 27px; /* ラジオボタンを少し小さく */
   height: 27px;
 }
 
-/* ====== 欠時数ヘッダー部 ====== */
+/* 欠時ヘッダー部 */
+.absence-header {
+  display: flex;           /* 横並び */
+  align-items: center;     /* 縦方向中央揃え */
+  justify-content: center; /* 中央寄せ */
+  gap: 6px;                /* 欠時とボタンの間隔を少なく */
+}
+
 .todayAbsence {
   display: block;
   max-width: 320px;
@@ -123,38 +144,55 @@ th {
   border-radius: 10px;
   cursor: pointer;
   transition: opacity 0.2s, transform 0.1s;
-  width: auto;            /* 幅を自動調整 */
-  padding: 10px 16px;     /* 内側の余白 */
-  font-size: 20px;        /* 文字サイズ */
+  width: auto;
+  padding: 10px 16px;
+  font-size: 20px;
 }
 
 .todayAbsence:hover {
-  opacity: 0.9; /* ホバー時に少し透明に */
+  opacity: 0.9;
 }
+
 .todayAbsence:active {
-  transform: scale(0.98); /* クリック時に少し縮小 */
+  transform: scale(0.98);
 }
 
-.absence-header {
-  display: flex;           /* 横並び */
-  align-items: center;     /* 縦方向中央揃え */
-  justify-content: center; /* 中央寄せ */
-  gap: 6px;               /* 欠時とボタンの間隔 */
-}
-
+/* 欠時数テーブルの増減ボタン間隔 */
 #absence td .count {
-  margin: 0 6px; /* 左右に少し余白 */
+  margin: 0 6px;
   font-weight: 600;
   font-size: 1rem;
 }
 
-/* ====== モーダル ====== */
+/* 欠時数増減ボタンデザイン */
+#absence td button {
+  background-color: #06C755;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+#absence td button:hover {
+  opacity: 0.85;
+}
+
+#absence td button:active {
+  transform: scale(0.95);
+}
+
+/* =========================
+   ====== モーダル ======
+   ========================= */
 .modal {
-  display: none; /* 初期状態では非表示 */
+  display: none; /* 初期状態は非表示 */
   position: fixed; /* 画面全体に固定 */
   z-index: 1000; /* 他の要素より前面に表示 */
   inset: 0;  /* 上下左右0で画面全体を覆う */
-  background-color: rgba(0,0,0,0.4); /* 半透明の黒背景 */
+  background-color: rgba(0,0,0,0.4); /* 半透明背景 */
 }
 
 .modal-content {
@@ -162,22 +200,22 @@ th {
   flex-direction: column; /* 縦方向に並べる */
   align-items: center; /* 中央揃え */
   gap: 12px; /* ボタン間の隙間 */
-  background-color: #fff; /* モーダルの背景色 */
-  margin: 25% auto; /* 画面中央に配置 */
-  padding: 20px; /* 内側の余白 */
-  border-radius: 12px; /* 角を丸く */
-  width: 90%; /* 横幅90% */
-  max-width: 400px; /* 最大横幅400px */
-  text-align: center; /* テキスト中央揃え */
-  position: relative; /* 閉じるボタンの位置調整用 */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 影を追加 */
+  background-color: #fff;
+  margin: 25% auto; /* 画面中央 */
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
 }
 
 .modal-content .modal-btn {
-  display: block;       /* 縦並び */
-  width: 90%;           /* ボタン幅 */
-  margin: 6px auto;     /* 上下間隔 */
-  font-size: 1.2rem;    /* 文字を大きく */
+  display: block;
+  width: 90%;
+  margin: 6px auto;
+  font-size: 1.2rem; /* ボタン文字を大きく */
   padding: 10px 12px;
   border-radius: 10px;
   border: none;
@@ -197,17 +235,10 @@ th {
 
 /* 閉じるボタン */
 #closeModal {
-  position: absolute; /* 親要素に対して絶対位置 */
-  right: 12px; /* 右から12px */
-  top: 8px; /* 上から8px */
-  font-size: 30px; /* フォントサイズ */
-  color: #777; /* 色 */
-  cursor: pointer; /* カーソルをポインターに */
-}
-
-/* ====== 通常テキスト ====== */
-p {
-  text-align: center;
-  font-size: 0.9rem;
-  color: #555;
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 30px;
+  color: #777;
+  cursor: pointer;
 }
