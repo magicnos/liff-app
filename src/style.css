@@ -136,11 +136,12 @@ td {
    欠時数テーブル
    ========================= */
 .absenceScale {
+  display: flex;
   font-size: 30px;
   color: #555;
   text-align: center; /* 文字を中央寄せ */
   vertical-align: middle; /* 文字を縦中央寄せ */
-  margin: 0; /* 上下 左右　の順 */
+  margin: 0 auto; /* 上下 左右　の順 */
 }
 
 .absence {
@@ -219,7 +220,7 @@ td {
 
 /* ボタンだけクリック可能・デザイン変化 */
 #absence td button {
-  display: inline-block; /* 縦に広がらないように */
+  display: flex;
   margin: 10px auto; /* 上下の余白 */
   background-color: #06C755; /* 背景色 */
   color: #fff;
