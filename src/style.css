@@ -71,13 +71,16 @@ col.day-col  { width: 20%; }
 }
 
 .absence-row {
-  display: flex;
-  align-items: center;  /* 高さをそろえる */
-  gap: 10px;            /* 各要素の間隔 */
+  font-size: 1.5em; /* テキストを大きく */
+  margin-right: 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
 }
 
 .absence-title {
   margin-right: 8px;
+  font-size: 20px;
 }
 
 .radio-group {
@@ -86,7 +89,7 @@ col.day-col  { width: 20%; }
 }
 
 .apply-btn {
-  margin-left: 20px; /* ラジオボタン群との間隔 */
+  margin-left: 10px; /* ラジオボタン群との間隔 */
   padding: 5px 12px;
   border: none;
   border-radius: 6px;
@@ -134,7 +137,7 @@ col.day-col  { width: 20%; }
   position: absolute;
   top: 10px;
   right: 14px;
-  font-size: 32px;             /* ← 大きくする */
+  font-size: 50px;
   font-weight: bold;
   color: #555;
   cursor: pointer;
