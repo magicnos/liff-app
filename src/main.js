@@ -286,7 +286,7 @@ async function changeTimetable(userId, id){
   let elseI = 0;  // 既存授業が4単位の時、もう片方の場所
   const i = btnId[0]; // 変更箇所
   const currentClassName = currentTimetable[i]; // 既存授業名
-  const timetables = timetableDoc;  // 新しい時間割オブジェクト
+  const timetables = {};  // 新しい時間割オブジェクト
 
 
   // 以下同じ授業でないとして、時間割変更
@@ -345,6 +345,11 @@ async function changeTimetable(userId, id){
       timetables[k+101] = currentTimetable[k];
     }
     await updateDoc(timetableDocRef, timetables);
+  }else{
+    // 同じ授業なら既存オブジェクトをそのまま返す
+    for (let k = 0; k < 30; k++){
+      timetables[k+101] = currentTimetable[k];
+    }
   }
 
   // UI反映のために新規時間割をreturnする
