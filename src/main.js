@@ -395,6 +395,42 @@ async function changeTimetable(userId, id){
   return timetables;
 }
 
+// 今日欠席ボタン
+async function todayAbsence(){
+  // 曜日取得
+  const now = new Date();
+  const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
+
+  // 土日は授業がない
+  if (day != 0 && day != 6){
+    // 時間割取得
+    const timetableObj = firestore.getDocument(`${userId}/timetable`).obj;
+    const timetableData = [];
+    for (let i = 0; i < 6; i++){
+      if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
+        timetableData.push(`${timetableObj[(day-1)*6 + i + 101]}`);
+      }
+    }
+
+    // 欠時数取得
+    const absenceData = firestore.getDocument(`${userId}/absence`).obj;
+
+    // 新しい欠時情報
+    const newAbsenceData = {};
+    for (let i = 0; i < timetableData.length; i++){
+      // 何欠つけるのか調べる
+      const credit = firestore.getDocument(`timetable_name/${timetableData[i]}`).obj.credit;
+      const addNumber = Number(`${'21'[credit%2]}`);
+      // 新規欠時代入
+      newAbsenceData[timetableData[i]] =
+      Number(absenceData[timetableData[i]]) + addNumber;
+    }
+
+    // DBに書き込む
+    firestore.updateDocument(`${userId}/absence`, newAbsenceData, true);
+
+  }
+}
 
 
 
