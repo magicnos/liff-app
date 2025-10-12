@@ -30,36 +30,35 @@ h2 {
 
 /* ====== 時間割テーブル ====== */
 table {
+  table-layout: fixed; /* 列幅を固定 */
   width: 100%;
   border-collapse: collapse;
-  margin: 10px auto;
-  background-color: #fafafa;
-  border-radius: 10px;
-  overflow: hidden;
-  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 th, td {
   border: 1px solid #ddd;
   text-align: center;
-  padding: 8px;
-  font-size: 0.9rem;
-}
-
-th {
-  background-color: #f0f0f0;
-  font-weight: 600;
-  color: #333;
+  vertical-align: middle; /* 縦方向も中央揃え */
+  width: 100px;   /* 列幅固定 */
+  height: 60px;   /* 行高さ固定 */
+  font-size: 1rem;
+  overflow: hidden; /* はみ出す文字を隠す */
+  word-break: break-word; /* 長い文字を折り返す */
 }
 
 .cellText {
-  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
 
 .cellText:hover {
   background-color: #e8f5e9;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
 }
 
 /* ====== 欠時管理部分 ====== */
