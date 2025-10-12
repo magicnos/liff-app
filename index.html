@@ -7,10 +7,9 @@
   </head>
 
   <body>
-    <h1>あなたの時間割</h1>
-    <h2>各セルを押すと授業を変更できます</h2>
-    <h2>既に登録している授業を変更すると、欠時がリセットされます</h2>
-
+    <h1 class="tableTitle">あなたの時間割</h1>
+    <h2 class="tableText">各セルを押すと授業を変更できます</h2>
+    <h2 class="tableText">既に登録している授業を変更すると、欠時がリセットされます</h2>
 
     <table id="timetable">
       <colgroup>
@@ -101,13 +100,8 @@
       </tbody>
     </table>
 
-
-    <h1>あなたの欠時数</h1>
-    <div class="absence-header">
-      <h2 class="absenceNomalText" id="allAbsence">総欠時：0</h2>
-      <button type="button" class="todayAbsence" onclick="todayAbsence()">本日欠席</button>
-    </div>
-
+    <h1 class="tableTitle">あなたの欠時数</h1>
+    <h2 class="absenceAllText" id="allAbsence">総欠時：0</h2>
 
     <div class="absence">
       <div class="radio-group">
