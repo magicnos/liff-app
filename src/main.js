@@ -124,8 +124,8 @@ function setButton(userId, timetableData, absenceData){
 
   // 総欠時数表示
   let allAbsence = 0;
-  for (const key in absenceData){
-    allAbsence += absenceData[key];
+  for (let k = 0; k < Object.keys(absenceData).length; k++){
+    allAbsence += absenceData[timetableData[k+101]];
   }
   document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
 }
