@@ -131,7 +131,6 @@ function setButton(userId, timetableData, absenceData){
 }
 
 
-
 // 欠時数を変える
 async function changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
   // 現在のローカル欠時数を取得
@@ -187,7 +186,7 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
   document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
 }
 
-// モーダルの初期化
+// 時間割モーダルの初期化
 function initModal(userId){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
@@ -254,7 +253,6 @@ function attachCellEvents(){
     });
   });
 }
-
 
 
 // 時間割を一回配列に変えなくてもいいんじゃないかな
