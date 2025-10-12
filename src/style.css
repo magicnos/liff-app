@@ -172,12 +172,14 @@ th {
   font-size: 30px;
 }
 
+/* セルの背景は変わらないようにする */
 #absence td {
-  pointer-events: none;  /* セル自体をクリック不可にする */
+  background-color: #fff !important;
 }
 
-/* 欠時数増減ボタンデザイン */
+/* ボタンだけクリック可能・デザイン変化 */
 #absence td button {
+  pointer-events: auto;
   background-color: #06C755;
   color: #fff;
   border: none;
@@ -186,8 +188,7 @@ th {
   cursor: pointer;
   font-size: 1.5625rem; /* 25px */
   transition: transform 0.1s, opacity 0.2s;
-  outline: none;          /* フォーカスの影響を消す */
-  pointer-events: auto;  /* ボタンは通常通りクリック可能 */
+  outline: none;
 }
 
 #absence td button:hover {
