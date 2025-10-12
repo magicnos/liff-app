@@ -154,15 +154,15 @@ td {
 /* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
-  flex-wrap: wrap;       /* 複数行に折り返す */
+  flex-wrap: wrap; /* 複数行に折り返す */
   justify-content: center; /* 横中央寄せ */
-  align-items: center;   /* 縦中央揃え */
-  gap: 10px;             /* 要素間の間隔 */
-  margin-bottom: 14px;   /* 下の余白 */
+  align-items: center; /* 縦中央揃え */
+  gap: 10px; /* 要素間の間隔 */
+  margin-bottom: 14px; /* 下の余白 */
 }
 
 .radio-group h2.absenceScale {
-  margin: 0;             /* 上下余白リセット */
+  margin: 0; /* 上下余白リセット */
   font-size: 30px;
   color: #555;
   text-align: center;
@@ -191,7 +191,7 @@ td {
 }
 
 .radio-group button#todayAbsence {
-  margin: 0; /* 上下余白リセット */
+  margin: 0 10px; /* 余白 */
   padding: 10px 16px;
   font-size: 25px;
   border-radius: 10px;
