@@ -30,20 +30,31 @@ h2 {
 
 /* ====== 時間割テーブル ====== */
 table {
-  table-layout: fixed; /* 列幅を固定 */
+  table-layout: fixed;
   width: 100%;
   border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1); /* 影を追加 */
+  border-radius: 8px; /* 角を丸く */
+}
+
+th:first-child,
+td:first-child {
+  width: 50px; /* 時限列を半分に */
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  width: calc((100% - 50px) / 5); /* 残り幅を曜日列で均等に */
 }
 
 th, td {
   border: 1px solid #ddd;
   text-align: center;
-  vertical-align: middle; /* 縦方向も中央揃え */
-  width: 100px;   /* 列幅固定 */
-  height: 60px;   /* 行高さ固定 */
+  vertical-align: middle;
+  height: 50px; /* 行高さを少し小さく */
   font-size: 1rem;
-  overflow: hidden; /* はみ出す文字を隠す */
-  word-break: break-word; /* 長い文字を折り返す */
+  overflow: hidden;
+  word-break: break-word;
 }
 
 .cellText {
@@ -83,7 +94,7 @@ th {
   border-radius: 20px;
   padding: 6px 10px;
   cursor: pointer;
-  font-size: 30px;
+  font-size: 27px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -96,8 +107,8 @@ th {
 
 .radio-group input {
   accent-color: #06C755;
-  width: 30px;
-  height: 30px;
+  width: 27px;
+  height: 27px;
 }
 
 /* ====== 欠時数ヘッダー部 ====== */
@@ -128,7 +139,13 @@ th {
   display: flex;           /* 横並び */
   align-items: center;     /* 縦方向中央揃え */
   justify-content: center; /* 中央寄せ */
-  gap: 12px;               /* 欠時とボタンの間隔 */
+  gap: 6px;               /* 欠時とボタンの間隔 */
+}
+
+#absence td .count {
+  margin: 0 6px; /* 左右に少し余白 */
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 /* ====== モーダル ====== */
@@ -154,6 +171,28 @@ th {
   text-align: center; /* テキスト中央揃え */
   position: relative; /* 閉じるボタンの位置調整用 */
   box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 影を追加 */
+}
+
+.modal-content .modal-btn {
+  display: block;       /* 縦並び */
+  width: 90%;           /* ボタン幅 */
+  margin: 6px auto;     /* 上下間隔 */
+  font-size: 1.2rem;    /* 文字を大きく */
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  background-color: #06C755;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.modal-content .modal-btn:hover {
+  opacity: 0.9;
+}
+
+.modal-content .modal-btn:active {
+  transform: scale(0.97);
 }
 
 /* 閉じるボタン */
