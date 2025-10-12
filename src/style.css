@@ -168,7 +168,7 @@ th {
 #absence td .count {
   margin: 0 6px;
   font-weight: 600;
-  font-size: 100px;
+  font-size: 30px;
 }
 
 /* 欠時数増減ボタンデザイン */
@@ -195,35 +195,35 @@ th {
    ====== モーダル ======
    ========================= */
 .modal {
-  display: none; /* 初期状態は非表示 */
-  position: fixed; /* 画面全体に固定 */
-  z-index: 1000; /* 他の要素より前面に表示 */
-  inset: 0;  /* 上下左右0で画面全体を覆う */
-  background-color: rgba(0,0,0,0.4); /* 半透明背景 */
+  display: none; 
+  position: fixed; 
+  z-index: 1000; 
+  inset: 0;  
+  background-color: rgba(0,0,0,0.4); 
 }
 
 .modal-content {
-  display: flex; /* Flexboxに変更 */
-  flex-direction: column; /* 縦方向に並べる */
-  align-items: center; /* 中央揃え */
-  gap: 12px; /* ボタン間の隙間 */
-  background-color: #fff;
-  margin: 25% auto; /* 画面中央 */
-  padding: 20px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 400px;
-  text-align: center;
-  position: relative;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+  display: flex; 
+  flex-direction: column; 
+  align-items: center; 
+  gap: 16px; /* ボタン間の隙間を少し広めに */
+  background-color: #fff; 
+  margin: 15% auto;        /* 画面中央 */
+  padding: 24px;            /* 内側余白を少し増やす */
+  border-radius: 12px; 
+  width: 95%;               /* 横幅を広げる */
+  max-width: 500px;         /* 最大横幅を大きく */
+  text-align: center; 
+  position: relative; 
+  box-shadow: 0 6px 16px rgba(0,0,0,0.2); /* 影を少し強め */
 }
 
 .modal-content .modal-btn {
-  display: block;
-  width: 90%;
-  margin: 6px auto;
-  font-size: 1.2rem; /* ボタン文字を大きく */
-  padding: 10px 12px;
+  display: block;       
+  width: 95%;           /* 横幅を少し広げる */
+  margin: 8px auto;     
+  font-size: 1.6rem;    /* 文字をさらに大きく見やすく */
+  padding: 14px 16px;   
   border-radius: 10px;
   border: none;
   background-color: #06C755;
@@ -231,6 +231,7 @@ th {
   cursor: pointer;
   transition: transform 0.1s, opacity 0.2s;
 }
+
 
 .modal-content .modal-btn:hover {
   opacity: 0.9;
@@ -240,12 +241,12 @@ th {
   transform: scale(0.97);
 }
 
-/* 閉じるボタン */
+/* 閉じるボタン（×） */
 #closeModal {
   position: absolute;
   right: 12px;
   top: 8px;
-  font-size: 50px;
+  font-size: 38px; /* さらに大きく */
   color: #777;
   cursor: pointer;
 }
