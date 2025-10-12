@@ -9,7 +9,7 @@ body {
 
 /* 見出し */
 h1 {
-  font-size: 75px;
+  font-size: 65px;
   color: #06C755;
   text-align: center;
   margin-bottom: 6px;
@@ -84,7 +84,7 @@ th {
   border-radius: 20px;
   padding: 6px 10px;
   cursor: pointer;
-  font-size: 0.9rem;
+  font-size: 30px;
   display: flex;
   align-items: center;
   gap: 4px;
@@ -97,8 +97,8 @@ th {
 
 .radio-group input {
   accent-color: #06C755;
-  width: 18px;
-  height: 18px;
+  width: 30px;
+  height: 30px;
 }
 
 /* ====== 欠席ボタン ====== */
