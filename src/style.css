@@ -57,12 +57,13 @@ table {
 
 th:first-child,
 td:first-child {
-  width: 50px; /* 時限列を半分に */
+  width: 60px; /* 時限列を3px長く */
+  font-size: 1.1rem; /* 時限番号の文字サイズを大きく */
 }
 
 th:not(:first-child),
 td:not(:first-child) {
-  width: calc((100% - 50px) / 5); /* 残り幅を曜日列で均等に */
+  width: calc((100% - 60px) / 5); /* 残り幅を曜日列で均等に */
 }
 
 th, td {
@@ -70,7 +71,7 @@ th, td {
   text-align: center;
   vertical-align: middle;
   height: 50px; /* 行高さを少し小さく */
-  font-size: 1rem;
+  font-size: 1.1rem;
   overflow: hidden;
   word-break: break-word;
 }
@@ -206,21 +207,23 @@ th {
   display: flex; 
   flex-direction: column; 
   align-items: center; 
-  gap: 16px; /* ボタン間の隙間を少し広めに */
+  gap: 12px; 
   background-color: #fff; 
-  margin: 15% auto;        /* 画面中央 */
-  padding: 24px;            /* 内側余白を少し増やす */
+  margin: 10% auto; /* 少し上に余白 */
+  padding: 20px; 
   border-radius: 12px; 
-  width: 95%;               /* 横幅を広げる */
-  max-width: 500px;         /* 最大横幅を大きく */
+  width: 90%; 
+  max-width: 450px; /* モーダルを少し大きく */
   text-align: center; 
   position: relative; 
-  box-shadow: 0 6px 16px rgba(0,0,0,0.2); /* 影を少し強め */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
+  overflow-y: auto;       /* スクロール可能に */
+  max-height: 80vh;        /* 高さ制限 */
 }
 
 .modal-content .modal-btn {
   display: block;       
-  width: 95%;           /* 横幅を少し広げる */
+  width: 98%;           /* 横幅を少し広げる */
   margin: 8px auto;     
   font-size: 1.6rem;    /* 文字をさらに大きく見やすく */
   padding: 14px 16px;   
