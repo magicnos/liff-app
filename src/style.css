@@ -173,8 +173,7 @@ th {
 }
 
 #absence td {
-  background-color: transparent !important; /* td背景は変えない */
-  transition: none; /* tdに変化が入らないように */
+  pointer-events: none;  /* セル自体をクリック不可にする */
 }
 
 /* 欠時数増減ボタンデザイン */
@@ -188,6 +187,7 @@ th {
   font-size: 1.5625rem; /* 25px */
   transition: transform 0.1s, opacity 0.2s;
   outline: none;          /* フォーカスの影響を消す */
+  pointer-events: auto;  /* ボタンは通常通りクリック可能 */
 }
 
 #absence td button:hover {
