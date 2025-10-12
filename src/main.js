@@ -386,7 +386,7 @@ async function changeTimetable(userId, id){
 
     // 欠時追加
     if (newClassName != '空きコマ'){
-      newAbsence = { [newClassName]: 0 };
+      const newAbsence = { [newClassName]: 0 };
       await updateDoc(absenceDocRef, newAbsence);
     }
   }
