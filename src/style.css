@@ -101,7 +101,7 @@ th {
   height: 30px;
 }
 
-/* ====== 欠席ボタン ====== */
+/* ====== 欠時数ヘッダー部 ====== */
 .todayAbsence {
   display: block;
   width: 85%;
@@ -123,6 +123,19 @@ th {
 }
 .todayAbsence:active {
   transform: scale(0.98); /* クリック時に少し縮小 */
+}
+
+.absence-header {
+  display: flex;           /* 横並び */
+  align-items: center;     /* 縦方向中央揃え */
+  justify-content: center; /* 中央寄せ */
+  gap: 12px;               /* 欠時とボタンの間隔 */
+}
+
+.todayAbsence {
+  width: auto;            /* 幅を自動調整 */
+  padding: 10px 16px;     /* 内側の余白 */
+  font-size: 1rem;        /* 文字サイズ */
 }
 
 /* ====== モーダル ====== */
