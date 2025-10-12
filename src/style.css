@@ -1,36 +1,261 @@
-/* 共通 */
+/* =========================
+   ====== 全体設定 ======
+   ========================= */
 body {
-  font-family: "Noto Sans JP", sans-serif;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  margin: 12px;
+  background-color: #ffffff;
+  color: #222;
+  line-height: 1.6;
 }
 
-/* テーブル列幅調整 */
-.time-col {
-  width: 60px;
-}
-.day-col {
-  width: 120px;
-}
-
-/* テーブルのセル */
-.cellText {
-  cursor: pointer;
-  vertical-align: middle;
-  font-size: 1rem;
-  padding: 0.75rem;
+/* 見出し */
+h1 {
+  font-size: 65px;
+  color: #06C755;
+  text-align: center;
+  margin-bottom: 6px;
 }
 
-/* 欠時数表示 */
+h2 {
+  font-size: 30px;
+  color: #555;
+  text-align: center;
+  margin: 4px 0;
+}
+
+h3 {
+  font-size: 30px;
+  color: #333;
+  text-align: center;
+  margin: 6px 0;
+}
+
+/* 通常テキスト */
+p,
 .absenceNomalText {
-  font-weight: bold;
+  text-align: center;
+  font-size: 14px; /* 0.9rem → 14.4px を四捨五入 */
+  color: #555;
 }
 
-/* モーダルボディのスクロール調整 */
-.modal-body {
-  max-height: 60vh;
+.absenceNomalText {
+  font-weight: 600;
+  color: #333;
+}
+
+/* =========================
+   ====== 時間割テーブル ======
+   ========================= */
+table {
+  table-layout: fixed;
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 8px;
+}
+
+th:first-child,
+td:first-child {
+  width: 60px; 
+  font-size: 18px; /* 1.1rem → 17.6px 四捨五入 */
+}
+
+th:not(:first-child),
+td:not(:first-child) {
+  width: calc((100% - 60px) / 5);
+}
+
+th, td {
+  border: 1px solid #ddd;
+  text-align: center;
+  vertical-align: middle;
+  height: 50px;
+  font-size: 18px; /* 1.1rem → 18px */
+  overflow: hidden;
+  word-break: break-word;
+}
+
+th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
+}
+
+.cellText {
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.cellText:hover {
+  background-color: #e8f5e9;
+}
+
+/* =========================
+   ====== 欠時管理部分 ======
+   ========================= */
+.absence {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+}
+
+/* ラジオボタン */
+.radio-group {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 27px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-group label:hover {
+  background: #e0e0e0;
+}
+
+.radio-group input {
+  accent-color: #06C755;
+  width: 27px;
+  height: 27px;
+}
+
+/* 欠時ヘッダー部 */
+.absence-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.todayAbsence {
+  display: block;
+  margin: 10px auto;
+  background-color: #06C755;
+  color: #fff;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  width: auto;
+  padding: 10px 0;
+  font-size: 30px;
+}
+
+.todayAbsence:hover {
+  opacity: 0.9;
+}
+
+.todayAbsence:active {
+  transform: scale(0.98);
+}
+
+/* 欠時数テーブルの増減ボタン間隔 */
+#absence td .count {
+  margin: 0 6px;
+  font-weight: 600;
+  font-size: 30px;
+}
+
+/* セルの背景は変わらないようにする */
+#absence td {
+  background-color: #fff !important;
+}
+
+/* ボタンだけクリック可能・デザイン変化 */
+#absence td button {
+  pointer-events: auto;
+  background-color: #06C755;
+  color: #fff;
+  border: none;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  font-size: 1.5625rem; /* 25px */
+  transition: transform 0.1s, opacity 0.2s;
+  outline: none;
+}
+
+#absence td button:hover {
+  opacity: 0.85;
+}
+
+#absence td button:active {
+  transform: scale(0.95);
+}
+
+/* =========================
+   ====== モーダル ======
+   ========================= */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  inset: 0;
+  background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  background-color: #fff;
+  margin: 10% auto;
+  padding: 20px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 450px;
+  text-align: center;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
   overflow-y: auto;
+  max-height: 80vh;
 }
 
-/* ラジオボタンの間隔 */
-.form-check-inline {
-  margin-right: 1rem;
+.modal-content .modal-btn {
+  display: block;
+  width: 98%;
+  margin: 8px auto;
+  font-size: 26px; /* 1.6rem → 25.6px 四捨五入 */
+  padding: 14px 16px;
+  border-radius: 10px;
+  border: none;
+  background-color: #06C755;
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.1s, opacity 0.2s;
+}
+
+.modal-content .modal-btn:hover {
+  opacity: 0.9;
+}
+
+.modal-content .modal-btn:active {
+  transform: scale(0.97);
+}
+
+/* 閉じるボタン（×） */
+#closeModal {
+  position: absolute;
+  right: 12px;
+  top: 8px;
+  font-size: 38px;
+  color: #777;
+  cursor: pointer;
 }
