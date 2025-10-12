@@ -208,7 +208,9 @@ function initModal(userId){
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
       const newTimetable = await changeTimetable(userId, id);
+      const newAbsence = await getData(userId, 'absence');
       setTimetable(newTimetable);
+      setButton(userId, newTimetable, newAbsence);
       modal.style.display = 'none';
     }
   });
