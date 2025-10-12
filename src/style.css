@@ -1,6 +1,6 @@
-/* ----------------------------------------
-   全体・フォント・基本設定
----------------------------------------- */
+/* ==================================================
+   基本設定（全体・フォント・配色）
+================================================== */
 body {
   font-family: Arial, sans-serif;
   margin: 15px;
@@ -8,9 +8,9 @@ body {
   color: #222;
 }
 
-/* ----------------------------------------
+/* ==================================================
    テーブル設定
----------------------------------------- */
+================================================== */
 table {
   border-collapse: collapse;
   width: 100%;
@@ -27,26 +27,27 @@ th, td {
 }
 
 col.time-col { width: 60px; }
-col.day-col { width: 20%; }
+col.day-col  { width: 20%; }
 
 .cellText {
   font-size: 160%;
   cursor: pointer;
 }
 
-/* ----------------------------------------
-   欠時テーブルボタン・カウント
----------------------------------------- */
+/* ==================================================
+   欠時テーブル（ボタン・カウント表示）
+================================================== */
 #absence button {
   font-size: 22px;
   width: 40px;
   height: 40px;
-  border-radius: 12px;
   border: none;
+  border-radius: 12px;
   background-color: #4CAF50;
   color: #fff;
   cursor: pointer;
   margin: 0 4px;
+  transition: background-color 0.2s;
 }
 
 #absence button:hover {
@@ -54,65 +55,113 @@ col.day-col { width: 20%; }
 }
 
 #absence .count {
-  font-size: 130%;
-  font-weight: 600;
-  margin: 0 12px;
   display: inline-block;
   min-width: 32px;
+  margin: 0 12px;
   text-align: center;
+  font-size: 130%;
+  font-weight: 600;
 }
 
-/* 欠時数ラジオボタン */
-input[type="radio"] { transform: scale(1.8); margin: 6px; }
-
-label.absenceScale {
-  display: inline-block;
-  margin-right: 14px;
-  font-size: 26px;
+/* ==================================================
+   欠時数ラジオボタン選択エリア
+================================================== */
+.absence-form {
+  margin: 10px 0;
 }
 
-/* ----------------------------------------
+.absence-row {
+  display: flex;
+  align-items: center;  /* 高さをそろえる */
+  gap: 10px;            /* 各要素の間隔 */
+}
+
+.absence-title {
+  margin-right: 8px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 8px;
+}
+
+.apply-btn {
+  margin-left: 20px; /* ラジオボタン群との間隔 */
+  padding: 5px 12px;
+  border: none;
+  border-radius: 6px;
+  background-color: #4CAF50;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.apply-btn:hover {
+  background-color: #45a049;
+}
+
+/* ==================================================
    モーダル関連
----------------------------------------- */
-/* モーダル全体 */
+================================================== */
+/* 背景（モーダル全体） */
 .modal {
   display: none; /* 初期非表示 */
   position: fixed;
   z-index: 1000;
-  left: 0;
-  top: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5);
   overflow: auto;
 }
 
-/* モーダル内のコンテンツ */
+/* コンテンツ本体（中央に表示） */
 .modal-content {
+  position: relative;          /* ×ボタンの位置指定用 */
   background-color: #fff;
-  margin: 15% auto;
-  padding: 20px;
-  border-radius: 8px;
-  width: 90%;      /* モバイル向け */
-  max-width: 400px;
+  margin: 8% auto;             /* 上下の余白をやや少なめに */
+  padding: 30px 20px;
+  border-radius: 12px;
+  width: 95%;                  /* スマホではほぼ全幅 */
+  max-width: 600px;            /* PCでは横幅600pxまで */
   text-align: center;
+  font-size: 20px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.25); /* 少し浮かせる影 */
 }
 
-/* 閉じるボタン */
+/* 閉じるボタン（×） */
 #closeModal {
-  float: right;
-  font-size: 24px;
+  position: absolute;
+  top: 10px;
+  right: 14px;
+  font-size: 32px;             /* ← 大きくする */
+  font-weight: bold;
+  color: #555;
   cursor: pointer;
+  transition: color 0.2s, transform 0.1s;
 }
 
-/* 授業ボタン */
+#closeModal:hover {
+  color: #000;
+  transform: scale(1.15);
+}
+
+/* モーダル内ボタン */
 .modal-btn {
-  padding: 8px 16px;
+  display: block;
+  width: 80%;                 /* 横幅を広げる */
+  margin: 16px auto;
+  padding: 14px 20px;
+  font-size: 20px;
   border: none;
-  border-radius: 6px;
+  border-radius: 8px;
   background-color: #007bff;
   color: white;
   cursor: pointer;
-  display: block; /* これで改行 */
-  margin: 10px auto; /* 上下の余白(autoで真ん中に設置) */
+  transition: background-color 0.2s, transform 0.1s;
+}
+
+.modal-btn:hover {
+  background-color: #0069d9;
+  transform: translateY(-2px); /* 押す前に少し浮く感じ */
 }

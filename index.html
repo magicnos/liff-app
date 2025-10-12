@@ -105,20 +105,19 @@
     <h1>あなたの欠時数</h1>
     <h2 id="allAbsence">総欠時：0</h2>
 
-    <form>
-      <h3 class="absenceScale">欠時数増減倍率：</h3>
-      <label class="absenceScale">
-        <input type="radio" name="absenceScale" value="1" checked> ×1
-      </label>
-      <label class="absenceScale">
-        <input type="radio" name="absenceScale" value="2"> ×2
-      </label>
-      <label class="absenceScale">
-        <input type="radio" name="absenceScale" value="4"> ×4
-      </label>
-      <label class="absenceScale">
-        <input type="radio" name="absenceScale" value="8"> ×8
-      </label>
+    <form class="absence-form">
+      <div class="absence-row">
+        <h3 class="absence-title">欠時数増減倍率：</h3>
+
+        <div class="radio-group">
+          <label><input type="radio" name="absenceScale" value="1" checked> ×1</label>
+          <label><input type="radio" name="absenceScale" value="2"> ×2</label>
+          <label><input type="radio" name="absenceScale" value="4"> ×4</label>
+          <label><input type="radio" name="absenceScale" value="8"> ×8</label>
+        </div>
+
+        <button type="button" class="todayAbsence">欠席</button>
+      </div>
     </form>
 
     <div class="absence">

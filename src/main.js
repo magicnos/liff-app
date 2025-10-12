@@ -80,7 +80,7 @@ function setTimetable(timetableData){
       if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
         table.rows[i].cells[k].innerText = timetableData[(k-1)*6 + (i-1)/2 + 101];
       }else{
-        table.rows[i].cells[k].innerText = '/';
+        table.rows[i].cells[k].innerText = '-';
       }
     }
   }
