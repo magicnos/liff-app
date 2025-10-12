@@ -207,8 +207,8 @@ function initModal(userId, timetableDoc){
   modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      // const newTimetable = await changeTimetable(userId, id, timetableDoc);
-      // setTimetable(newTimetable);
+      const newTimetable = await changeTimetable(userId, id, timetableDoc);
+      setTimetable(newTimetable);
       modal.style.display = 'none';
     }
   });
@@ -251,10 +251,6 @@ function attachCellEvents(){
 }
 
 
-/*
-まず、時間割登録だけできるようにして(欠時登録用の変数を消しちゃってもいい)
-それから、欠時数登録を実装
-*/
 
 // 時間割変更
 async function changeTimetable(userId, id, timetableDoc){
@@ -263,7 +259,6 @@ async function changeTimetable(userId, id, timetableDoc){
 
   // DBに触ってる
   const timetableDocRef = doc(db, userId, 'timetable');
-  const absenceDocRef = doc(db, userId, 'absence');
 
   // -- 新規追加授業名取得 --
   // 曜日別時間割データ取得
@@ -278,15 +273,14 @@ async function changeTimetable(userId, id, timetableDoc){
   }
 
   // キャッシュにしておく
-  let newDoc = {};
-  let currentDoc = {};
-  let newCredit = 0;
-  let currentCredit = 0;
-  let elseI = 0;
-  let de1 = '';
-  let de2 = '';
-  const i = btnId[0];
-  const currentClassName = currentTimetable[i];
+  let newDoc = {}; // 新規授業情報
+  let currentDoc = {}; // 既存授業情報
+  let newCredit = 0; // 新規授業単位数
+  let currentCredit = 0; // 既存授業単位数
+  let elseI = 0;  // 既存授業が4単位の時、もう片方の場所
+  const i = btnId[0]; // 変更箇所
+  const currentClassName = currentTimetable[i]; // 既存授業名
+  const timetables = {};  // 新しい時間割オブジェクト
 
 
   // 以下同じ授業でないとして、時間割変更
@@ -314,17 +308,14 @@ async function changeTimetable(userId, id, timetableDoc){
 
     // 配列操作
     if (newCredit == 4){
-      // 空きコマにする前に保存しておく
-      de1 = currentTimetable[i];
-      de2 = currentTimetable[elseI];
-      // 既存授業単位数で分岐
+      // 既存授業単位数
       if (currentCredit == 4){
-        // もう片方の単位数で分岐
-        if (await getData('timetable_name', currentTimetable[elseI]).credit == 4){
+        // もう片方の情報
+        const elseDoc = await getData('timetable_name', currentTimetable[elseI]);
+        if (elseDoc.credit == 4){
           // もう片方の4単位を、全部空きコマにする
-          const deltaElse = await getData('timetable_name', currentTimetable[elseI]);
-          currentTimetable[deltaElse.week1*6 + deltaElse.hour] = '空きコマ';
-          currentTimetable[deltaElse.week2*6 + deltaElse.hour] = '空きコマ';
+          currentTimetable[elseDoc.week1*6 + elseDoc.hour] = '空きコマ';
+          currentTimetable[elseDoc.week2*6 + elseDoc.hour] = '空きコマ';
 
           // 既存授業のもう片方を空きコマにする
           currentTimetable[elseI] = '空きコマ';
@@ -344,7 +335,6 @@ async function changeTimetable(userId, id, timetableDoc){
     currentTimetable[i] = newClassName;
 
     // DB更新
-    const timetables = {};
     for (let k = 0; k < 30; k++){
       timetables[k+101] = currentTimetable[k];
     }
@@ -352,7 +342,7 @@ async function changeTimetable(userId, id, timetableDoc){
   }
 
   // UI反映のために新規時間割をreturnする
-  return currentTimetable;
+  return timetables;
 }
 
 
