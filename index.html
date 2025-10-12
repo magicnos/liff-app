@@ -3,225 +3,210 @@
   <head>
     <meta charset="UTF-8" />
     <title>新宿山吹の時間割</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="src/style.css">
   </head>
 
-  <body>
-    <h1>あなたの時間割</h1>
-    <h2>各セルを押すと授業を変更できます</h2>
-    <h2>既に登録している授業を変更すると、欠時がリセットされます</h2>
+  <body class="bg-light">
+    <div class="container my-4">
 
+      <h1 class="text-center text-success mb-2 display-4">あなたの時間割</h1>
+      <h2 class="text-center text-secondary h4 mb-1">各セルを押すと授業を変更できます</h2>
+      <h2 class="text-center text-secondary h4 mb-4">既に登録している授業を変更すると、欠時がリセットされます</h2>
 
-    <table id="timetable">
-      <colgroup>
-        <col class="time-col">
-        <col class="day-col">
-        <col class="day-col">
-        <col class="day-col">
-        <col class="day-col">
-        <col class="day-col">
-      </colgroup>
-      <thead>
-        <tr>
-          <th>時限</th>
-          <th>月</th>
-          <th>火</th>
-          <th>水</th>
-          <th>木</th>
-          <th>金</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>1限</td>
-          <td rowspan='2' id='a0' class='cellText'></td>
-          <td rowspan='2' id='a6' class='cellText'></td>
-          <td rowspan='2' id='a12' class='cellText'></td>
-          <td rowspan='2' id='a18' class='cellText'></td>
-          <td rowspan='2' id='a24' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>2限</td>
-        </tr>
-        <tr>
-          <td>3限</td>
-          <td rowspan='2' id='a1' class='cellText'></td>
-          <td rowspan='2' id='a7' class='cellText'></td>
-          <td rowspan='2' id='a13' class='cellText'></td>
-          <td rowspan='2' id='a19' class='cellText'></td>
-          <td rowspan='2' id='a25' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>4限</td>
-        </tr>
-        <tr>
-          <td>5限</td>
-          <td rowspan='2' id='a2' class='cellText'></td>
-          <td rowspan='2' id='a8' class='cellText'></td>
-          <td rowspan='2' id='a14' class='cellText'></td>
-          <td rowspan='2' id='a20' class='cellText'></td>
-          <td rowspan='2' id='a26' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>6限</td>
-        </tr>
-        <tr>
-          <td>7限</td>
-          <td rowspan='2' id='a3' class='cellText'></td>
-          <td rowspan='2' id='a9' class='cellText'></td>
-          <td rowspan='2' id='a15' class='cellText'></td>
-          <td rowspan='2' id='a21' class='cellText'></td>
-          <td rowspan='2' id='a27' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>8限</td>
-        </tr>
-        <tr>
-          <td>9限</td>
-          <td rowspan='2' id='a4' class='cellText'></td>
-          <td rowspan='2' id='a10' class='cellText'></td>
-          <td rowspan='2' id='a16' class='cellText'></td>
-          <td rowspan='2' id='a22' class='cellText'></td>
-          <td rowspan='2' id='a28' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>10限</td>
-        </tr>
-        <tr>
-          <td>11限</td>
-          <td rowspan='2' id='a5' class='cellText'></td>
-          <td rowspan='2' id='a11' class='cellText'></td>
-          <td rowspan='2' id='a17' class='cellText'></td>
-          <td rowspan='2' id='a23' class='cellText'></td>
-          <td rowspan='2' id='a29' class='cellText'></td>
-        </tr>
-        <tr>
-          <td>12限</td>
-        </tr>
-      </tbody>
-    </table>
-
-
-    <h1>あなたの欠時数</h1>
-    <div class="absence-header">
-      <h2 class="absenceNomalText" id="allAbsence">総欠時：0</h2>
-      <button type="button" class="todayAbsence" onclick="todayAbsence()">本日欠席</button>
-    </div>
-
-
-    <div class="absence">
-      <div class="radio-group">
-        <h2 class="absenceNomalText">欠時数増減倍率：</h2>
-        <label><input type="radio" name="absenceScale" value="1" checked> ×1</label>
-        <label><input type="radio" name="absenceScale" value="2"> ×2</label>
-        <label><input type="radio" name="absenceScale" value="4"> ×4</label>
-        <label><input type="radio" name="absenceScale" value="8"> ×8</label>
+      <div class="table-responsive">
+        <table id="timetable" class="table table-bordered table-hover text-center align-middle">
+          <colgroup>
+            <col class="time-col">
+            <col class="day-col">
+            <col class="day-col">
+            <col class="day-col">
+            <col class="day-col">
+            <col class="day-col">
+          </colgroup>
+          <thead class="table-light">
+            <tr>
+              <th>時限</th>
+              <th>月</th>
+              <th>火</th>
+              <th>水</th>
+              <th>木</th>
+              <th>金</th>
+            </tr>
+          </thead>
+          <tbody>
+            <!-- ここから元の構造 그대로維持 -->
+            <tr>
+              <td>1限</td>
+              <td rowspan='2' id='a0' class='cellText'></td>
+              <td rowspan='2' id='a6' class='cellText'></td>
+              <td rowspan='2' id='a12' class='cellText'></td>
+              <td rowspan='2' id='a18' class='cellText'></td>
+              <td rowspan='2' id='a24' class='cellText'></td>
+            </tr>
+            <tr><td>2限</td></tr>
+            <tr>
+              <td>3限</td>
+              <td rowspan='2' id='a1' class='cellText'></td>
+              <td rowspan='2' id='a7' class='cellText'></td>
+              <td rowspan='2' id='a13' class='cellText'></td>
+              <td rowspan='2' id='a19' class='cellText'></td>
+              <td rowspan='2' id='a25' class='cellText'></td>
+            </tr>
+            <tr><td>4限</td></tr>
+            <tr>
+              <td>5限</td>
+              <td rowspan='2' id='a2' class='cellText'></td>
+              <td rowspan='2' id='a8' class='cellText'></td>
+              <td rowspan='2' id='a14' class='cellText'></td>
+              <td rowspan='2' id='a20' class='cellText'></td>
+              <td rowspan='2' id='a26' class='cellText'></td>
+            </tr>
+            <tr><td>6限</td></tr>
+            <tr>
+              <td>7限</td>
+              <td rowspan='2' id='a3' class='cellText'></td>
+              <td rowspan='2' id='a9' class='cellText'></td>
+              <td rowspan='2' id='a15' class='cellText'></td>
+              <td rowspan='2' id='a21' class='cellText'></td>
+              <td rowspan='2' id='a27' class='cellText'></td>
+            </tr>
+            <tr><td>8限</td></tr>
+            <tr>
+              <td>9限</td>
+              <td rowspan='2' id='a4' class='cellText'></td>
+              <td rowspan='2' id='a10' class='cellText'></td>
+              <td rowspan='2' id='a16' class='cellText'></td>
+              <td rowspan='2' id='a22' class='cellText'></td>
+              <td rowspan='2' id='a28' class='cellText'></td>
+            </tr>
+            <tr><td>10限</td></tr>
+            <tr>
+              <td>11限</td>
+              <td rowspan='2' id='a5' class='cellText'></td>
+              <td rowspan='2' id='a11' class='cellText'></td>
+              <td rowspan='2' id='a17' class='cellText'></td>
+              <td rowspan='2' id='a23' class='cellText'></td>
+              <td rowspan='2' id='a29' class='cellText'></td>
+            </tr>
+            <tr><td>12限</td></tr>
+          </tbody>
+        </table>
       </div>
 
-      <table id="absence">
-        <colgroup>
-          <col class="time-col">
-          <col class="day-col">
-          <col class="day-col">
-          <col class="day-col">
-          <col class="day-col">
-          <col class="day-col">
-        </colgroup>
-        <thead>
-          <tr>
-            <th>時限</th>
-            <th>月</th>
-            <th>火</th>
-            <th>水</th>
-            <th>木</th>
-            <th>金</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <td>1限</td>
-            <td rowspan='2' id='a0' class='cellText'></td>
-            <td rowspan='2' id='a6' class='cellText'></td>
-            <td rowspan='2' id='a12' class='cellText'></td>
-            <td rowspan='2' id='a18' class='cellText'></td>
-            <td rowspan='2' id='a24' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>2限</td>
-          </tr>
-          <tr>
-            <td>3限</td>
-            <td rowspan='2' id='a1' class='cellText'></td>
-            <td rowspan='2' id='a7' class='cellText'></td>
-            <td rowspan='2' id='a13' class='cellText'></td>
-            <td rowspan='2' id='a19' class='cellText'></td>
-            <td rowspan='2' id='a25' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>4限</td>
-          </tr>
-          <tr>
-            <td>5限</td>
-            <td rowspan='2' id='a2' class='cellText'></td>
-            <td rowspan='2' id='a8' class='cellText'></td>
-            <td rowspan='2' id='a14' class='cellText'></td>
-            <td rowspan='2' id='a20' class='cellText'></td>
-            <td rowspan='2' id='a26' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>6限</td>
-          </tr>
-          <tr>
-            <td>7限</td>
-            <td rowspan='2' id='a3' class='cellText'></td>
-            <td rowspan='2' id='a9' class='cellText'></td>
-            <td rowspan='2' id='a15' class='cellText'></td>
-            <td rowspan='2' id='a21' class='cellText'></td>
-            <td rowspan='2' id='a27' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>8限</td>
-          </tr>
-          <tr>
-            <td>9限</td>
-            <td rowspan='2' id='a4' class='cellText'></td>
-            <td rowspan='2' id='a10' class='cellText'></td>
-            <td rowspan='2' id='a16' class='cellText'></td>
-            <td rowspan='2' id='a22' class='cellText'></td>
-            <td rowspan='2' id='a28' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>10限</td>
-          </tr>
-          <tr>
-            <td>11限</td>
-            <td rowspan='2' id='a5' class='cellText'></td>
-            <td rowspan='2' id='a11' class='cellText'></td>
-            <td rowspan='2' id='a17' class='cellText'></td>
-            <td rowspan='2' id='a23' class='cellText'></td>
-            <td rowspan='2' id='a29' class='cellText'></td>
-          </tr>
-          <tr>
-            <td>12限</td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
+      <h1 class="text-center text-success display-4 mt-5">あなたの欠時数</h1>
+      <div class="d-flex justify-content-center align-items-center gap-3 my-3">
+        <h2 class="absenceNomalText mb-0" id="allAbsence">総欠時：0</h2>
+        <button type="button" class="btn btn-success btn-lg" onclick="todayAbsence()">本日欠席</button>
+      </div>
 
-    <div id="modal" class="modal">
-      <div class="modal-content">
-        <span id="closeModal">&times;</span>
-        <div id="modal-body">
-          読み込み中
+      <div class="absence p-3 rounded shadow-sm bg-white">
+        <div class="d-flex flex-wrap justify-content-center gap-2 mb-3">
+          <h2 class="absenceNomalText h5 me-2">欠時数増減倍率：</h2>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="absenceScale" id="scale1" value="1" checked>
+            <label class="form-check-label" for="scale1">×1</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="absenceScale" id="scale2" value="2">
+            <label class="form-check-label" for="scale2">×2</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="absenceScale" id="scale4" value="4">
+            <label class="form-check-label" for="scale4">×4</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" name="absenceScale" id="scale8" value="8">
+            <label class="form-check-label" for="scale8">×8</label>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table id="absence" class="table table-bordered table-hover text-center align-middle">
+            <colgroup>
+              <col class="time-col">
+              <col class="day-col">
+              <col class="day-col">
+              <col class="day-col">
+              <col class="day-col">
+              <col class="day-col">
+            </colgroup>
+            <thead class="table-light">
+              <tr>
+                <th>時限</th>
+                <th>月</th>
+                <th>火</th>
+                <th>水</th>
+                <th>木</th>
+                <th>金</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- 元の構造 그대로維持 -->
+              <tr>
+                <td>1限</td>
+                <td rowspan='2' id='a0' class='cellText'></td>
+                <td rowspan='2' id='a6' class='cellText'></td>
+                <td rowspan='2' id='a12' class='cellText'></td>
+                <td rowspan='2' id='a18' class='cellText'></td>
+                <td rowspan='2' id='a24' class='cellText'></td>
+              </tr>
+              <tr><td>2限</td></tr>
+              <tr>
+                <td>3限</td>
+                <td rowspan='2' id='a1' class='cellText'></td>
+                <td rowspan='2' id='a7' class='cellText'></td>
+                <td rowspan='2' id='a13' class='cellText'></td>
+                <td rowspan='2' id='a19' class='cellText'></td>
+                <td rowspan='2' id='a25' class='cellText'></td>
+              </tr>
+              <tr><td>4限</td></tr>
+              <tr>
+                <td>5限</td>
+                <td rowspan='2' id='a2' class='cellText'></td>
+                <td rowspan='2' id='a8' class='cellText'></td>
+                <td rowspan='2' id='a14' class='cellText'></td>
+                <td rowspan='2' id='a20' class='cellText'></td>
+                <td rowspan='2' id='a26' class='cellText'></td>
+              </tr>
+              <tr><td>6限</td></tr>
+              <tr>
+                <td>7限</td>
+                <td rowspan='2' id='a3' class='cellText'></td>
+                <td rowspan='2' id='a9' class='cellText'></td>
+                <td rowspan='2' id='a15' class='cellText'></td>
+                <td rowspan='2' id='a21' class='cellText'></td>
+                <td rowspan='2' id='a27' class='cellText'></td>
+              </tr>
+              <tr><td>8限</td></tr>
+              <tr>
+                <td>9限</td>
+                <td rowspan='2' id='a4' class='cellText'></td>
+                <td rowspan='2' id='a10' class='cellText'></td>
+                <td rowspan='2' id='a16' class='cellText'></td>
+                <td rowspan='2' id='a22' class='cellText'></td>
+                <td rowspan='2' id='a28' class='cellText'></td>
+              </tr>
+              <tr><td>10限</td></tr>
+              <tr>
+                <td>11限</td>
+                <td rowspan='2' id='a5' class='cellText'></td>
+                <td rowspan='2' id='a11' class='cellText'></td>
+                <td rowspan='2' id='a17' class='cellText'></td>
+                <td rowspan='2' id='a23' class='cellText'></td>
+                <td rowspan='2' id='a29' class='cellText'></td>
+              </tr>
+              <tr><td>12限</td></tr>
+            </tbody>
+          </table>
         </div>
       </div>
+
     </div>
 
-    <br>
-    <p>名前：<span id="username"></span></p>
-    <p>ユーザーID：<span id="userId"></span></p>
-
-    <!-- ViteでビルドされるJSを読み込む -->
-    <script type="module" src="src/main.js"></script>
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="src/main.js"></script>
   </body>
 </html>

@@ -103,18 +103,20 @@ function setButton(userId, timetableData, absenceData){
       if (className && className != '空きコマ'){
         // 減ボタン
         const btnDown = document.createElement("button");
+        btnDown.className = "btn btn-success btn-sm me-1";
         btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, -1);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
         const span = document.createElement("span");
-        span.className = "count";
+        span.className = "count mx-2";
         span.textContent = absenceData[className];
         cell.appendChild(span);
 
         // 増ボタン
         const btnUp = document.createElement("button");
+        btnUp.className = "btn btn-success btn-sm ms-1";
         btnUp.textContent = "△";
         btnUp.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, 1);
         cell.appendChild(btnUp);
@@ -237,10 +239,10 @@ function attachCellEvents(){
 
       // モーダルに授業名を追加
       let html = `
-        <h3>授業一覧</h3>
+        <h3 class="text-center mb-2">授業一覧</h3>;
       `;
       for (let k = 0; k < Object.keys(data).length; k++){
-        html += `<button id="m${i},${k}" class="modal-btn">${data[k]}</button>`;
+        html += `<button id="m${i},${k}" class="btn btn-success modal-btn mb-2 w-100">${data[k]}</button>`;
       }
       html += `
       <br>
