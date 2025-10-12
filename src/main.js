@@ -178,6 +178,13 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
     btnDown.disabled = false;
     btnUp.disabled = false;
   }
+
+  // 総欠時数表示
+  let allAbsence = 0;
+  for (const key in absenceData){
+    allAbsence += absenceData[key];
+  }
+  document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
 }
 
 // モーダルの初期化
