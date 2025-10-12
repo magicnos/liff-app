@@ -87,22 +87,7 @@ function setTimetable(timetableData){
 }
 
 
-// 時間割に欠時数をセット
-function setAbsence(absenceData, timetableData){
-  const table = document.getElementById('absence');
-  for (let k = 1; k <= 5; k++){
-    for (let i = 1; i <= 12; i+=2){
-      if (timetableData[(k-1)*6 + (i-1)/2 + 101] == '空きコマ'){
-        table.rows[i].cells[k].innerText = '/';
-      }else{
-        table.rows[i].cells[k].innerText = absenceData[timetableData[(k-1)*6 + (i-1)/2 + 101]];
-      }
-    }
-  }
-}
-
-
-// 欠時数時間割にボタン設置
+// 欠時数時間割にボタン設置&総欠時表示
 function setButton(userId, timetableData, absenceData){
   const table = document.getElementById("absence");
 
@@ -136,6 +121,13 @@ function setButton(userId, timetableData, absenceData){
       }
     }
   }
+
+  // 総欠時数表示
+  let allAbsence = 0;
+  for (const key in absenceData){
+    allAbsence += absenceData[key];
+  }
+  document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
 }
 
 
@@ -393,7 +385,7 @@ async function changeTimetable(userId, id){
     }
   }
 
-  
+
   // UI反映のために新規時間割をreturnする
   return timetables;
 }
