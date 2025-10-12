@@ -154,22 +154,30 @@ td {
 /* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
-  flex-wrap: wrap; /* 折り返し可能に */
-  justify-content: center; /* 中央寄せ */
-  gap: 10px; /* ラベル間の間隔 */
-  margin-bottom: 14px; /* 下の余白 */
+  flex-wrap: wrap;       /* 複数行に折り返す */
+  justify-content: center; /* 横中央寄せ */
+  align-items: center;   /* 縦中央揃え */
+  gap: 10px;             /* 要素間の間隔 */
+  margin-bottom: 14px;   /* 下の余白 */
+}
+
+.radio-group h2.absenceScale {
+  margin: 0;             /* 上下余白リセット */
+  font-size: 30px;
+  color: #555;
+  text-align: center;
 }
 
 .radio-group label {
   display: flex;
-  align-items: center; /* 垂直中央揃え */
-  gap: 4px; /* ラベルとラジオボタンの間隔 */
-  background: #f3f3f3; /* ラベルの背景色 */
-  border-radius: 20px; /* 角を丸くする */
-  padding: 6px 10px; /* 内側の余白 */
-  cursor: pointer; /* クリック可能にする */
-  font-size: 27px; /* ラベルの文字サイズ */
-  transition: background-color 0.2s ease; /* ホバー時の背景色変化をスムーズに */
+  align-items: center;
+  gap: 4px;
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 27px;
+  transition: background-color 0.2s ease;
 }
 
 .radio-group label:hover {
@@ -182,27 +190,24 @@ td {
   height: 27px;
 }
 
-#todayAbsence {
-  display: flex;
-  margin: 10px auto; /* 上下の余白 */
-  background-color: #06C755; /* 背景色 */
+.radio-group button#todayAbsence {
+  margin: 0; /* 上下余白リセット */
+  padding: 10px 16px;
+  font-size: 25px;
+  border-radius: 10px;
+  background-color: #06C755;
   color: #fff;
-  font-weight: 600; /* 太字 */
-  border: none; /* 枠線なし */
-  border-radius: 10px; /* 角を丸くする */
-  cursor: pointer; /* クリック可能にする */
-  transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
-  width: auto; /* 幅自動 */
-  padding: 10px 0; /* 内側の余白 */
-  font-size: 25px; /* 文字サイズ */
+  border: none;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
 }
 
-.todayAbsence:hover {
-  opacity: 0.9; /* 少し薄くなる */
+.radio-group button#todayAbsence:hover {
+  opacity: 0.9;
 }
 
-.todayAbsence:active {
-  transform: scale(0.98); /* 少し縮む */
+.radio-group button#todayAbsence:active {
+  transform: scale(0.98);
 }
 
 /* ==欠時数テーブル本体== */
