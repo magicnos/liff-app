@@ -24,6 +24,13 @@ h2 {
   margin: 4px 0;
 }
 
+h3 {
+  font-size: 30px;
+  color: #333;
+  text-align: center;
+  margin: 6px 0;
+}
+
 /* 通常テキスト */
 p,
 .absenceNomalText {
@@ -75,6 +82,7 @@ th {
 }
 
 .cellText {
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -135,7 +143,6 @@ th {
 
 .todayAbsence {
   display: block;
-  max-width: 320px;
   margin: 10px auto;
   background-color: #06C755;
   color: #fff;
@@ -146,7 +153,7 @@ th {
   transition: opacity 0.2s, transform 0.1s;
   width: auto;
   padding: 10px 0px;
-  font-size: 35px;
+  font-size: 30px;
 }
 
 .todayAbsence:hover {
@@ -161,7 +168,7 @@ th {
 #absence td .count {
   margin: 0 6px;
   font-weight: 600;
-  font-size: 35px;
+  font-size: 100px;
 }
 
 /* 欠時数増減ボタンデザイン */
@@ -169,10 +176,10 @@ th {
   background-color: #06C755;
   color: #fff;
   border: none;
-  border-radius: 6px;
-  padding: 2px 6px;
+  border-radius: 8px;
+  padding: 4px 8px;
   cursor: pointer;
-  font-size: 1rem;
+  font-size: 25px;
   transition: transform 0.1s, opacity 0.2s;
 }
 
@@ -238,7 +245,7 @@ th {
   position: absolute;
   right: 12px;
   top: 8px;
-  font-size: 30px;
+  font-size: 50px;
   color: #777;
   cursor: pointer;
 }
