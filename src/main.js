@@ -238,12 +238,14 @@ function attachCellEvents(){
       // モーダルに授業名を追加
       let html = `
         <h3>授業一覧</h3>
-        <h3>セル位置: 行 ${row}, 列 ${col}</h3>
-        <h3>まだボタンをタップしても時間割は変わらないよ</h3>
       `;
       for (let k = 0; k < Object.keys(data).length; k++){
         html += `<button id="m${i},${k}" class="modal-btn">${data[k]}</button>`;
       }
+      html += `
+      <br>
+      <h3>セル位置: 行 ${row}, 列 ${col}</h3>
+      `;
       body.innerHTML = html;
 
       // モーダル表示
@@ -265,6 +267,7 @@ async function changeTimetable(userId, id){
 
   // DBに触ってる
   const timetableDocRef = doc(db, userId, 'timetable');
+  const absenceDocRef = doc(db, userId, 'absence');
 
   // -- 新規追加授業名取得 --
   // 曜日別時間割データ取得
@@ -284,6 +287,8 @@ async function changeTimetable(userId, id){
   let newCredit = 0; // 新規授業単位数
   let currentCredit = 0; // 既存授業単位数
   let elseI = 0;  // 既存授業が4単位の時、もう片方の場所
+  let de1 = '';
+  let de2 = '';
   const i = btnId[0]; // 変更箇所
   const currentClassName = currentTimetable[i]; // 既存授業名
   const timetables = {};  // 新しい時間割オブジェクト
@@ -314,6 +319,10 @@ async function changeTimetable(userId, id){
 
     // 配列操作
     if (newCredit == 4){
+      // 新規授業が4単位の時、両方の場所を保存しておく
+      de1 = currentTimetable[newDoc.week1*6 + newDoc.hour];
+      de2 = currentTimetable[newDoc.week2*6 + newDoc.hour];
+
       // 既存授業単位数
       if (currentCredit == 4){
         // もう片方の情報
@@ -352,13 +361,7 @@ async function changeTimetable(userId, id){
     }
   }
 
-  // UI反映のために新規時間割をreturnする
-  return timetables;
-}
 
-
-// 一時的な欠時数のやつ
-async function kari(){
   // 以下同じ授業でないとして、欠時数変更
   if (newClassName != currentClassName){
     // 欠時削除
@@ -387,8 +390,10 @@ async function kari(){
       await updateDoc(absenceDocRef, newAbsence);
     }
   }
-}
 
+  // UI反映のために新規時間割をreturnする
+  return timetables;
+}
 
 
 
@@ -405,11 +410,10 @@ async function main(){
   const timetableData = await getData(userId, 'timetable');
   const absenceData = await getData(userId, 'absence');
 
-  // 時間割に時間割と欠時数を表示
+  // 時間割に時間割を表示
   setTimetable(timetableData);
-  setAbsence(absenceData, timetableData);
 
-  // 欠時数時間割に欠時変更ボタンを設置
+  // 欠時数時間割に欠時数と欠時変更ボタンを設置
   setButton(userId, timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
