@@ -12,26 +12,30 @@ body {
    テーブル設定
 ================================================== */
 table {
-  border-collapse: collapse;
-  width: 100%;
-  margin-bottom: 20px;
+  border-collapse: collapse; /* 枠線を重ねて表示 */
+  width: 100%; /* 横幅いっぱい */
   table-layout: fixed; /* 列幅固定 */
 }
 
 th, td {
-  border: 2px solid #bbb;
-  padding: 6px;
-  text-align: center;
-  word-wrap: break-word;
-  font-size: 18px;
+  border: 2px solid #bbb; /* 枠線 */
+  padding: 6px; /* 内側の余白 */
+  text-align: center; /* 中央寄せ */
+  word-wrap: break-word; /* 長い単語の折り返し */
+  font-size: 18px; /* フォントサイズ */
 }
 
-col.time-col { width: 60px; }
-col.day-col  { width: 20%; }
+col.time-col {
+  width: 60px; /* 時間列の幅 */
+}
+
+col.day-col  {
+  width: 20%; /* 5列で均等割り */
+}
 
 .cellText {
-  font-size: 160%;
-  cursor: pointer;
+  font-size: 160%; /* セル内の文字を大きく */
+  cursor: pointer; /* クリックできることを示す */
 }
 
 /* ==================================================
@@ -64,38 +68,24 @@ col.day-col  { width: 20%; }
 }
 
 /* ==================================================
-   欠時数ラジオボタン選択エリア
+   欠時数ラジオボタン選択関係
 ================================================== */
 .absence-form {
-  margin: 10px 0;
-}
-
-.absence-row {
-  font-size: 1.5em; /* テキストを大きく */
-  margin-right: 20px;
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.absence-title {
-  margin-right: 8px;
-  font-size: 40px;
+  margin: 10px 0; /* 上下の余白 */
 }
 
 .radio-group {
-  display: flex;
-  gap: 8px;
-  font-size: 40px;
+  display: flex; /* 要素を横並びにする */
+  gap: 8px; /* 要素間の隙間 */
+  font-size: 30px; /* ラジオボタンとラベルのサイズ */
 }
 
 .todayAbsence {
   margin-left: 10px; /* ラジオボタン群との間隔 */
-  border: none;
-  border-radius: 6px;
-  background-color: #4CAF50;
-  color: #fff;
-  cursor: pointer;
+  border: none; /* 枠線なし */
+  border-radius: 6px; /* 角丸 */
+  background-color: #4CAF50; /* 背景色 */
+  color: #fff;  /* 文字色 */
   transition: background-color 0.2s;
 }
 
