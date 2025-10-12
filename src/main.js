@@ -110,10 +110,12 @@ function setButton(userId, timetableData, absenceData){
     for (let i = 1; i <= 12; i += 2){
       const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
 
-      if (className && className != '空きコマ'){
-        const cell = table.rows[i].cells[k];
-        cell.textContent = ""; // クリア
+      // ここでクリアして、空きコマにした場所にボタンが残るのを防ぐ
+      const cell = table.rows[i].cells[k];
+      cell.textContent = ""; // クリア
 
+      // 空きコマじゃないとき、ボタンと欠時数を設置
+      if (className && className != '空きコマ'){
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
@@ -391,6 +393,7 @@ async function changeTimetable(userId, id){
     }
   }
 
+  
   // UI反映のために新規時間割をreturnする
   return timetables;
 }
