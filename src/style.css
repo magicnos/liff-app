@@ -172,16 +172,22 @@ th {
   font-size: 30px;
 }
 
+#absence td {
+  background-color: transparent !important; /* td背景は変えない */
+  transition: none; /* tdに変化が入らないように */
+}
+
 /* 欠時数増減ボタンデザイン */
 #absence td button {
   background-color: #06C755;
   color: #fff;
   border: none;
-  border-radius: 8px;
-  padding: 4px 8px;
+  border-radius: 0.5rem;
+  padding: 0.25rem 0.5rem;
   cursor: pointer;
-  font-size: 25px;
+  font-size: 1.5625rem; /* 25px */
   transition: transform 0.1s, opacity 0.2s;
+  outline: none;          /* フォーカスの影響を消す */
 }
 
 #absence td button:hover {
