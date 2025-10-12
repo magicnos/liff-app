@@ -50,7 +50,7 @@ table {
 
 /* 時間列だけ固定幅 */
 col.time-col {
-  width: 30px; /* 固定幅 */
+  width: 60px; /* 固定幅 */
 }
 
 /* 残りの列は均等幅 */
@@ -62,7 +62,7 @@ th {
   padding: 4px 6px; /* 内側余白 */
   font-size: 20px;
   font-weight: 300;
-  height: 50px; /* セルの高さ */
+  height: 40px; /* セルの高さ */
   border: 3px solid #ddd;
   text-align: center; /* 文字を中央寄せ */
   vertical-align: middle; /* 文字を縦中央寄せ */
@@ -77,7 +77,7 @@ td {
   padding: 1px; /* 内側余白 */
   font-size: 10px;
   font-weight: 400; /* 通常は400 */
-  height: 50px; /* セルの高さ */
+  height: 40px; /* セルの高さ */
   border: 3px solid #ddd; /* 枠線 */
   border-collapse: collapse; /* 枠線を重ねる */
   text-align: center; /* 文字を中央寄せ */
@@ -114,9 +114,9 @@ td {
    ========================= */
 #timetable > .cellText {
   padding: 1px; /* 内側余白 */
-  font-size: 25px;
+  font-size: 60px;
   font-weight: 400; /* 通常は400 */
-  height: 50px; /* セルの高さ */
+  height: 40px; /* セルの高さ */
   border: 1px solid #ddd; /* 枠線 */
   border-collapse: collapse; /* 枠線を重ねる */
   text-align: center; /* 文字を中央寄せ */
@@ -135,9 +135,10 @@ td {
    欠時数テーブル
    ========================= */
 .absenceScale {
-  font-size: 27px;
+  font-size: 30px;
   color: #555;
-  text-align: center; 
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
   margin: 0; /* 上下 左右　の順 */
 }
 
@@ -152,10 +153,10 @@ td {
 /* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-  margin-bottom: 14px;
+  flex-wrap: wrap; /* 折り返し可能に */
+  justify-content: center; /* 中央寄せ */
+  gap: 10px; /* ラベル間の間隔 */
+  margin-bottom: 14px; /* 下の余白 */
 }
 
 .radio-group label {
@@ -181,7 +182,7 @@ td {
 }
 
 #todayAbsence {
-  display: block;
+  display: flex;
   margin: 10px auto; /* 上下の余白 */
   background-color: #06C755; /* 背景色 */
   color: #fff;
