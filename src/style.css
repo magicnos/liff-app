@@ -219,6 +219,10 @@ td {
 
 /* セルの背景は変わらないようにする */
 #absence td {
+  display: flex;
+  justify-content: center; /* 横中央寄せ */
+  align-items: center; /* 縦中央寄せ */
+  gap: 6px; /* ボタンと欠時数の間隔 */
   background-color: #fff !important;
 }
 
