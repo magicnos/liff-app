@@ -74,7 +74,6 @@ th {
 
 /* 実質時限の部分のみ */
 td {
-  display: flex;
   padding: 1px; /* 内側余白 */
   font-size: 20px;
   font-weight: 400; /* 通常は400 */
