@@ -36,6 +36,56 @@ p {
   text-align: center;
 }
 
+table {
+  width: 100%; /* 横幅いっぱい */
+  table-layout: fixed; /* セルの幅を均等に */
+  border: 2px solid #ddd; /* 枠線 */
+  border-collapse: collapse; /* 枠線を重ねる */
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  background-color: #f9f9f9; /* 背景色 */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  border-radius: 8px; /* 角を丸くする */
+}
+
+/* 時間列だけ固定幅 */
+col.time-col {
+  width: 30px; /* 固定幅 */
+}
+
+/* 残りの列は均等幅 */
+col:not(.time-col) {
+  width: calc((100% - 30px) / 5); /* 残りの幅を5等分 */
+}
+
+th {
+  padding: 4px 6px; /* 内側余白 */
+  font-size: 20px;
+  font-weight: 300;
+  height: 50px; /* セルの高さ */
+  border: 3px solid #ddd;
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  overflow: hidden; /* はみ出た部分を隠す */
+  word-break: break-word; /* 長い単語を折り返す */
+  background-color: #f0f0f0;
+  color: #333;
+}
+
+/* 実質時限の部分のみ */
+td {
+  padding: 1px; /* 内側余白 */
+  font-size: 10px;
+  font-weight: 400; /* 通常は400 */
+  height: 50px; /* セルの高さ */
+  border: 3px solid #ddd; /* 枠線 */
+  border-collapse: collapse; /* 枠線を重ねる */
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  overflow: hidden; /* はみ出た部分を隠す */
+  word-break: break-word; /* 長い単語を折り返す */
+}
+
 
 /* ========================
    テーブルの上
@@ -58,81 +108,48 @@ p {
   margin: 4px 0; /* 上下 左右　の順 */
 }
 
+
+/* ========================
+   時間割テーブル
+   ========================= */
+#timetable > .cellText {
+  padding: 1px; /* 内側余白 */
+  font-size: 25px;
+  font-weight: 400; /* 通常は400 */
+  height: 50px; /* セルの高さ */
+  border: 1px solid #ddd; /* 枠線 */
+  border-collapse: collapse; /* 枠線を重ねる */
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  overflow: hidden; /* はみ出た部分を隠す */
+  word-break: break-word; /* 長い単語を折り返す */
+  cursor: pointer; /* クリック可能にする */
+  transition: background-color 0.2s ease; /* ホバー時の背景色変化をスムーズに */
+}
+
+#timetable > .cellText:hover {
+  background-color: #e8f5e9;
+}
+
 /* ========================
    欠時数テーブル
    ========================= */
 .absenceScale {
-  font-size: 27px; /* 1.7rem → 27.2px 四捨五入 */
+  font-size: 27px;
   color: #555;
-  text-align: center;
+  text-align: center; 
   margin: 0; /* 上下 左右　の順 */
 }
 
-
-
-
-
-
-/* =========================
-   ====== 時間割テーブル ======
-   ========================= */
-table {
-  table-layout: fixed;
-  width: 100%;
-  border-collapse: collapse;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-  border-radius: 8px;
-}
-
-th:first-child,
-td:first-child {
-  width: 60px; 
-  font-size: 18px; /* 1.1rem → 17.6px 四捨五入 */
-}
-
-th:not(:first-child),
-td:not(:first-child) {
-  width: calc((100% - 60px) / 5);
-}
-
-th, td {
-  border: 1px solid #ddd;
-  text-align: center;
-  vertical-align: middle;
-  height: 50px;
-  font-size: 18px; /* 1.1rem → 18px */
-  overflow: hidden;
-  word-break: break-word;
-}
-
-th {
-  background-color: #f0f0f0;
-  font-weight: 600;
-  color: #333;
-}
-
-.cellText {
-  font-size: 20px;
-  cursor: pointer;
-  transition: background-color 0.2s ease;
-}
-
-.cellText:hover {
-  background-color: #e8f5e9;
-}
-
-/* =========================
-   ====== 欠時管理部分 ======
-   ========================= */
 .absence {
   background-color: #fff;
-  margin-top: 20px;
-  padding: 14px;
-  border-radius: 12px;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  margin-top: 20px; /* 上の余白 */
+  padding: 14px; /* 内側の余白 */
+  border-radius: 12px; /* 角を丸くする */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 軽い影をつける */
 }
 
-/* ラジオボタン */
+/* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
   flex-wrap: wrap;
@@ -143,14 +160,14 @@ th {
 
 .radio-group label {
   display: flex;
-  align-items: center;
-  gap: 4px;
-  background: #f3f3f3;
-  border-radius: 20px;
-  padding: 6px 10px;
-  cursor: pointer;
-  font-size: 27px;
-  transition: background-color 0.2s ease;
+  align-items: center; /* 垂直中央揃え */
+  gap: 4px; /* ラベルとラジオボタンの間隔 */
+  background: #f3f3f3; /* ラベルの背景色 */
+  border-radius: 20px; /* 角を丸くする */
+  padding: 6px 10px; /* 内側の余白 */
+  cursor: pointer; /* クリック可能にする */
+  font-size: 27px; /* ラベルの文字サイズ */
+  transition: background-color 0.2s ease; /* ホバー時の背景色変化をスムーズに */
 }
 
 .radio-group label:hover {
@@ -163,40 +180,32 @@ th {
   height: 27px;
 }
 
-/* 欠時ヘッダー部 */
-.absence-header {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-}
-
-.todayAbsence {
+#todayAbsence {
   display: block;
-  margin: 10px auto;
-  background-color: #06C755;
+  margin: 10px auto; /* 上下の余白 */
+  background-color: #06C755; /* 背景色 */
   color: #fff;
-  font-weight: 600;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.1s;
-  width: auto;
-  padding: 10px 0;
-  font-size: 30px;
+  font-weight: 600; /* 太字 */
+  border: none; /* 枠線なし */
+  border-radius: 10px; /* 角を丸くする */
+  cursor: pointer; /* クリック可能にする */
+  transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
+  width: auto; /* 幅自動 */
+  padding: 10px 0; /* 内側の余白 */
+  font-size: 30px; /* 文字サイズ */
 }
 
 .todayAbsence:hover {
-  opacity: 0.9;
+  opacity: 0.9; /* 少し薄くなる */
 }
 
 .todayAbsence:active {
-  transform: scale(0.98);
+  transform: scale(0.98); /* 少し縮む */
 }
 
-/* 欠時数テーブルの増減ボタン間隔 */
-#absence td .count {
-  margin: 0 6px;
+/* ==欠時数テーブル本体== */
+.count {
+  margin: 0 8px;
   font-weight: 600;
   font-size: 30px;
 }
@@ -208,25 +217,28 @@ th {
 
 /* ボタンだけクリック可能・デザイン変化 */
 #absence td button {
-  pointer-events: auto;
-  background-color: #06C755;
+  display: block;
+  margin: 10px auto; /* 上下の余白 */
+  background-color: #06C755; /* 背景色 */
   color: #fff;
-  border: none;
-  border-radius: 0.5rem;
-  padding: 0.25rem 0.5rem;
-  cursor: pointer;
-  font-size: 1.5625rem; /* 25px */
-  transition: transform 0.1s, opacity 0.2s;
-  outline: none;
+  font-weight: 600; /* 太字 */
+  border: none; /* 枠線なし */
+  border-radius: 10px; /* 角を丸くする */
+  cursor: pointer; /* クリック可能にする */
+  transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
+  width: auto; /* 幅自動 */
+  padding: 10px 0; /* 内側の余白 */
+  font-size: 30px; /* 文字サイズ */
 }
 
 #absence td button:hover {
-  opacity: 0.85;
+  opacity: 0.85; /* 少し薄くなる */
 }
 
 #absence td button:active {
-  transform: scale(0.95);
+  transform: scale(0.95); /* 少し縮む */
 }
+
 
 /* =========================
    ====== モーダル ======
@@ -261,7 +273,7 @@ th {
   display: block;
   width: 98%;
   margin: 8px auto;
-  font-size: 26px; /* 1.6rem → 25.6px 四捨五入 */
+  font-size: 26px;
   padding: 14px 16px;
   border-radius: 10px;
   border: none;
