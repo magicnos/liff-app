@@ -187,7 +187,7 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
 }
 
 // モーダルの初期化
-function initModal(userId, timetableDoc){
+function initModal(userId){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
 
@@ -207,7 +207,7 @@ function initModal(userId, timetableDoc){
   modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      const newTimetable = await changeTimetable(userId, id, timetableDoc);
+      const newTimetable = await changeTimetable(userId, id);
       setTimetable(newTimetable);
       modal.style.display = 'none';
     }
@@ -252,8 +252,12 @@ function attachCellEvents(){
 
 
 
+// 時間割を一回配列に変えなくてもいいんじゃないかな
 // 時間割変更
-async function changeTimetable(userId, id, timetableDoc){
+async function changeTimetable(userId, id){
+  // 現在の時間割を取得
+  const timetableDoc = await getData(userId, 'timetable');
+
   // ボタンIdを配列に(時間割番号, 授業番号)
   const btnId = id.slice(1).split(',');
 
