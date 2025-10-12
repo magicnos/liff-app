@@ -3,7 +3,7 @@
    ========================= */
 body {
   font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
-  background-color: #f0f2f5; /* カード背景との差別化 */
+  background-color: #f0f2f5;
   color: #212529;
   margin: 0px;
   line-height: 1.6; /* 行間 */
@@ -19,13 +19,6 @@ body {
 /* =========================
    ====== 全体設定 ======
    ========================= */
-body {
-  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
-  margin: 12px;
-  background-color: #ffffff;
-  color: #222;
-  line-height: 1.6;
-}
 
 /* 見出し */
 h1 {
