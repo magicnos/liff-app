@@ -7,53 +7,71 @@ body {
   color: #212529;
   margin: 0px;
   line-height: 1.6; /* 行間 */
-  padding: 12px; /* 内側の余白 */
+  padding: 10px; /* 内側の余白 */
   -webkit-tap-highlight-color: rgba(0,0,0,0); /* タップ時のハイライト消す */
   touch-action: manipulation; /* スクロール操作と干渉しない */
   scroll-behavior: smooth; /* スムーススクロール */
 }
 
-
-
-
-/* =========================
-   ====== 全体設定 ======
-   ========================= */
-
-/* 見出し */
 h1 {
-  font-size: 65px;
-  color: #06C755;
+  font-size: 60px;
+  font-weight: 600;
+  color: #000000;
   text-align: center;
-  margin-bottom: 6px;
+  margin-bottom: 3px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* 文字に影をつける */
+  border-bottom: 5px solid black; /* 見出し下にライン */
 }
 
 h2 {
-  font-size: 30px;
+  font-size: 25px;
   color: #555;
   text-align: center;
-  margin: 4px 0;
+  margin: 4px 0; /* 上下 左右　の順 */
 }
 
-h3 {
-  font-size: 30px;
-  color: #333;
-  text-align: center;
-  margin: 6px 0;
-}
-
-/* 通常テキスト */
-p,
-.absenceNomalText {
-  text-align: center;
-  font-size: 14px; /* 0.9rem → 14.4px を四捨五入 */
+p {
+  font-size: 14px;
   color: #555;
+  text-align: center;
 }
 
-.absenceNomalText {
+
+/* ========================
+   テーブルの上
+   ========================= */
+.tableTitle {
+  font-size: 60px;
   font-weight: 600;
-  color: #333;
+  color: #06C755;
+  text-align: center;
+  margin-bottom: 3px;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.2); /* 文字に影をつける */
+  border-bottom: 5px solid black; /* 見出し下にライン */
 }
+
+.tableText,
+.absenceAllText {
+  font-size: 25px;
+  color: #555;
+  text-align: center;
+  margin: 4px 0; /* 上下 左右　の順 */
+}
+
+/* ========================
+   欠時数テーブル
+   ========================= */
+.absenceScale {
+  font-size: 27px; /* 1.7rem → 27.2px 四捨五入 */
+  color: #555;
+  text-align: center;
+  margin: 0; /* 上下 左右　の順 */
+}
+
+
+
+
+
 
 /* =========================
    ====== 時間割テーブル ======
