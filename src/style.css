@@ -1,160 +1,203 @@
-/* ==================================================
-   基本設定（全体・フォント・配色）
-================================================== */
+/* ====== 全体設定 ====== */
 body {
-  font-family: Arial, sans-serif;
-  margin: 15px;
-  background-color: #fafafa;
+  font-family: "Noto Sans JP", "Hiragino Kaku Gothic ProN", sans-serif;
+  margin: 12px;
+  background-color: #ffffff;
   color: #222;
+  line-height: 1.6;
 }
 
-/* ==================================================
-   テーブル設定
-================================================== */
+/* 見出し */
+h1 {
+  font-size: 1.4rem;
+  color: #06C755;
+  text-align: center;
+  margin-bottom: 6px;
+}
+
+h2 {
+  font-size: 0.95rem;
+  color: #555;
+  text-align: center;
+  margin: 4px 0;
+}
+
+.absenceNomalText {
+  font-weight: 600;
+  color: #333;
+  text-align: center;
+}
+
+/* ====== 時間割テーブル ====== */
 table {
-  border-collapse: collapse; /* 枠線を重ねて表示 */
-  width: 100%; /* 横幅いっぱい */
-  table-layout: fixed; /* 列幅固定 */
+  width: 100%;
+  border-collapse: collapse;
+  margin: 10px auto;
+  background-color: #fafafa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.08);
 }
 
 th, td {
-  border: 2px solid #bbb; /* 枠線 */
-  padding: 6px; /* 内側の余白 */
-  text-align: center; /* 中央寄せ */
-  word-wrap: break-word; /* 長い単語の折り返し */
-  font-size: 18px; /* フォントサイズ */
+  border: 1px solid #ddd;
+  text-align: center;
+  padding: 8px;
+  font-size: 0.9rem;
 }
 
-col.time-col {
-  width: 60px; /* 時間列の幅 */
-}
-
-col.day-col  {
-  width: 20%; /* 5列で均等割り */
+th {
+  background-color: #f0f0f0;
+  font-weight: 600;
+  color: #333;
 }
 
 .cellText {
-  font-size: 160%; /* セル内の文字を大きく */
-  cursor: pointer; /* クリックできることを示す */
-}
-
-/* ==================================================
-   欠時テーブル（ボタン・カウント表示）
-================================================== */
-#absence button {
-  font-size: 22px;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 12px;
-  background-color: #4CAF50;
-  color: #fff;
   cursor: pointer;
-  margin: 0 4px;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease;
 }
 
-#absence button:hover {
-  background-color: #45a049;
+.cellText:hover {
+  background-color: #e8f5e9;
 }
 
-#absence .count {
-  display: inline-block;
-  min-width: 32px;
-  margin: 0 12px;
-  text-align: center;
-  font-size: 130%;
-  font-weight: 600;
-}
-
-/* ==================================================
-   欠時数ラジオボタン選択関係
-================================================== */
-.absence-form {
-  margin: 10px 0; /* 上下の余白 */
+/* ====== 欠時管理部分 ====== */
+.absence {
+  background-color: #fff;
+  margin-top: 20px;
+  padding: 14px;
+  border-radius: 12px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
 }
 
 .radio-group {
-  display: flex; /* 要素を横並びにする */
-  gap: 8px; /* 要素間の隙間 */
-  font-size: 30px; /* ラジオボタンとラベルのサイズ */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 14px;
 }
 
+.radio-group label {
+  background: #f3f3f3;
+  border-radius: 20px;
+  padding: 6px 10px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.radio-group label:hover {
+  background: #e0e0e0;
+}
+
+.radio-group input {
+  accent-color: #06C755;
+  width: 18px;
+  height: 18px;
+}
+
+/* ====== 欠席ボタン ====== */
 .todayAbsence {
-  margin-left: 10px; /* ラジオボタン群との間隔 */
-  border: none; /* 枠線なし */
-  border-radius: 6px; /* 角丸 */
-  background-color: #4CAF50; /* 背景色 */
-  color: #fff;  /* 文字色 */
-  transition: background-color 0.2s;
+  display: block;
+  width: 85%;
+  max-width: 320px;
+  margin: 10px auto;
+  padding: 12px 16px;
+  background-color: #06C755;
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
 }
 
 .todayAbsence:hover {
-  background-color: #45a049;
+  opacity: 0.9; /* ホバー時に少し透明に */
+}
+.todayAbsence:active {
+  transform: scale(0.98); /* クリック時に少し縮小 */
 }
 
-/* ==================================================
-   モーダル関連
-================================================== */
-/* 背景（モーダル全体） */
+/* ====== モーダル ====== */
 .modal {
-  display: none; /* 初期非表示 */
-  position: fixed;
-  z-index: 1000;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  overflow: auto;
+  display: none; /* 初期状態では非表示 */
+  position: fixed; /* 画面全体に固定 */
+  z-index: 1000; /* 他の要素より前面に表示 */
+  inset: 0;  /* 上下左右0で画面全体を覆う */
+  background-color: rgba(0,0,0,0.4); /* 半透明の黒背景 */
 }
 
-/* コンテンツ本体（中央に表示） */
 .modal-content {
-  position: relative;          /* ×ボタンの位置指定用 */
-  background-color: #fff;
-  margin: 8% auto;             /* 上下の余白をやや少なめに */
-  padding: 30px 20px;
-  border-radius: 12px;
-  width: 95%;                  /* スマホではほぼ全幅 */
-  max-width: 600px;            /* PCでは横幅600pxまで */
-  text-align: center;
-  font-size: 20px;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.25); /* 少し浮かせる影 */
+  background-color: #fff; /* モーダルの背景色 */
+  margin: 25% auto; /* 画面中央に配置 */
+  padding: 20px; /* 内側の余白 */
+  border-radius: 12px; /* 角を丸く */
+  width: 90%; /* 横幅90% */
+  max-width: 400px; /* 最大横幅400px */
+  text-align: center; /* テキスト中央揃え */
+  position: relative; /* 閉じるボタンの位置調整用 */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15); /* 影を追加 */
 }
 
-/* 閉じるボタン（×） */
+/* 閉じるボタン */
 #closeModal {
-  position: absolute;
-  top: 10px;
-  right: 14px;
-  font-size: 50px;
-  font-weight: bold;
+  position: absolute; /* 親要素に対して絶対位置 */
+  right: 12px; /* 右から12px */
+  top: 8px; /* 上から8px */
+  font-size: 30px; /* フォントサイズ */
+  color: #777; /* 色 */
+  cursor: pointer; /* カーソルをポインターに */
+}
+
+/* ====== 通常テキスト ====== */
+p {
+  text-align: center;
+  font-size: 0.9rem;
   color: #555;
-  cursor: pointer;
-  transition: color 0.2s, transform 0.1s;
 }
 
-#closeModal:hover {
-  color: #000;
-  transform: scale(1.15);
-}
 
-/* モーダル内ボタン */
-.modal-btn {
-  display: block;
-  width: 80%;                 /* 横幅を広げる */
-  margin: 16px auto;
-  padding: 14px 20px;
-  font-size: 20px;
-  border: none;
-  border-radius: 8px;
-  background-color: #007bff;
-  color: white;
-  cursor: pointer;
-  transition: background-color 0.2s, transform 0.1s;
-}
 
-.modal-btn:hover {
-  background-color: #0069d9;
-  transform: translateY(-2px); /* 押す前に少し浮く感じ */
+/* ====== スマホ用レイアウト ====== */
+@media (max-width: 480px) {
+  h1 {
+    font-size: 1.2rem;
+  }
+
+  h2 {
+    font-size: 0.85rem;
+  }
+
+  th, td {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  /* テーブルを横スクロール可能に */
+  table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+
+  .radio-group {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .todayAbsence {
+    width: 95%;
+    font-size: 1rem;
+  }
+
+  .modal-content {
+    width: 95%;
+    margin-top: 40%;
+  }
 }
