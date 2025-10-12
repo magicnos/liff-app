@@ -145,8 +145,8 @@ th {
   cursor: pointer;
   transition: opacity 0.2s, transform 0.1s;
   width: auto;
-  padding: 10px 16px;
-  font-size: 20px;
+  padding: 10px 0px;
+  font-size: 35px;
 }
 
 .todayAbsence:hover {
@@ -161,7 +161,7 @@ th {
 #absence td .count {
   margin: 0 6px;
   font-weight: 600;
-  font-size: 1rem;
+  font-size: 35px;
 }
 
 /* 欠時数増減ボタンデザイン */
