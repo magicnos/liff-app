@@ -9,14 +9,14 @@ body {
 
 /* 見出し */
 h1 {
-  font-size: 1.4rem;
+  font-size: 100px;
   color: #06C755;
   text-align: center;
   margin-bottom: 6px;
 }
 
 h2 {
-  font-size: 0.95rem;
+  font-size: 60px;
   color: #555;
   text-align: center;
   margin: 4px 0;
@@ -53,6 +53,7 @@ th {
 }
 
 .cellText {
+  font-size: 20px;
   cursor: pointer;
   transition: background-color 0.2s ease;
 }
@@ -160,44 +161,4 @@ p {
   text-align: center;
   font-size: 0.9rem;
   color: #555;
-}
-
-
-
-/* ====== スマホ用レイアウト ====== */
-@media (max-width: 480px) {
-  h1 {
-    font-size: 1.2rem;
-  }
-
-  h2 {
-    font-size: 0.85rem;
-  }
-
-  th, td {
-    font-size: 0.8rem;
-    padding: 6px;
-  }
-
-  /* テーブルを横スクロール可能に */
-  table {
-    display: block;
-    overflow-x: auto;
-    white-space: nowrap;
-  }
-
-  .radio-group {
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .todayAbsence {
-    width: 95%;
-    font-size: 1rem;
-  }
-
-  .modal-content {
-    width: 95%;
-    margin-top: 40%;
-  }
 }
