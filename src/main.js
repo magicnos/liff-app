@@ -401,10 +401,10 @@ async function todayAbsence(){
   const now = new Date();
   const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
 
-  // 土日は授業がない
+  // 土日以外
   if (day != 0 && day != 6){
     // 時間割取得
-    const timetableObj = firestore.getDocument(`${userId}/timetable`).obj;
+    const timetableObj = await getData(userId, 'timetable');
     const timetableData = [];
     for (let i = 0; i < 6; i++){
       if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
@@ -413,22 +413,24 @@ async function todayAbsence(){
     }
 
     // 欠時数取得
-    const absenceData = firestore.getDocument(`${userId}/absence`).obj;
+    const absenceData = await getData(userId, 'absence');
 
     // 新しい欠時情報
     const newAbsenceData = {};
     for (let i = 0; i < timetableData.length; i++){
       // 何欠つけるのか調べる
-      const credit = firestore.getDocument(`timetable_name/${timetableData[i]}`).obj.credit;
+      const credit = await getData('timetable_name', timetableData[i]).credit;
       const addNumber = Number(`${'21'[credit%2]}`);
       // 新規欠時代入
       newAbsenceData[timetableData[i]] =
       Number(absenceData[timetableData[i]]) + addNumber;
     }
 
-    // DBに書き込む
-    firestore.updateDocument(`${userId}/absence`, newAbsenceData, true);
-
+    // DB更新
+    const docRef = doc(db, userId, 'absence');
+    for (let k = 0; k < Object.keys(newAbsenceData).length; k++){
+      await updateDoc(docRef, { [timetable[k]]: newAbsenceData[timetable[k]] } );
+    }
   }
 }
 

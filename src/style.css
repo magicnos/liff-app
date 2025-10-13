@@ -191,7 +191,7 @@ td {
 }
 
 .radio-group button#todayAbsence {
-  margin: 0 10px; /* 余白 */
+  margin: 0 30px; /* 余白 */
   padding: 10px 16px;
   font-size: 25px;
   border-radius: 10px;
