@@ -108,6 +108,11 @@ td {
   background-color: #e8f5e9;
 }
 
+th.todayHeader {
+  border: 4px solid red; /* 赤い枠線 */
+  background-color: #ffeaea; /* 少し淡い赤背景にしてもわかりやすい */
+}
+
 /* ========================
    欠時数テーブル
    ========================= */

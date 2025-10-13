@@ -395,6 +395,26 @@ async function changeTimetable(id){
 }
 
 
+// 今日の曜日に赤枠をつける
+function highlightToday(){
+  // 曜日配列（日曜=0, 月曜=1, ...）
+  const dayOfWeek = new Date().getDay();
+
+  // 1〜5（月〜金）のときのみ処理
+  if (dayOfWeek >= 1 && dayOfWeek <= 5) {
+    // timetableテーブル内のthを取得
+    const ths = document.querySelectorAll("#timetable thead th");
+
+    // 例: 月なら1番目（0は「時限」）
+    const targetTh = ths[dayOfWeek];
+    if (targetTh) {
+      targetTh.classList.add("todayHeader");
+    }
+  }
+}
+
+
+
 
 // メインの処理
 async function main(){
@@ -416,6 +436,9 @@ async function main(){
   // 時間割モーダル表示と内容セット
   initModal();
   attachCellEvents();
+
+  // 今日の曜日に赤枠をつける
+  highlightToday()
 }
 
 
