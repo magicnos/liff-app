@@ -431,6 +431,9 @@ async function todayAbsence(){
     for (let k = 0; k < Object.keys(newAbsenceData).length; k++){
       await updateDoc(docRef, { [timetable[k]]: newAbsenceData[timetable[k]] } );
     }
+
+    // UI更新
+    setButton(userId, newTimetable, newAbsence);
   }
 }
 
