@@ -414,6 +414,68 @@ function highlightToday(){
 }
 
 
+// 本日欠席機能
+function todayAbsence(){
+  // DOMの読み込みが終わってから実行
+  document.addEventListener("DOMContentLoaded", () => {
+
+    // ボタンを取得
+    const saveButton = document.getElementById("todayAbsence");
+
+    // クリックイベントを登録
+    saveButton.addEventListener("click", async () => {
+      // 曜日取得
+      const now = new Date();
+      const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
+
+      // 土日は授業がない
+      if (day == 0 || day == 6){
+        alert('本日定時制課程の授業はありません。');
+      }else{
+
+        try{
+          // 時間割取得
+          const timetableObj = await getData(userId, 'timetable');
+          const timetableData = [];
+          for (let i = 0; i < 6; i++){
+            if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
+              timetableData.push(timetableObj[(day-1)*6 + i + 101]);
+            }
+          }
+
+          // 欠時数取得
+          const absenceData = await getData(userId, 'absence');
+
+          // 新しい欠時情報
+          const newAbsenceData = {};
+          for (let i = 0; i < timetableData.length; i++){
+            // 何欠つけるのか調べる
+            const classData = await getData('timetable_name', timetableData[i]);
+            const credit = classData.credit;
+            const addNumber = `${'21'[credit%2]}`;
+            // 新規欠時代入
+            newAbsenceData[timetableData[i]] =
+            Number(absenceData[timetableData[i]]) + Number(addNumber);
+          }
+
+          // DB更新
+          const docRef = doc(db, userId, 'absence');
+          await updateDoc(docRef, newAbsenceData);
+
+          alert("本日の欠席を登録しました。");
+        }catch (err){
+          // エラー時は欠時数を元に戻す
+          const docRef = doc(db, userId, 'absence');
+          await updateDoc(docRef, absenceData);
+
+          alert("欠時数登録に失敗しました。もう一度試してください。");
+        }
+      }
+    });
+  });
+}
+
+
 
 
 // メインの処理
@@ -438,7 +500,9 @@ async function main(){
   attachCellEvents();
 
   // 今日の曜日に赤枠をつける
-  highlightToday()
+  highlightToday();
+  // 本日欠席機能
+  todayAbsence();
 }
 
 
@@ -446,5 +510,4 @@ main();
 
 
 // 本日欠席機能をつける
-// 曜日によって今日の時間割の行をハイライトする
 // 時間割変更を配列じゃなくてオブジェクト型でできるように
