@@ -11,11 +11,12 @@ import {
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 
+
 let db, auth, userId;
 
 
 // DB初期化処理
-async function initFirebaseAndLiff(){
+async function initFirebase(){
   // Firebase初期化
   const firebaseConfig = {
     apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
@@ -481,7 +482,7 @@ function todayAbsence(){
 // メインの処理
 async function main(){
   // DB初期化
-  await initFirebaseAndLiff();
+  await initFirebase();
   // liff初期化とuserId取得
   userId = await firstLiff();
 
@@ -509,5 +510,6 @@ async function main(){
 main();
 
 
-// 本日欠席機能をつける
-// 時間割変更を配列じゃなくてオブジェクト型でできるように
+// 設定類のliffを作成
+// 今あるgasを別のファイルにバックアップしておいて、一気に書き換える
+// gasが必要最低限になったので、別のwebhookでラインボットを動かせるか試す
