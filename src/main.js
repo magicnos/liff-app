@@ -419,7 +419,8 @@ async function todayAbsence(){
     const newAbsenceData = {};
     for (let i = 0; i < timetableData.length; i++){
       // 何欠つけるのか調べる
-      const credit = await getData('timetable_name', timetableData[i]).credit;
+      let credit = await getData('timetable_name', timetableData[i]);
+      credit = credit.credit;
       const addNumber = Number(`${'21'[credit%2]}`);
       // 新規欠時代入
       newAbsenceData[timetableData[i]] =
@@ -428,12 +429,13 @@ async function todayAbsence(){
 
     // DB更新
     const docRef = doc(db, userId, 'absence');
-    for (let k = 0; k < Object.keys(newAbsenceData).length; k++){
-      await updateDoc(docRef, { [timetable[k]]: newAbsenceData[timetable[k]] } );
-    }
+    await updateDoc(docRef, newAbsenceData);
+
+    // 新しい欠時数取得
+    const newAbsence = await getData(userId, 'absence');
 
     // UI更新
-    setButton(newTimetable, newAbsence);
+    await setButton(timetableObj, newAbsence);
   }
 }
 
