@@ -1,4 +1,4 @@
-import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
+// import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import {
   getFirestore,
@@ -12,6 +12,7 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 
 
 let db, auth, userId;
+
 
 
 // DB初期化処理
