@@ -416,62 +416,62 @@ function highlightToday(){
 
 // 本日欠席機能
 function todayAbsence(){
-  // DOMの読み込みが終わってから実行
-  document.addEventListener("DOMContentLoaded", () => {
+  // ボタンを取得
+  const saveButton = document.getElementById("todayAbsence");
 
-    // ボタンを取得
-    const saveButton = document.getElementById("todayAbsence");
+  // クリックイベントを登録
+  saveButton.addEventListener("click", async () => {
+    // 曜日取得
+    const now = new Date();
+    const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
 
-    // クリックイベントを登録
-    saveButton.addEventListener("click", async () => {
-      // 曜日取得
-      const now = new Date();
-      const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
+    // 土日は授業がない
+    if (day == 0 || day == 6){
+      alert('本日定時制課程の授業はありません。');
+      return;
+    }
 
-      // 土日は授業がない
-      if (day == 0 || day == 6){
-        alert('本日定時制課程の授業はありません。');
-      }else{
+    // 欠時数取得(catchで使うのでtryの外で定義)
+    const absenceData = await getData(userId, 'absence');
 
-        try{
-          // 時間割取得
-          const timetableObj = await getData(userId, 'timetable');
-          const timetableData = [];
-          for (let i = 0; i < 6; i++){
-            if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
-              timetableData.push(timetableObj[(day-1)*6 + i + 101]);
-            }
-          }
-
-          // 欠時数取得
-          const absenceData = await getData(userId, 'absence');
-
-          // 新しい欠時情報
-          const newAbsenceData = {};
-          for (let i = 0; i < timetableData.length; i++){
-            // 何欠つけるのか調べる
-            const classData = await getData('timetable_name', timetableData[i]);
-            const credit = classData.credit;
-            const addNumber = `${'21'[credit%2]}`;
-            // 新規欠時代入
-            newAbsenceData[timetableData[i]] =
-            Number(absenceData[timetableData[i]]) + Number(addNumber);
-          }
-
-          // DB更新
-          const docRef = doc(db, userId, 'absence');
-          await updateDoc(docRef, newAbsenceData);
-
-          alert("本日の欠席を登録しました。");
-        }catch (err){
-          // エラー時は欠時数を元に戻す
-          const docRef = doc(db, userId, 'absence');
-          await updateDoc(docRef, absenceData);
-
-          alert("欠時数登録に失敗しました。もう一度試してください。");
+    try{
+      // 時間割取得
+      const timetableObj = await getData(userId, 'timetable');
+      const timetableData = [];
+      for (let i = 0; i < 6; i++){
+        if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
+          timetableData.push(timetableObj[(day-1)*6 + i + 101]);
         }
       }
-    });
+
+      // 新しい欠時情報
+      const newAbsenceData = {};
+      for (let i = 0; i < timetableData.length; i++){
+        // 何欠つけるのか調べる
+        const classData = await getData('timetable_name', timetableData[i]);
+        const credit = classData.credit;
+        const addNumber = `${'21'[credit%2]}`;
+        // 新規欠時代入
+        newAbsenceData[timetableData[i]] =
+        Number(absenceData[timetableData[i]]) + Number(addNumber);
+      }
+
+      // DB更新
+      const docRef = doc(db, userId, 'absence');
+      await updateDoc(docRef, newAbsenceData);
+
+      // UI更新
+      Object.assign(absenceData, newAbsenceData); // マージ
+      setButton(timetableObj, absenceData);
+
+      alert("本日の欠席を登録しました。");
+    }catch (err){
+      // エラー時は欠時数を元に戻す
+      const docRef = doc(db, userId, 'absence');
+      await updateDoc(docRef, absenceData);
+
+      alert("欠時数登録に失敗しました。もう一度試してください。");
+    }
   });
 }
 
