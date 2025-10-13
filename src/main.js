@@ -242,10 +242,6 @@ function attachCellEvents(){
       for (let k = 0; k < Object.keys(data).length; k++){
         html += `<button id="m${i},${k}" class="modal-btn">${data[k]}</button>`;
       }
-      html += `
-      <br>
-      <h3>セル位置: 行 ${row}, 列 ${col}</h3>
-      `;
       body.innerHTML = html;
 
       // モーダル表示
