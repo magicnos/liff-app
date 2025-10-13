@@ -7,7 +7,7 @@
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
       // LIFFブラウザで開いてるかチェック
-      if (liff.isInClient()){
+      if (!liff.isInClient()){
         window.location.href = "notLine.html";
       }
     </script>
