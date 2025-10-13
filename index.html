@@ -5,19 +5,22 @@
     <title>新宿山吹の時間割</title>
     <link rel="stylesheet" href="src/style.css">
     <script>
-      // LINEアプリで開いているかをUserAgentでチェック
-      const ua = navigator.userAgent.toLowerCase();
-      const isLineApp = ua.includes("line");
-      const isMobile = /iphone|android/.test(ua);
-      const liffId = "2008192386-zPDXa2d8"; // あなたのLIFF ID
+      window.onload = async () => {
+        // LINEアプリで開いているかをUserAgentでチェック
+        const ua = navigator.userAgent.toLowerCase();
+        const isLineApp = /line\/\d+/.test(ua);
+        const isMobile = /iphone|android/.test(ua);
+        const liffId = "2008192386-zPDXa2d8"; // あなたのLIFF ID
 
-      // LINEアプリ外からアクセスした場合
-      if (!isLineApp && isMobile) {
-        // 自動でLINEアプリで開く
-        location.href = `https://liff.line.me/${liffId}`;
-      } else if (!isLineApp && !isMobile) {
-        // pc用
-        document.write("<h2>このページはスマホのLINEアプリから開いてください。</h2>");
+        // LINEアプリ外からアクセスした場合
+        if (!isLineApp && isMobile){
+          // 自動でLINEアプリで開く
+          const liffUrl = `https://liff.line.me/${liffId}`;
+          window.location.href = liffUrl;
+        } else if (!isLineApp && !isMobile){
+          // pc用
+          document.write("<h2>このページはスマホのLINEアプリから開いてください。</h2>");
+        }
       }
     </script>
   </head>
