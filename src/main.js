@@ -11,7 +11,7 @@ import {
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
 
-let db, auth;
+let db, auth, userId;
 
 
 // DB初期化処理
@@ -88,7 +88,7 @@ function setTimetable(timetableData){
 
 
 // 欠時数時間割にボタン設置&総欠時表示
-function setButton(userId, timetableData, absenceData){
+function setButton(timetableData, absenceData){
   const table = document.getElementById("absence");
 
   for (let k = 1; k <= 5; k++){
@@ -104,7 +104,7 @@ function setButton(userId, timetableData, absenceData){
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, -1);
+        btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
         cell.appendChild(btnDown);
 
         // 欠時数(span)
@@ -116,7 +116,7 @@ function setButton(userId, timetableData, absenceData){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, 1);
+        btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
         cell.appendChild(btnUp);
       }
     }
@@ -132,7 +132,7 @@ function setButton(userId, timetableData, absenceData){
 
 
 // 欠時数を変える
-async function changeAbsence(userId, className, absenceData, timetableData, btnDown, btnUp, operation){
+async function changeAbsence(className, absenceData, timetableData, btnDown, btnUp, operation){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
   // 欠時数増減倍率取得(name="absenceScale" のラジオボタンのうち、チェックされているものを取得)
@@ -187,7 +187,7 @@ async function changeAbsence(userId, className, absenceData, timetableData, btnD
 }
 
 // 時間割モーダルの初期化
-function initModal(userId){
+function initModal(){
   const modal = document.getElementById('modal');
   const span = document.getElementById('closeModal');
 
@@ -207,10 +207,10 @@ function initModal(userId){
   modal.addEventListener('click', async e => {
     if (e.target.classList.contains('modal-btn')){
       const id = e.target.id;
-      const newTimetable = await changeTimetable(userId, id);
+      const newTimetable = await changeTimetable(id);
       const newAbsence = await getData(userId, 'absence');
       setTimetable(newTimetable);
-      setButton(userId, newTimetable, newAbsence);
+      setButton(newTimetable, newAbsence);
       modal.style.display = 'none';
     }
   });
@@ -257,7 +257,7 @@ function attachCellEvents(){
 
 // 時間割を一回配列に変えなくてもいいんじゃないかな
 // 時間割変更
-async function changeTimetable(userId, id){
+async function changeTimetable(id){
   // 現在の時間割を取得
   const timetableDoc = await getData(userId, 'timetable');
 
@@ -433,7 +433,7 @@ async function todayAbsence(){
     }
 
     // UI更新
-    setButton(userId, newTimetable, newAbsence);
+    setButton(newTimetable, newAbsence);
   }
 }
 
@@ -445,7 +445,7 @@ async function main(){
   // DB初期化
   await initFirebaseAndLiff();
   // userId取得
-  const userId = await firstLiff();
+  userId = await firstLiff();
 
   // ユーザーの時間割情報と欠時数情報を取得
   const timetableData = await getData(userId, 'timetable');
@@ -455,10 +455,10 @@ async function main(){
   setTimetable(timetableData);
 
   // 欠時数時間割に欠時数と欠時変更ボタンを設置
-  setButton(userId, timetableData, absenceData);
+  setButton(timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal(userId, timetableData);
+  initModal(timetableData);
   attachCellEvents();
 }
 
