@@ -101,11 +101,11 @@ function setButton(timetableData, absenceData){
 
       // 空きコマじゃないとき、ボタンと欠時数を設置
       if (className && className != '空きコマ'){
-        // 減ボタン
-        const btnDown = document.createElement("button");
-        btnDown.textContent = "▽";
-        btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
-        cell.appendChild(btnDown);
+        // 増ボタン
+        const btnUp = document.createElement("button");
+        btnUp.textContent = "△";
+        btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
+        cell.appendChild(btnUp);
 
         // 欠時数(span)
         const span = document.createElement("span");
@@ -113,11 +113,11 @@ function setButton(timetableData, absenceData){
         span.textContent = absenceData[className];
         cell.appendChild(span);
 
-        // 増ボタン
-        const btnUp = document.createElement("button");
-        btnUp.textContent = "△";
-        btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
-        cell.appendChild(btnUp);
+        // 減ボタン
+        const btnDown = document.createElement("button");
+        btnDown.textContent = "▽";
+        btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
+        cell.appendChild(btnDown);
       }
     }
   }
