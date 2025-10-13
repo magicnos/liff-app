@@ -17,7 +17,6 @@ let db, auth, userId;
 // DB初期化処理
 async function initFirebaseAndLiff(){
   // Firebase初期化
-  // (apiKey, authDomain, projectId)
   const firebaseConfig = {
     apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
     authDomain: "linebot-799ed.firebaseapp.com",
@@ -49,11 +48,10 @@ async function firstLiff(){
 
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
-    document.getElementById("username").textContent = profile.displayName;
     document.getElementById("userId").textContent = profile.userId;
 
     return profile.userId;
-  } catch (error){
+  }catch (error){
     alert("エラーが起きました。再度開きなおすか、下記のエラー内容をお知らせください。\n" + "LIFF初期化に失敗しました: " + error);
   }
 }
@@ -72,7 +70,7 @@ async function getData(path1, path2){
 }
 
 
-// 時間割に授業をセット
+// 時間割に授業をセット(オブジェクト型)
 function setTimetable(timetableData){
   const table = document.getElementById('timetable');
   for (let k = 1; k <= 5; k++){
@@ -87,7 +85,7 @@ function setTimetable(timetableData){
 }
 
 
-// 欠時数時間割にボタン設置&総欠時表示
+// 欠時数時間割にボタン設置&総欠時表示(オブジェクト型)
 function setButton(timetableData, absenceData){
   const table = document.getElementById("absence");
 
@@ -100,7 +98,7 @@ function setButton(timetableData, absenceData){
       cell.textContent = ""; // クリア
 
       // 空きコマじゃないとき、ボタンと欠時数を設置
-      if (className && className != '空きコマ'){
+      if (className != '空きコマ'){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
@@ -118,16 +116,14 @@ function setButton(timetableData, absenceData){
         btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
         cell.appendChild(btnDown);
+      }else{
+        cell.textContent = "-";
       }
     }
   }
 
   // 総欠時数表示
-  let allAbsence = 0;
-  for (const key in absenceData){
-    allAbsence += absenceData[key];
-  }
-  document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
+  allAbsence(absenceData);
 }
 
 
@@ -179,12 +175,19 @@ async function changeAbsence(className, absenceData, timetableData, btnDown, btn
   }
 
   // 総欠時数表示
+  allAbsence(absenceData);
+}
+
+
+// 総欠時表示
+async function allAbsence(absenceData){
   let allAbsence = 0;
   for (const key in absenceData){
     allAbsence += absenceData[key];
   }
   document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
 }
+
 
 // 時間割モーダルの初期化
 function initModal(){
@@ -215,6 +218,7 @@ function initModal(){
     }
   });
 }
+
 
 // セルをタップしたらモーダルを開く
 function attachCellEvents(){
@@ -251,7 +255,6 @@ function attachCellEvents(){
 }
 
 
-// 時間割を一回配列に変えなくてもいいんじゃないかな
 // 時間割変更
 async function changeTimetable(id){
   // 現在の時間割を取得
@@ -264,17 +267,10 @@ async function changeTimetable(id){
   const timetableDocRef = doc(db, userId, 'timetable');
   const absenceDocRef = doc(db, userId, 'absence');
 
-  // -- 新規追加授業名取得 --
   // 曜日別時間割データ取得
   const timetableData = await getData('timetable_week', String(Number(btnId[0]) + 101));
+  // 新規追加授業名取得
   const newClassName = timetableData[btnId[1]];
-  // ----
-
-  // 現在の時間割配列を作成
-  let currentTimetable = [];
-  for (let t = 101; t < 131; t++){
-    currentTimetable.push(timetableDoc[t]);
-  }
 
   // キャッシュにしておく
   let newDoc = {}; // 新規授業情報
@@ -285,7 +281,7 @@ async function changeTimetable(id){
   let de1 = '';
   let de2 = '';
   const i = btnId[0]; // 変更箇所
-  const currentClassName = currentTimetable[i]; // 既存授業名
+  const currentClassName = timetableDoc[i+101]; // 既存授業名
   const timetables = {};  // 新しい時間割オブジェクト
 
 
@@ -315,45 +311,37 @@ async function changeTimetable(id){
     // 配列操作
     if (newCredit == 4){
       // 新規授業が4単位の時、両方の場所を保存しておく
-      de1 = currentTimetable[newDoc.week1*6 + newDoc.hour];
-      de2 = currentTimetable[newDoc.week2*6 + newDoc.hour];
+      de1 = timetableDoc[newDoc.week1*6 + newDoc.hour +101];
+      de2 = timetableDoc[newDoc.week2*6 + newDoc.hour +101];
 
       // 既存授業単位数
       if (currentCredit == 4){
         // もう片方の情報
-        const elseDoc = await getData('timetable_name', currentTimetable[elseI]);
+        const elseDoc = await getData('timetable_name', timetableDoc[elseI +101]);
         if (elseDoc.credit == 4){
           // もう片方の4単位を、全部空きコマにする
-          currentTimetable[elseDoc.week1*6 + elseDoc.hour] = '空きコマ';
-          currentTimetable[elseDoc.week2*6 + elseDoc.hour] = '空きコマ';
+          timetableDoc[elseDoc.week1*6 + elseDoc.hour +101] = '空きコマ';
+          timetableDoc[elseDoc.week2*6 + elseDoc.hour +101] = '空きコマ';
 
           // 既存授業のもう片方を空きコマにする
-          currentTimetable[elseI] = '空きコマ';
+          timetableDoc[elseI +101] = '空きコマ';
         }
       }
 
       // 授業登録
-      currentTimetable[newDoc.week1*6 + newDoc.hour] = newClassName;
-      currentTimetable[newDoc.week2*6 + newDoc.hour] = newClassName;
+      timetableDoc[newDoc.week1*6 + newDoc.hour +101] = newClassName;
+      timetableDoc[newDoc.week2*6 + newDoc.hour +101] = newClassName;
     }else{
       if (currentCredit == 4){
-        currentTimetable[elseI] = '空きコマ';
+        timetableDoc[elseI +101] = '空きコマ';
       }
     }
 
     // 一律で登録箇所に登録
-    currentTimetable[i] = newClassName;
+    timetableDoc[i +101] = newClassName;
 
     // DB更新
-    for (let k = 0; k < 30; k++){
-      timetables[k+101] = currentTimetable[k];
-    }
     await updateDoc(timetableDocRef, timetables);
-  }else{
-    // 同じ授業なら既存オブジェクトをそのまま返す
-    for (let k = 0; k < 30; k++){
-      timetables[k+101] = currentTimetable[k];
-    }
   }
 
 
@@ -388,53 +376,8 @@ async function changeTimetable(id){
 
 
   // UI反映のために新規時間割をreturnする
-  return timetables;
+  return timetableDoc;
 }
-
-// 今日欠席ボタン
-async function todayAbsence(){
-  // 曜日取得
-  const now = new Date();
-  const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
-
-  // 土日以外
-  if (day != 0 && day != 6){
-    // 時間割取得
-    const timetableObj = await getData(userId, 'timetable');
-    const timetableData = [];
-    for (let i = 0; i < 6; i++){
-      if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
-        timetableData.push(`${timetableObj[(day-1)*6 + i + 101]}`);
-      }
-    }
-
-    // 欠時数取得
-    const absenceData = await getData(userId, 'absence');
-
-    // 新しい欠時情報
-    const newAbsenceData = {};
-    for (let i = 0; i < timetableData.length; i++){
-      // 何欠つけるのか調べる
-      let credit = await getData('timetable_name', timetableData[i]);
-      credit = credit.credit;
-      const addNumber = Number(`${'21'[credit%2]}`);
-      // 新規欠時代入
-      newAbsenceData[timetableData[i]] =
-      Number(absenceData[timetableData[i]]) + addNumber;
-    }
-
-    // DB更新
-    const docRef = doc(db, userId, 'absence');
-    await updateDoc(docRef, newAbsenceData);
-
-    // 新しい欠時数取得
-    const newAbsence = await getData(userId, 'absence');
-
-    // UI更新
-    await setButton(timetableObj, newAbsence);
-  }
-}
-
 
 
 
@@ -442,7 +385,7 @@ async function todayAbsence(){
 async function main(){
   // DB初期化
   await initFirebaseAndLiff();
-  // userId取得
+  // liff初期化とuserId取得
   userId = await firstLiff();
 
   // ユーザーの時間割情報と欠時数情報を取得
@@ -456,9 +399,13 @@ async function main(){
   setButton(timetableData, absenceData);
 
   // 時間割モーダル表示と内容セット
-  initModal(timetableData);
+  initModal();
   attachCellEvents();
 }
 
 
 main();
+
+
+// 本日欠席機能をつける
+// 曜日によって今日の時間割の行をハイライトする
