@@ -1,5 +1,4 @@
 import 'https://static.line-scdn.net/liff/edge/2/sdk.js';
-// --- Firebase SDK読み込み ---
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
 import {
   getFirestore,
@@ -40,6 +39,13 @@ async function firstLiff(){
   try{
     // LIFF初期化
     await liff.init({ liffId });
+
+    // LINEアプリ外で開かれた場合リダイレクト
+    if (!liff.isInClient()) {
+      const liffUrl = `https://liff.line.me/${liffId}`;
+      window.location.href = liffUrl;
+      return;
+    }
 
     // ログインしてなければログイン
     if (!liff.isLoggedIn()){
