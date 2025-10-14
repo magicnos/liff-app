@@ -51,7 +51,7 @@ async function firstLiff(){
     const profile = await liff.getProfile();
     const userIdElem = document.getElementById("userId");
     userIdElem.textContent = profile.userId;
-    userIdElem.style.fontSize = "13px";
+    userIdElem.style.fontSize = "12px";
 
     return profile.userId;
   }catch (error){
