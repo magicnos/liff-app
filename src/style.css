@@ -14,11 +14,7 @@ body {
 }
 
 .level1 {
-  font-size: 13px;
-}
-
-.level2 {
-  font-size: 18px;
+  font-size: 12px;
 }
 
 table {
@@ -89,7 +85,7 @@ td {
   font-size: 25px;
   color: #555;
   text-align: center;
-  margin: 4px 0; /* 上下 左右　の順 */
+  margin: 0; /* 上下 左右　の順 */
 }
 
 
