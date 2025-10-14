@@ -244,6 +244,7 @@ function attachCellEvents(){
 
       // モーダルに授業名を追加
       let html = `
+        <h3>${'月火水木金'[col-1]}曜${Math.floor(row/2)},${Math.floor(row/2)+1}限</h3>
         <h3>授業一覧</h3>
       `;
       for (let k = 0; k < Object.keys(data).length; k++){

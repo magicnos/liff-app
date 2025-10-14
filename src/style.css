@@ -104,10 +104,6 @@ td {
   word-break: break-word; /* 長い単語を折り返す */
 }
 
-#timetable .cellText:hover {
-  background-color: #e8f5e9;
-}
-
 th.todayHeader {
   border: 4px solid red; /* 赤い枠線 */
   background-color: #ffeaea; /* 少し淡い赤背景にしてもわかりやすい */
