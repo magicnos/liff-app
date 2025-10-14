@@ -121,12 +121,17 @@ function setButton(timetableData, absenceData){
         btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
 
-        // コンテナにボタンを入れる
-        wrapper.appendChild(btnUp);
-        wrapper.appendChild(btnDown);
+        // ボタン2つをまとめる小さい縦並びコンテナ
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "button-group";
+        buttonGroup.appendChild(btnUp);
+        buttonGroup.appendChild(btnDown);
+
+        // 最初のコンテナの中で、ボタンコンテナの右に欠時数を配置
+        wrapper.appendChild(buttonGroup);
+        wrapper.appendChild(span);
 
         // セルに入れる
-        wrapper.appendChild(span);
         cell.appendChild(wrapper);
       }else{
         cell.textContent = "-";
