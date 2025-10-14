@@ -20,6 +20,10 @@ h3 {
   font-size: 28px;
 }
 
+
+/* =========================
+   table全般
+   ========================= */
 table {
   width: 100%; /* 横幅いっぱい */
   table-layout: fixed; /* セルの幅を均等に */
@@ -89,69 +93,7 @@ td {
   margin: 0; /* 上下 左右　の順 */
 }
 
-
-/* ========================
-   時間割テーブル
-   ========================= */
-#timetable .cellText {
-  padding: 1px; /* 内側余白 */
-  font-size: 22px;
-  font-weight: 400; /* 通常は400 */
-  height: 100px; /* セルの高さ */
-  border: 1px solid #ddd; /* 枠線 */
-  border-collapse: collapse; /* 枠線を重ねる */
-  text-align: center; /* 文字を中央寄せ */
-  vertical-align: middle; /* 文字を縦中央寄せ */
-  overflow: hidden; /* はみ出た部分を隠す */
-  word-break: break-word; /* 長い単語を折り返す */
-}
-
-th.todayHeader {
-  border: 4px solid red; /* 赤い枠線 */
-  background-color: #ffeaea; /* 少し淡い赤背景にしてもわかりやすい */
-}
-
-/* ========================
-   欠時数テーブル
-   ========================= */
-.absenceScale {
-  display: inline-block;
-  font-size: 30px;
-  color: #555;
-  text-align: center; /* 文字を中央寄せ */
-  vertical-align: middle; /* 文字を縦中央寄せ */
-  margin: 0 5px; /* 上下 左右　の順 */
-}
-
-.absence {
-  background-color: #fff;
-  margin-top: 20px; /* 上の余白 */
-  padding: 14px; /* 内側の余白 */
-  border-radius: 12px; /* 角を丸くする */
-  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 軽い影をつける */
-}
-
-.absence-wrapper {
-  display: flex; /* 横並びにする */
-  align-items: center; /* 垂直中央寄せ */
-  gap: 30px; /* ボタンと欠時数の間の隙間 */
-  margin-left: 20px;
-}
-
-.button-group {
-  display: flex;
-  flex-direction: column; /* 縦並び */
-  align-items: center; /* ボタンを中央寄せ */
-  gap: 2px; /* ボタン同士の隙間 */
-}
-
-.absence .absence-count {
-  font-size: 35px;
-  font-weight: 600;
-}
-
-
-/* == 上の部分(ラジオボタン,本日欠席)== */
+/* ==上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
   flex-wrap: wrap; /* 複数行に折り返す */
@@ -210,16 +152,70 @@ th.todayHeader {
   transform: scale(0.98);
 }
 
-/* ==欠時数テーブル本体== */
-.count {
-  margin: 0 8px;
-  font-weight: 600;
-  font-size: 30px;
+
+/* ========================
+   時間割テーブル
+   ========================= */
+#timetable .cellText {
+  padding: 1px; /* 内側余白 */
+  font-size: 22px;
+  font-weight: 400; /* 通常は400 */
+  height: 100px; /* セルの高さ */
+  border: 1px solid #ddd; /* 枠線 */
+  border-collapse: collapse; /* 枠線を重ねる */
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  overflow: hidden; /* はみ出た部分を隠す */
+  word-break: break-word; /* 長い単語を折り返す */
 }
 
-/* セルの背景は変わらないようにする */
+th.todayHeader {
+  border: 4px solid red; /* 赤い枠線 */
+  background-color: #ffeaea; /* 少し淡い赤背景にしてもわかりやすい */
+}
+
+
+/* ========================
+   欠時数テーブル
+   ========================= */
+.absenceScale {
+  display: inline-block;
+  font-size: 30px;
+  color: #555;
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  margin: 0 5px; /* 上下 左右　の順 */
+}
+
+.absence {
+  background-color: #fff;
+  margin-top: 20px; /* 上の余白 */
+  padding: 14px; /* 内側の余白 */
+  border-radius: 12px; /* 角を丸くする */
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 軽い影をつける */
+}
+
+.absence-wrapper {
+  display: flex; /* 横並びにする */
+  align-items: center; /* 垂直中央寄せ */
+  gap: 30px; /* ボタンと欠時数の間の隙間 */
+  margin-left: 20px;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column; /* 縦並び */
+  align-items: center; /* ボタンを中央寄せ */
+  gap: 2px; /* ボタン同士の隙間 */
+}
+
+.absence .absence-count {
+  font-size: 35px;
+  font-weight: 600;
+}
+
 #absence td {
-  background-color: #fff !important;
+  background-color: #fff !important; /* セルの背景は変わらないようにする */
 }
 
 /* ボタンだけクリック可能・デザイン変化 */
@@ -248,7 +244,7 @@ th.todayHeader {
 
 
 /* =========================
-   ====== モーダル ======
+   モーダル
    ========================= */
 .modal {
   display: none;
@@ -298,7 +294,6 @@ th.todayHeader {
   transform: scale(0.97);
 }
 
-/* 閉じるボタン（×） */
 #closeModal {
   position: absolute;
   right: 12px;
