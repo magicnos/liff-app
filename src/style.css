@@ -93,7 +93,7 @@ td {
    ========================= */
 #timetable .cellText {
   padding: 1px; /* 内側余白 */
-  font-size: 60px;
+  font-size: 20px;
   font-weight: 400; /* 通常は400 */
   height: 40px; /* セルの高さ */
   border: 1px solid #ddd; /* 枠線 */
