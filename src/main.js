@@ -163,7 +163,7 @@ async function changeAbsence(className, absenceData, timetableData, btnDown, btn
     for (let i = 1; i <= 12; i+=2){
       if (timetableData[(k-1)*6 + (i-1)/2 + 101] != '空きコマ'){
         const cell = table.rows[i].cells[k];
-        const span = cell.querySelector(".count");
+        const span = cell.querySelector(".absence-count");
         span.textContent = absenceData[timetableData[(k-1)*6 + (i-1)/2 + 101]];
       }
     }
