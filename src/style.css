@@ -17,6 +17,10 @@ p.level1 {
   font-size: 15px;
 }
 
+h3 {
+  font-size: 20px;
+}
+
 table {
   width: 100%; /* 横幅いっぱい */
   table-layout: fixed; /* セルの幅を均等に */
