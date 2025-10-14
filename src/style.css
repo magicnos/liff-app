@@ -131,6 +131,37 @@ th.todayHeader {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 軽い影をつける */
 }
 
+.absence-wrapper {
+  display: flex;
+  align-items: center;          /* 垂直方向の中央寄せ */
+  justify-content: space-between; /* 左右に分ける */
+  width: 100%;
+}
+
+.button-group {
+  display: flex;
+  flex-direction: column;       /* ボタンを縦に並べる */
+  gap: 4px;                     /* ボタンの間隔 */
+}
+
+.btn-plus,
+.btn-minus {
+  width: 24px;
+  height: 24px;
+  border: none;
+  border-radius: 4px;
+  background-color: #ddd;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.absence-count {
+  flex: 1;
+  text-align: center;
+  font-size: 1.1rem;
+}
+
+
 /* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
   display: flex;
