@@ -131,6 +131,13 @@ th.todayHeader {
   box-shadow: 0 2px 6px rgba(0,0,0,0.1); /* 軽い影をつける */
 }
 
+.absence-wrapper {
+  display: flex; /* 横並びにする */
+  align-items: center; /* 垂直中央寄せ */
+  justify-content: space-between; /* 左右に適度に余白 */
+  gap: 8px; /* ボタンと欠時数の間の隙間 */
+}
+
 
 /* == 上の部分(ラジオボタン,本日欠席)== */
 .radio-group {
