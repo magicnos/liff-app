@@ -134,7 +134,12 @@ th.todayHeader {
 .absence-wrapper {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
-  gap: 0; /* ボタンと欠時数の間の隙間 */
+  gap: 2px; /* ボタンと欠時数の間の隙間 */
+}
+
+.absence-count {
+  font-size: 20px;
+  font-weight: 600px;
 }
 
 
