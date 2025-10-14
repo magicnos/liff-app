@@ -97,7 +97,7 @@ td {
   padding: 1px; /* 内側余白 */
   font-size: 22px;
   font-weight: 400; /* 通常は400 */
-  height: 90px; /* セルの高さ */
+  height: 100px; /* セルの高さ */
   border: 1px solid #ddd; /* 枠線 */
   border-collapse: collapse; /* 枠線を重ねる */
   text-align: center; /* 文字を中央寄せ */
