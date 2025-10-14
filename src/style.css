@@ -102,8 +102,6 @@ td {
   vertical-align: middle; /* 文字を縦中央寄せ */
   overflow: hidden; /* はみ出た部分を隠す */
   word-break: break-word; /* 長い単語を折り返す */
-  cursor: pointer; /* クリック可能にする */
-  transition: background-color 0.2s ease; /* ホバー時の背景色変化をスムーズに */
 }
 
 #timetable .cellText:hover {
