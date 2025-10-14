@@ -13,7 +13,7 @@ body {
 }
 
 p.level1 {
-  font-size: 16px;
+  font-size: 15px;
 }
 
 h3 {
@@ -95,7 +95,7 @@ td {
    ========================= */
 #timetable .cellText {
   padding: 1px; /* 内側余白 */
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 400; /* 通常は400 */
   height: 40px; /* セルの高さ */
   border: 1px solid #ddd; /* 枠線 */
@@ -258,7 +258,7 @@ th.todayHeader {
 
 .modal-content .modal-btn {
   display: block;
-  width: 98%;
+  width: 99%;
   margin: 8px auto;
   font-size: 26px;
   padding: 14px 16px;
