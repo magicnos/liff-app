@@ -107,12 +107,12 @@ function setButton(timetableData, absenceData){
 
         // 増ボタン
         const btnUp = document.createElement("button");
-        btnUp.textContent = "△";
+        btnUp.textContent = "+";
         btnUp.className = "btn-plus";
 
         // 減ボタン
         const btnDown = document.createElement("button");
-        btnDown.textContent = "▽";
+        btnDown.textContent =+"-";
         btnDown.className = "btn-minus";
 
         // ボタンをまとめるdiv

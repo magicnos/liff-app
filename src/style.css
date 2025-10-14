@@ -133,15 +133,15 @@ th.todayHeader {
 
 .absence-wrapper {
   display: flex;
-  align-items: center;          /* 垂直方向の中央寄せ */
+  align-items: center; /* 垂直方向の中央寄せ */
   justify-content: space-between; /* 左右に分ける */
   width: 100%;
 }
 
 .button-group {
   display: flex;
-  flex-direction: column;       /* ボタンを縦に並べる */
-  gap: 4px;                     /* ボタンの間隔 */
+  flex-direction: column; /* ボタンを縦に並べる */
+  gap: 4px; /* ボタンの間隔 */
 }
 
 .btn-plus,
@@ -156,9 +156,9 @@ th.todayHeader {
 }
 
 .absence-count {
-  flex: 1;
   text-align: center;
-  font-size: 1.1rem;
+  font-size: 20px;
+  font-weight: 600;
 }
 
 
