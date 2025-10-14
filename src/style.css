@@ -74,7 +74,7 @@ td {
    テーブルの上
    ========================= */
 .tableTitle {
-  font-size: 50px;
+  font-size: 55px;
   font-weight: 600;
   color: #06C755;
   text-align: center;
@@ -133,32 +133,39 @@ th.todayHeader {
 
 .absence-wrapper {
   display: flex;
-  align-items: center; /* 垂直方向の中央寄せ */
-  justify-content: space-between; /* 左右に分ける */
+  align-items: center;       /* 縦中央にそろえる */
+  justify-content: flex-start; /* 左寄せに変更 */
+  gap: 8px;                  /* ボタンと数字の間隔を指定（ここで調整可能） */
   width: 100%;
 }
 
 .button-group {
   display: flex;
-  flex-direction: column; /* ボタンを縦に並べる */
-  gap: 4px; /* ボタンの間隔 */
+  flex-direction: column;    /* ボタン縦並び */
+  align-items: center;
+  gap: 4px;                  /* ボタン間の距離 */
 }
 
 .btn-plus,
 .btn-minus {
-  width: 24px;
-  height: 24px;
+  width: 28px;
+  height: 28px;
   border: none;
-  border-radius: 4px;
-  background-color: #ddd;
+  border-radius: 50%;
+  font-size: 18px;
+  font-weight: bold;
+  color: #fff;
   cursor: pointer;
-  font-size: 14px;
+  transition: 0.2s;
 }
 
+
 .absence-count {
-  text-align: center;
   font-size: 20px;
   font-weight: 600;
+  color: #333;
+  text-align: center;
+  min-width: 25px; /* 数字の位置がずれないように固定幅 */
 }
 
 

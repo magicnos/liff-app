@@ -112,7 +112,7 @@ function setButton(timetableData, absenceData){
 
         // 減ボタン
         const btnDown = document.createElement("button");
-        btnDown.textContent =+"-";
+        btnDown.textContent = "-";
         btnDown.className = "btn-minus";
 
         // ボタンをまとめるdiv
