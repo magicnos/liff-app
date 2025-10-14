@@ -133,32 +133,15 @@ th.todayHeader {
 
 .absence-wrapper {
   display: flex;
-  align-items: center;       /* 縦中央にそろえる */
+  align-items: center; /* 縦中央にそろえる */
   justify-content: flex-start; /* 左寄せに変更 */
-  gap: 8px;                  /* ボタンと数字の間隔を指定（ここで調整可能） */
-  width: 100%;
-}
-
-.button-group {
+  gap: 6px; /* ボタンの間隔 */
+  margin: 4px 8px;
+  width: 50%;
   display: flex;
-  flex-direction: column;    /* ボタン縦並び */
+  flex-direction: column; /* ボタン縦並び */
   align-items: center;
-  gap: 4px;                  /* ボタン間の距離 */
 }
-
-.btn-plus,
-.btn-minus {
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: 50%;
-  font-size: 18px;
-  font-weight: bold;
-  color: #fff;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
 
 .absence-count {
   font-size: 20px;

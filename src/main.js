@@ -100,41 +100,35 @@ function setButton(timetableData, absenceData){
       const cell = table.rows[i].cells[k];
       cell.textContent = ""; // クリア
 
+      // 空きコマじゃないとき、ボタンと欠時数を設置
       if (className != '空きコマ'){
-        // コンテナを作成（ボタン＋欠時数をまとめる）
+        // 要素を入れるコンテナ
         const wrapper = document.createElement("div");
         wrapper.className = "absence-wrapper";
-
+        
         // 増ボタン
         const btnUp = document.createElement("button");
-        btnUp.textContent = "+";
-        btnUp.className = "btn-plus";
+        btnUp.textContent = "△";
+        btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
 
-        // 減ボタン
-        const btnDown = document.createElement("button");
-        btnDown.textContent = "-";
-        btnDown.className = "btn-minus";
-
-        // ボタンをまとめるdiv
-        const buttonGroup = document.createElement("div");
-        buttonGroup.className = "button-group";
-        buttonGroup.appendChild(btnUp);
-        buttonGroup.appendChild(btnDown);
-
-        // 欠時数表示
+        // 欠時数(span)
         const span = document.createElement("span");
         span.className = "absence-count";
         span.textContent = absenceData[className];
 
-        // クリックイベント設定
-        btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
+        // 減ボタン
+        const btnDown = document.createElement("button");
+        btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
 
-        // コンテナに追加
-        wrapper.appendChild(buttonGroup);
-        wrapper.appendChild(span);
+        // コンテナにボタンを入れる
+        wrapper.appendChild(btnUp);
+        wrapper.appendChild(btnDown);
+
+        // セルに入れる
         cell.appendChild(wrapper);
-      } else {
+        cell.appendChild(span);
+      }else{
         cell.textContent = "-";
       }
     }
