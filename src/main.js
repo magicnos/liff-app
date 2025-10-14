@@ -102,32 +102,23 @@ function setButton(timetableData, absenceData){
 
       // 空きコマじゃないとき、ボタンと欠時数を設置
       if (className != '空きコマ'){
-        // 要素を入れるコンテナ
-        const wrapper = document.createElement("div");
-        wrapper.className = "absence-wrapper";
-        
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
         btnUp.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, 1);
+        cell.appendChild(btnUp);
 
         // 欠時数(span)
         const span = document.createElement("span");
-        span.className = "absence-count";
+        span.className = "count";
         span.textContent = absenceData[className];
+        cell.appendChild(span);
 
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(className, absenceData, timetableData, btnDown, btnUp, -1);
-
-        // コンテナにボタンを入れる
-        wrapper.appendChild(btnUp);
-        wrapper.appendChild(btnDown);
-
-        // セルに入れる
-        cell.appendChild(wrapper);
-        cell.appendChild(span);
+        cell.appendChild(btnDown);
       }else{
         cell.textContent = "-";
       }
