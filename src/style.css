@@ -135,7 +135,7 @@ th.todayHeader {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
   gap: 30px; /* ボタンと欠時数の間の隙間 */
-  margin-left: 8px;
+  margin-left: 20px;
 }
 
 .button-group {
@@ -146,7 +146,7 @@ th.todayHeader {
 }
 
 .absence .absence-count {
-  font-size: 20px;
+  font-size: 35px;
   font-weight: 600;
 }
 
