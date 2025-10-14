@@ -85,9 +85,8 @@ td {
   border-bottom: 5px solid black; /* 見出し下にライン */
 }
 
-.tableText,
-.absenceAllText {
-  font-size: 23px;
+.tableText {
+  font-size: 25px;
   color: #555;
   text-align: center;
   margin: 4px 0; /* 上下 左右　の順 */
