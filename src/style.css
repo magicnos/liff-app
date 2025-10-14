@@ -8,7 +8,7 @@ body {
   margin: 0px;
   line-height: 1.6; /* 行間 */
   padding: 10px; /* 内側の余白 */
-  -webkit-tap-highlight-color: rgba(0,0,0,0,1); /* タップ時のハイライト消す */
+  -webkit-tap-highlight-color: rgba(0,0,0,0.1); /* タップ時のハイライト消す */
   touch-action: manipulation; /* スクロール操作と干渉しない */
   scroll-behavior: smooth; /* スムーススクロール */
 }
@@ -60,7 +60,6 @@ td {
   font-weight: 400; /* 通常は400 */
   height: 40px; /* セルの高さ */
   border: 3px solid #ddd; /* 枠線 */
-  border-collapse: collapse; /* 枠線を重ねる */
   text-align: center; /* 文字を中央寄せ */
   vertical-align: middle; /* 文字を縦中央寄せ */
   overflow: hidden; /* はみ出た部分を隠す */
@@ -72,7 +71,7 @@ td {
    テーブルの上
    ========================= */
 .tableTitle {
-  font-size: 60px;
+  font-size: 50px;
   font-weight: 600;
   color: #06C755;
   text-align: center;
@@ -92,7 +91,7 @@ td {
 /* ========================
    時間割テーブル
    ========================= */
-#timetable > .cellText {
+#timetable .cellText {
   padding: 1px; /* 内側余白 */
   font-size: 60px;
   font-weight: 400; /* 通常は400 */
@@ -107,7 +106,7 @@ td {
   transition: background-color 0.2s ease; /* ホバー時の背景色変化をスムーズに */
 }
 
-#timetable > .cellText:hover {
+#timetable .cellText:hover {
   background-color: #e8f5e9;
 }
 
