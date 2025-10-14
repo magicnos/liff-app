@@ -13,8 +13,8 @@ body {
   scroll-behavior: smooth; /* スムーススクロール */
 }
 
-.level1 {
-  font-size: 13px;
+p.level1 {
+  font-size: 12px !important;
 }
 
 table {
