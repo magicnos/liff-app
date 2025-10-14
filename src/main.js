@@ -49,7 +49,9 @@ async function firstLiff(){
 
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
-    document.getElementById("userId").textContent = profile.userId;
+    const userIdElem = document.getElementById("userId");
+    userIdElem.textContent = profile.userId;
+    userIdElem.style.fontSize = "13px";
 
     return profile.userId;
   }catch (error){
