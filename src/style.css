@@ -8,7 +8,6 @@ body {
   margin: 0px;
   line-height: 1.6; /* 行間 */
   padding: 10px; /* 内側の余白 */
-  -webkit-tap-highlight-color: rgba(0,0,0,0.1); /* タップ時のハイライト消す */
   touch-action: manipulation; /* スクロール操作と干渉しない */
   scroll-behavior: smooth; /* スムーススクロール */
 }
@@ -86,7 +85,6 @@ td {
 
 .tableText {
   font-size: 25px;
-  color: #555;
   text-align: center;
   margin: 0; /* 上下 左右　の順 */
 }
