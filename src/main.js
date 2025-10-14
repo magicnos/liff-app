@@ -126,8 +126,8 @@ function setButton(timetableData, absenceData){
         wrapper.appendChild(btnDown);
 
         // セルに入れる
+        wrapper.appendChild(span);
         cell.appendChild(wrapper);
-        cell.insertAdjacentElement("afterend", span);
       }else{
         cell.textContent = "-";
       }
