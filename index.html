@@ -2,27 +2,18 @@
 <html lang="ja">
   <head>
     <meta charset="UTF-8" />
-    <title>アクセス制限</title>
+    <title>新宿山吹の時間割</title>
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
       // LIFFブラウザで開いてるかチェック
-      if (liff.isInClient()){
+      if (!liff.isInClient()){
+        window.location.href = "/notLine.html";
+      }else{
         window.location.href = "/main.html";
       }
     </script>
-    <style>
-      body {
-        font-family: "Noto Sans JP", sans-serif;
-        text-align: center;
-        margin-top: 20%;
-      }
-      h1 {
-        color: #d32f2f;
-      }
-    </style>
   </head>
   <body>
-    <h1>このページはLINEアプリ内でのみ利用できます</h1>
-    <p>LINEのトークルームから再度アクセスしてください。</p>
+    <h1>loading...</h1>
   </body>
 </html>
