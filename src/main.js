@@ -9,6 +9,11 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
+// 環境変数の読み込み
+const liffId = import.meta.env.LIFF_ID;
+const apiKey = import.meta.env.FIREBASE_API_KEY;
+const authDomain = import.meta.env.FIREBASE_AUTH_DOMAIN;
+const projectid = import.meta.env.FIREBASE_PROJECT_ID;
 
 
 let db, auth, userId;
@@ -19,9 +24,9 @@ let db, auth, userId;
 async function initFirebase(){
   // Firebase初期化
   const firebaseConfig = {
-    apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
-    authDomain: "linebot-799ed.firebaseapp.com",
-    projectId: "linebot-799ed"
+    apiKey: apiKey,
+    authDomain: authDomain,
+    projectId: projectid
   };
 
   const app = initializeApp(firebaseConfig);
@@ -35,8 +40,6 @@ async function initFirebase(){
 
 // liff初期化とプロフィール取得
 async function firstLiff(){
-  const liffId = "2008192386-zPDXa2d8";
-
   try{
     // LIFF初期化
     await liff.init({ liffId });
