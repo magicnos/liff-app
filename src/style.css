@@ -219,7 +219,7 @@ th.todayHeader {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
   gap: 20px; /* ボタンと欠時数の間の隙間 */
- margin-left: 18px;
+ margin-left: 15px;
 }
 
 .button-group,
@@ -244,7 +244,7 @@ th.todayHeader {
   display: flex;
   margin: 10px 0;
   width: 44px;
-  height: 34px;
+  height: 44px;
   background-color: #06C755; /* 背景色 */
   color: #fff;
   font-weight: 400;
