@@ -117,7 +117,8 @@ td {
   margin: 0;
 }
 
-.radio-group {
+.radio-group,
+.radio-group2 {
   display: flex;
   flex-wrap: wrap; /* 複数行に折り返す */
   justify-content: center; /* 横中央寄せ */
