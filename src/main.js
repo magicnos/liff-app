@@ -116,11 +116,11 @@ function setButton(timetableData, absenceData, absence2Data){
 
         // 欠時数(span)後期
         const span2 = document.createElement("span");
-        span2.className = "absence-count";
+        span2.className = "absence2-count";
         if (checkHalf()){
           span2.textContent = '(0)';
         }else{
-          span2.textContent = `(${absenceData[className]})`;
+          span2.textContent = `(${absenceData[className]}`;
         }
 
         // 減ボタン
@@ -189,11 +189,13 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
       const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
       if (className != '空きコマ'){
         const cell = table.rows[i].cells[k];
-        const span = cell.querySelector(".absence-count");
+        let span;
         if (checkHalf()){
-          span.textContent = `${absenceData[className]} (0)`;
+          span = cell.querySelector(".absence-count");
+          span.textContent = absenceData[className];
         }else{
-          span.textContent = `${absence2Data[className]} (${absenceData[className]})`;
+          span = cell.querySelector(".absence2-count");
+          span.textContent = absence2Data[className];
         }
       }
     }
