@@ -20,6 +20,13 @@ h3 {
   font-size: 28px;
 }
 
+.halfC {
+  font-size: 40px;
+  font-weight: 400;
+  color: #555;
+  text-align: left;
+  margin-bottom: 3px;
+}
 
 /* =========================
    table全般
