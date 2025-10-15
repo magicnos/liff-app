@@ -108,14 +108,10 @@ function setButton(timetableData, absenceData, absence2Data){
         // 欠時数(span)
         const span = document.createElement("span");
         span.className = "absence-count";
-        // 前期後期チェック
-        const now = new Date();
-        const month = now.getMonth() + 1; // 0〜11なので+1が必要
-        const day = now.getDate(); // 1〜31
-        if (month <= changeMonth && day <= changeDay){
+        if (checkHalf()){
           span.textContent = `${absenceData[className]} (0)`;
         }else{
-          span.textContent = `${absenceData2[className]} (${absenceData[className]})`;
+          span.textContent = `${absence2Data[className]} (${absenceData[className]})`;
         }
 
         // 減ボタン
@@ -158,11 +154,7 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
   const newValue = current + scale*operation;
 
   // ローカル欠時数変更
-  // 前期後期チェック
-  const now = new Date();
-  const month = now.getMonth() + 1; // 0〜11なので+1が必要
-  const day = now.getDate(); // 1〜31
-  if (month <= changeMonth && day <= changeDay){
+  if (checkHalf()){
     absenceData[className] = newValue;
   }else{
     absence2Data[className] = newValue;
@@ -177,14 +169,10 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
       if (className != '空きコマ'){
         const cell = table.rows[i].cells[k];
         const span = cell.querySelector(".absence-count");
-        // 前期後期チェック
-        const now = new Date();
-        const month = now.getMonth() + 1; // 0〜11なので+1が必要
-        const day = now.getDate(); // 1〜31
-        if (month <= changeMonth && day <= changeDay){
+        if (checkHalf()){
           span.textContent = `${absenceData[className]} (0)`;
         }else{
-          span.textContent = `${absenceData2[className]} (${absenceData[className]})`;
+          span.textContent = `${absence2Data[className]} (${absenceData[className]})`;
         }
       }
     }
@@ -200,11 +188,7 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
 
   try{
     // DB更新
-    // 前期後期チェック
-    const now = new Date();
-    const month = now.getMonth() + 1; // 0〜11なので+1が必要
-    const day = now.getDate(); // 1〜31
-    if (month <= changeMonth && day <= changeDay){
+    if (checkHalf()){
       await updateDoc(docRef, { [className]: newValue });
     }else{
       await updateDoc(docRef2, { [className]: newValue });
@@ -537,13 +521,23 @@ function todayAbsence(){
 
 // 前期後期を表示
 function changeHalf(){
+  if (checkHalf()){
+    document.getElementById("halfC").textContent = '前期期間(~10/9)';
+  }else{
+    document.getElementById("halfC").textContent = '後期期間(10/10~)';
+  }
+}
+
+
+// 前期後期判定関数
+function checkHalf(){
   const now = new Date();
   const month = now.getMonth() + 1; // 0〜11なので+1が必要
   const day = now.getDate(); // 1〜31
   if (month <= changeMonth && day <= changeDay){
-    document.getElementById("halfC").textContent = '前期期間(~10/9)';
+    return true;
   }else{
-    document.getElementById("halfC").textContent = '後期期間(10/10~)';
+    return false;
   }
 }
 
