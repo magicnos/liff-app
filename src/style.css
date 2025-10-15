@@ -127,10 +127,6 @@ td {
   margin-bottom: 25px; /* 下の余白 */
 }
 
-.radio-group {
-  border-bottom: 2px solid #555; /* 下にライン */
-}
-
 .radio-group h2.absenceScale,
 .radio-group2 h2.absenceScale {
   margin: 0; /* 上下余白リセット */
