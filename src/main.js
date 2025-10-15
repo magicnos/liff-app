@@ -577,26 +577,10 @@ function setupHalfRadio(absenceData, absence2Data, timetableData){
 
   radios.forEach(radio => {
     radio.addEventListener('change', () => {
-      const table = document.getElementById('absence');
-      for (let k = 1; k <= 5; k++){
-        for (let i = 1; i <= 12; i+=2){
-          const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
-          if (className != '空きコマ'){
-            const cell = table.rows[i].cells[k];
-            let span, span2;
-            if (radio.value == 'first'){
-              span = cell.querySelector(".absence-count");
-              span2 = cell.querySelector(".absence2-count");
-              span.textContent = absenceData[className];
-              span2.textContent = '(0)';
-            }else{
-              span = cell.querySelector(".absence-count");
-              span2 = cell.querySelector(".absence2-count");
-              span.textContent = absence2Data[className];
-              span2.textContent = `(${absenceData[className]})`;
-            }
-          }
-        }
+      if (radio.value == 'first'){
+        setButton(timetableData, absenceData, absence2Data);
+      }else{
+        setButton(timetableData, absence2Data, absenceData);
       }
     });
   });
