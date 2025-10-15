@@ -21,7 +21,7 @@ h3 {
 }
 
 .halfC {
-  font-size: 20px;
+  font-size: 40px;
   font-weight: 400;
   color: #555;
   text-align: left;
@@ -94,13 +94,13 @@ td {
 }
 
 .tableText {
-  font-size: 20px;
+  font-size: 30px;
   text-align: center;
   margin: 0; /* 上下 左右　の順 */
 }
 
 .tableText2 {
-  font-size: 25px;
+  font-size: 40px;
   text-align: center;
   margin: 0; /* 上下 左右　の順 */
 }
