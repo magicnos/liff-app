@@ -408,7 +408,7 @@ async function changeTimetable(id){
         }
         if (de2 != '空きコマ'){
           await updateDoc(absenceDocRef, { [de2]: deleteField() });
-          await updateDoc(absence2DocRef, { [de1]: deleteField() });
+          await updateDoc(absence2DocRef, { [de2]: deleteField() });
         }
       }else{
         if (de1 != '空きコマ'){
