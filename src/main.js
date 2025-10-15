@@ -486,12 +486,13 @@ function todayAbsence(){
     if (checkHalf()){
       const docRef = doc(db, userId, 'absence');
       await updateDoc(docRef, newAbsenceData);
-      Object.assign(absenceData, newAbsenceData);
     }else{
       const docRef = doc(db, userId, 'absence2');
       await updateDoc(docRef, newAbsenceData);
-      Object.assign(absence2Data, newAbsenceData);
     }
+
+    // ローカル変数更新
+    Object.assign(absenceData, newAbsenceData);
   
     // UI更新
     if (document.querySelector('input[name="semester"]:checked').value == 'first'){
