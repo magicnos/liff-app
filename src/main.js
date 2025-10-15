@@ -41,12 +41,6 @@ async function firstLiff(){
     // LIFF初期化
     await liff.init({ liffId });
 
-    // ログインしてなければログイン
-    if (!liff.isLoggedIn()){
-      liff.login();
-      return;
-    }
-
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
     const userIdElem = document.getElementById("userId");
