@@ -189,13 +189,17 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
       const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
       if (className != '空きコマ'){
         const cell = table.rows[i].cells[k];
-        let span;
+        let span, span2;
         if (checkHalf()){
           span = cell.querySelector(".absence-count");
+          span2 = cell.querySelector(".absence2-count");
           span.textContent = absenceData[className];
+          span2.textContent = '(0)';
         }else{
-          span = cell.querySelector(".absence2-count");
+          span = cell.querySelector(".absence-count");
+          span2 = cell.querySelector(".absence2-count");
           span.textContent = absence2Data[className];
+          span2.textContent = `(${absenceData[className]})`;
         }
       }
     }
