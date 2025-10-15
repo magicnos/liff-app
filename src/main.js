@@ -434,7 +434,7 @@ function highlightToday(){
 
 
 // 本日欠席機能
-function todayAbsence(){
+function todayAbsence(absenceData, absence2Data){
   // ボタンを取得
   const saveButton = document.getElementById("todayAbsence");
 
@@ -460,52 +460,59 @@ function todayAbsence(){
     }
 
     // 欠時数取得
-    const absenceData = {};
-    const absence2Data = {};
+    const absenceDoc = {};
+    const absence2Doc = {};
     if (checkHalf()){
-      Object.assign(absenceData, await getData(userId, 'absence'));
-      Object.assign(absence2Data, await getData(userId, 'absence2'));
+      Object.assign(absenceDoc, await getData(userId, 'absence'));
+      Object.assign(absence2Doc, await getData(userId, 'absence2'));
     }else{
-      Object.assign(absenceData, await getData(userId, 'absence2'));
-      Object.assign(absence2Data, await getData(userId, 'absence'));
+      Object.assign(absenceDoc, await getData(userId, 'absence2'));
+      Object.assign(absence2Doc, await getData(userId, 'absence'));
     }
 
     // 新しい欠時情報
-    const newAbsenceData = {};
+    const newabsenceDoc = {};
     for (let i = 0; i < timetableData.length; i++){
       // 何欠つけるのか調べる
       const classData = await getData('timetable_name', timetableData[i]);
       const credit = classData.credit;
       const addNumber = `${'21'[credit%2]}`;
       // 新規欠時代入
-      newAbsenceData[timetableData[i]] =
-      Number(absenceData[timetableData[i]]) + Number(addNumber);
+      newabsenceDoc[timetableData[i]] =
+      Number(absenceDoc[timetableData[i]]) + Number(addNumber);
     }
 
     // DB更新
     if (checkHalf()){
       const docRef = doc(db, userId, 'absence');
-      await updateDoc(docRef, newAbsenceData);
+      await updateDoc(docRef, newabsenceData);
     }else{
       const docRef = doc(db, userId, 'absence2');
       await updateDoc(docRef, newAbsenceData);
     }
 
+    // マージン
+    Object.assign(absenceDoc, newAbsenceData);
+
     // ローカル変数更新
-    Object.assign(absenceData, newAbsenceData);
-  
+    if (checkHalf()){
+      Object.assign(absenceData, absenceDoc);
+    }else{
+      Object.assign(absence2Data, absenceDoc);
+    }
+
     // UI更新
     if (document.querySelector('input[name="semester"]:checked').value == 'first'){
       if (checkHalf()){
-        setButton(timetableObj, absenceData, absence2Data);
+        setButton(timetableObj, absenceDoc, absence2Doc);
       }else{
-        setButton(timetableObj, absence2Data, absenceData);
+        setButton(timetableObj, absence2Doc, absenceDoc);
       }
     }else{
       if (checkHalf()){
-        setButton(timetableObj, absence2Data, absenceData);
+        setButton(timetableObj, absence2Doc, absenceDoc);
       }else{
-        setButton(timetableObj, absenceData, absence2Data);
+        setButton(timetableObj, absenceDoc, absence2Doc);
       }
     }
 
@@ -606,7 +613,7 @@ async function main(){
   attachCellEvents();
 
   // 本日欠席機能
-  todayAbsence();
+  todayAbsence(absenceData, absence2Data);
 }
 
 
