@@ -131,7 +131,6 @@ td {
   background: #f3f3f3;
   border-radius: 20px;
   padding: 6px 10px;
-  cursor: pointer;
   font-size: 27px;
   transition: background-color 0.2s ease;
 }
@@ -144,6 +143,7 @@ td {
   accent-color: #06C755;
   width: 27px;
   height: 27px;
+  cursor: pointer;
 }
 
 .todayAbsence-wrapper {
@@ -218,7 +218,7 @@ th.todayHeader {
 .absence-wrapper {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
-  gap: 30px; /* ボタンと欠時数の間の隙間 */
+  gap: 20px; /* ボタンと欠時数の間の隙間 */
   justify-content: center;
 }
 
@@ -242,7 +242,7 @@ th.todayHeader {
 
 #absence td button {
   display: flex;
-  margin: 10px 20px;
+  margin: 10px 0;
   width: 44px;
   height: 34px;
   background-color: #06C755; /* 背景色 */
