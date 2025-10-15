@@ -219,7 +219,7 @@ th.todayHeader {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
   gap: 30px; /* ボタンと欠時数の間の隙間 */
-  margin-left: 20px;
+  justify-content: center;
 }
 
 .button-group,
@@ -242,9 +242,9 @@ th.todayHeader {
 
 #absence td button {
   display: flex;
-  margin: 10px auto; /* 上下の余白 */
-  width: 40px;
-  height: 30px;
+  margin: 10px 20px;
+  width: 44px;
+  height: 34px;
   background-color: #06C755; /* 背景色 */
   color: #fff;
   font-weight: 400;
@@ -253,7 +253,8 @@ th.todayHeader {
   cursor: pointer; /* クリック可能にする */
   transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
   padding: 0; /* 内側の余白 */
-  font-size: 30px; /* 文字サイズ */
+  text-align: center;
+  font-size: 25px; /* 文字サイズ */
 }
 
 #absence td button:hover {
