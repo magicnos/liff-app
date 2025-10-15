@@ -145,7 +145,7 @@ td {
   height: 27px;
 }
 
-.radio-group button#todayAbsence {
+#todayAbsence {
   margin: 0 30px; /* 余白 */
   padding: 10px 16px;
   font-size: 25px;
@@ -157,11 +157,11 @@ td {
   transition: opacity 0.2s, transform 0.1s;
 }
 
-.radio-group button#todayAbsence:hover {
+#todayAbsence:hover {
   opacity: 0.9;
 }
 
-.radio-group button#todayAbsence:active {
+#todayAbsence:active {
   transform: scale(0.98);
 }
 

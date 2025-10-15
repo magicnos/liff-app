@@ -551,6 +551,46 @@ function todayAbsence(){
 }
 
 
+// 欠時数テーブル切り替え
+function setupHalfRadio(absenceData, absence2Data, timetableData){
+
+  // デフォルト値を設定
+  if (checkHalf()){
+    document.getElementById("first").checked = true;
+  }else{
+    document.getElementById("second").checked = true;
+  }
+
+  const radios = document.querySelectorAll('input[name="half"]');
+
+  radios.forEach(radio => {
+    radio.addEventListener('change', () => {
+      const table = document.getElementById('absence');
+      for (let k = 1; k <= 5; k++){
+        for (let i = 1; i <= 12; i+=2){
+          const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
+          if (className != '空きコマ'){
+            const cell = table.rows[i].cells[k];
+            let span, span2;
+            if (radio.value == 'first'){
+              span = cell.querySelector(".absence-count");
+              span2 = cell.querySelector(".absence2-count");
+              span.textContent = absenceData[className];
+              span2.textContent = '(0)';
+            }else{
+              span = cell.querySelector(".absence-count");
+              span2 = cell.querySelector(".absence2-count");
+              span.textContent = absence2Data[className];
+              span2.textContent = `(${absenceData[className]})`;
+            }
+          }
+        }
+      }
+    });
+  });
+}
+
+
 // 前期後期を表示
 function changeHalf(){
   if (checkHalf()){
@@ -595,6 +635,9 @@ async function main(){
 
   // 欠時数時間割に欠時数と欠時変更ボタンを設置
   setButton(timetableData, absenceData, absence2Data);
+
+  // 欠時数テーブル切り替え
+  setupHalfRadio(absenceData, absence2Data, timetableData);
 
   // 時間割モーダル表示と内容セット
   initModal();
