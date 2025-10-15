@@ -150,13 +150,12 @@ td {
   display: flex;
   justify-content: center; /* 横方向中央 */
   align-items: center; /* 縦方向中央 */
-  gap: 5px; /* ボタンと文字の間の余白 */
 }
 
 #todayAbsence {
-  margin: 0 30px; /* 余白 */
+  margin: 0 20px; /* 余白 */
   padding: 10px 16px;
-  font-size: 25px;
+  font-size: 23px;
   border-radius: 10px;
   background-color: #06C755;
   color: #fff;
@@ -241,18 +240,18 @@ th.todayHeader {
   background-color: #fff !important; /* セルの背景は変わらないようにする */
 }
 
-/* ボタンだけクリック可能・デザイン変化 */
 #absence td button {
   display: flex;
   margin: 10px auto; /* 上下の余白 */
+  width: 40px;
+  height: 30px;
   background-color: #06C755; /* 背景色 */
   color: #fff;
-  font-weight: 400; /* 太字 */
+  font-weight: 400;
   border: none; /* 枠線なし */
   border-radius: 10px; /* 角を丸くする */
   cursor: pointer; /* クリック可能にする */
   transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
-  width: auto; /* 幅自動 */
   padding: 0; /* 内側の余白 */
   font-size: 30px; /* 文字サイズ */
 }
