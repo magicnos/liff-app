@@ -131,7 +131,8 @@ td {
   border-bottom: 2px solid #555; /* 下にライン */
 }
 
-.radio-group h2.absenceScale {
+.radio-group h2.absenceScale,
+.radio-group2 h2.absenceScale {
   margin: 0; /* 上下余白リセット */
   font-size: 38px;
   color: #555;
