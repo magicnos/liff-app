@@ -563,7 +563,12 @@ function firstChange(timetableData, absenceData, absence2Data){
   // 時間割に時間割を表示
   setTimetable(timetableData);
   // 欠時数時間割に欠時数と欠時変更ボタンを設置
-  setButton(timetableData, absenceData, absence2Data);
+  if (checkHalf()){
+    setButton(timetableData, absenceData, absence2Data);
+  }else{
+    setButton(timetableData, absence2Data, absenceData);
+  }
+  
   // 今日の曜日に赤枠をつける
   highlightToday();
 }
