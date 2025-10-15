@@ -200,11 +200,11 @@ th.todayHeader {
    ========================= */
 .absenceScale {
   display: inline-block;
-  font-size: 30px;
+  font-size: 28px;
   color: #555;
   text-align: center; /* 文字を中央寄せ */
   vertical-align: middle; /* 文字を縦中央寄せ */
-  margin: 0 5px; /* 上下 左右　の順 */
+  margin: 0 2px; /* 上下 左右　の順 */
 }
 
 .absence {

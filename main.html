@@ -114,12 +114,16 @@
     <div class="absence">
       <div class="radio-group">
         <h2 class="absenceScale">欠時数増減倍率：</h2>
-        <label><input type="radio" name="absenceScale" value="1" checked> ×1</label>
-        <label><input type="radio" name="absenceScale" value="2"> ×2</label>
-        <label><input type="radio" name="absenceScale" value="4"> ×4</label>
-        <label><input type="radio" name="absenceScale" value="8"> ×8</label>
-        <label><input type="radio" name="semester" value="first" id="first">前期</label>
-        <label><input type="radio" name="semester" value="second" id="second">後期</label>
+        <div class="radio">
+          <label><input type="radio" name="absenceScale" value="1" checked> ×1</label>
+          <label><input type="radio" name="absenceScale" value="2"> ×2</label>
+          <label><input type="radio" name="absenceScale" value="4"> ×4</label>
+          <label><input type="radio" name="absenceScale" value="8"> ×8</label>
+        </div>
+        <div class="radio2">
+          <label><input type="radio" name="semester" value="first" id="first">前期</label>
+          <label><input type="radio" name="semester" value="second" id="second">後期</label>
+        </div>
       </div>
 
       <table id="absence">
