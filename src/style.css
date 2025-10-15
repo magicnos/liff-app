@@ -124,7 +124,7 @@ td {
   justify-content: center; /* 横中央寄せ */
   align-items: center; /* 縦中央揃え */
   gap: 10px; /* 要素間の間隔 */
-  margin-bottom: 18px; /* 下の余白 */
+  margin-bottom: 25px; /* 下の余白 */
 }
 
 .radio-group h2.absenceScale {
