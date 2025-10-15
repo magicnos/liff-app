@@ -242,6 +242,8 @@ th.todayHeader {
 
 #absence td button {
   display: flex;
+  justify-content: center; /* 横方向の中央寄せ */
+  align-items: center; /* 縦方向の中央寄せ */
   margin: 10px 0;
   width: 44px;
   height: 44px;
@@ -253,7 +255,6 @@ th.todayHeader {
   cursor: pointer; /* クリック可能にする */
   transition: opacity 0.2s, transform 0.1s; /* ホバーとクリック時の変化をスムーズに */
   padding: 0; /* 内側の余白 */
-  text-align: center;
   font-size: 25px; /* 文字サイズ */
 }
 
