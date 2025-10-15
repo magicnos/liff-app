@@ -476,14 +476,15 @@ function highlightToday(){
 
   // 1〜5（月〜金）のときのみ処理
   if (dayOfWeek >= 1 && dayOfWeek <= 5) {
-    // timetableテーブル内のthを取得
-    const ths = document.querySelectorAll("#timetable thead th");
+    // テーブル内のthを取得
+    const thsT = document.querySelectorAll("#timetable thead th");
+    const thsA = document.querySelectorAll("#absence thead th");
 
     // 例: 月なら1番目（0は「時限」）
-    const targetTh = ths[dayOfWeek];
-    if (targetTh) {
-      targetTh.classList.add("todayHeader");
-    }
+    const targetThT = thsT[dayOfWeek];
+    targetThT.classList.add("todayHeader");
+    const targetThA = thsA[dayOfWeek];
+    targetThA.classList.add("todayHeader");
   }
 }
 
@@ -509,18 +510,18 @@ function todayAbsence(){
     const absenceData = await getData(userId, 'absence');
     const absence2Data = await getData(userId, 'absence2');
 
-    try{
-      // 時間割取得
-      const timetableObj = await getData(userId, 'timetable');
-      const timetableData = [];
-      for (let i = 0; i < 6; i++){
-        if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
-          timetableData.push(timetableObj[(day-1)*6 + i + 101]);
-        }
+    // 時間割取得
+    const timetableObj = await getData(userId, 'timetable');
+    const timetableData = [];
+    for (let i = 0; i < 6; i++){
+      if (timetableObj[(day-1)*6 + i + 101] != '空きコマ'){
+        timetableData.push(timetableObj[(day-1)*6 + i + 101]);
       }
+    }
 
-      // 新しい欠時情報
-      const newAbsenceData = {};
+    // 新しい欠時情報
+    const newAbsenceData = {};
+    if (checkHalf()){
       for (let i = 0; i < timetableData.length; i++){
         // 何欠つけるのか調べる
         const classData = await getData('timetable_name', timetableData[i]);
@@ -535,18 +536,29 @@ function todayAbsence(){
       const docRef = doc(db, userId, 'absence');
       await updateDoc(docRef, newAbsenceData);
 
-      // UI更新
       Object.assign(absenceData, newAbsenceData); // マージ
-      setButton(timetableObj, absenceData, absence2Data);
+    }else{
+      for (let i = 0; i < timetableData.length; i++){
+        // 何欠つけるのか調べる
+        const classData = await getData('timetable_name', timetableData[i]);
+        const credit = classData.credit;
+        const addNumber = `${'21'[credit%2]}`;
+        // 新規欠時代入
+        newAbsenceData[timetableData[i]] =
+        Number(absence2Data[timetableData[i]]) + Number(addNumber);
+      }
 
-      alert("本日の欠席を登録しました。");
-    }catch (err){
-      // エラー時は欠時数を元に戻す
-      const docRef = doc(db, userId, 'absence');
-      await updateDoc(docRef, absenceData);
+      // DB更新
+      const docRef = doc(db, userId, 'absence2');
+      await updateDoc(docRef, newAbsenceData);
 
-      alert("欠時数登録に失敗しました。もう一度試してください。");
+      Object.assign(absence2Data, newAbsenceData); // マージ
     }
+  
+    // UI更新
+    setButton(timetableObj, absenceData, absence2Data);
+
+    alert("本日の欠席を登録しました。");
   });
 }
 
@@ -561,7 +573,7 @@ function setupHalfRadio(absenceData, absence2Data, timetableData){
     document.getElementById("second").checked = true;
   }
 
-  const radios = document.querySelectorAll('input[name="half"]');
+  const radios = document.querySelectorAll('input[name="semester"]');
 
   radios.forEach(radio => {
     radio.addEventListener('change', () => {
