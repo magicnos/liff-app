@@ -561,6 +561,9 @@ async function main(){
   const absenceData = await getData(userId, 'absence');
   const absence2Data = await getData(userId, 'absence2');
 
+  // 前期後期表示
+  changeHalf();
+
   // 時間割に時間割を表示
   setTimetable(timetableData);
 
