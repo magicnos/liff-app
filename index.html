@@ -6,18 +6,13 @@
     <script src="https://static.line-scdn.net/liff/edge/2/sdk.js"></script>
     <script>
       window.addEventListener("DOMContentLoaded", async () => {
-        try {
-          await liff.init({ "2008192386-zPDXa2d8" });
+        const liffId = "2008192386-zPDXa2d8";
+        await liff.init({ liffId });
 
-          if (liff.isInClient()){
-            window.location.href = "/main.html";
-          }else{
-            window.location.href = "/notLine.html";
-          }
-        }catch (err){
-          console.error("LIFF初期化に失敗:", err);
-          document.body.innerHTML =
-            "<h1>LIFF初期化に失敗しました。<br>時間をおいて再度アクセスしてください。</h1>";
+        if (liff.isInClient()){
+          window.location.href = "/main.html";
+        }else{
+          window.location.href = "/notLine.html";
         }
       });
     </script>
