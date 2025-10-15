@@ -149,7 +149,7 @@ td {
   display: flex;
   justify-content: center; /* 横方向中央 */
   align-items: center; /* 縦方向中央 */
-  gap: 12px; /* ボタンと文字の間の余白 */
+  gap: 10px; /* ボタンと文字の間の余白 */
 }
 
 #todayAbsence {
