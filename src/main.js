@@ -9,23 +9,17 @@ import {
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
-// 環境変数の読み込み
-const apiKey = import.meta.env.FIREBASE_API_KEY;
-const authDomain = import.meta.env.FIREBASE_AUTH_DOMAIN;
-const projectid = import.meta.env.FIREBASE_PROJECT_ID;
-
 
 let db, auth, userId;
-
 
 
 // DB初期化処理
 async function initFirebase(){
   // Firebase初期化
   const firebaseConfig = {
-    apiKey: apiKey,
-    authDomain: authDomain,
-    projectId: projectid
+    apiKey: "AIzaSyBdp66vY1UQJWQNpUaq_GBd-zcNnZXTXgg",
+    authDomain: "linebot-799ed.firebaseapp.com",
+    projectId: "linebot-799ed",
   };
 
   const app = initializeApp(firebaseConfig);
