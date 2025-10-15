@@ -251,7 +251,7 @@ async function allAbsence(absenceData, absence2Data){
   for (const key in absence2Data){
     allAbsence += absence2Data[key];
   }
-  document.getElementById("allAbsence").textContent = `総欠時：${allAbsence}`;
+  document.getElementById("allAbsence").textContent = `年間総欠時：${allAbsence}`;
 }
 
 
