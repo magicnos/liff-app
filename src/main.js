@@ -172,7 +172,12 @@ async function changeAbsence(className, absenceData, absence2Data, timetableData
   }
 
   // ローカルで新しい欠時数を定義
-  const newValue = current + scale*operation;
+  let newValue = 0;
+  if (checkHalf()){
+    newValue = current + scale*operation;
+  }else{
+    newValue = current2 + scale*operation;
+  }
 
   // ローカル欠時数変更
   if (checkHalf()){
