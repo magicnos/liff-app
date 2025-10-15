@@ -98,13 +98,13 @@ td {
   font-size: 30px;
   font-weight: 600;
   text-align: center;
-  margin: 0; /* 上下 左右　の順 */
+  margin: 5px 0; /* 上下 左右　の順 */
 }
 
 .tableText2 {
   font-size: 40px;
   text-align: center;
-  margin: 0; /* 上下 左右　の順 */
+  margin: 5px 0; /* 上下 左右　の順 */
 }
 
 /* ==上の部分(ラジオボタン,本日欠席)== */
@@ -219,7 +219,7 @@ th.todayHeader {
   display: flex; /* 横並びにする */
   align-items: center; /* 垂直中央寄せ */
   gap: 20px; /* ボタンと欠時数の間の隙間 */
-  justify-content: center;
+ margin-left: 18px;
 }
 
 .button-group,
