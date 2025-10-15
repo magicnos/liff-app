@@ -109,9 +109,9 @@ function setButton(timetableData, absenceData, absence2Data){
         const span = document.createElement("span");
         span.className = "absence-count";
         if (checkHalf()){
-          span.textContent = `${absenceData[className]} (0)`;
+          span.textContent = `${absenceData[className]}`;
         }else{
-          span.textContent = `${absence2Data[className]} (${absenceData[className]})`;
+          span.textContent = `${absence2Data[className]}`;
         }
 
         // 欠時数(span)後期
