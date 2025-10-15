@@ -108,6 +108,15 @@ td {
 }
 
 /* ==上の部分(ラジオボタン,本日欠席)== */
+.absenceScale {
+  display: inline-block;
+  font-size: 28px;
+  color: #555;
+  text-align: center; /* 文字を中央寄せ */
+  vertical-align: middle; /* 文字を縦中央寄せ */
+  margin: 0;
+}
+
 .radio-group {
   display: flex;
   flex-wrap: wrap; /* 複数行に折り返す */
@@ -173,7 +182,7 @@ td {
 }
 
 .radio {
-  margin: 0 0 0 3px;
+  margin: 0 0 0 10px;
 }
 
 .radio2 {
@@ -206,15 +215,6 @@ th.todayHeader {
 /* ========================
    欠時数テーブル
    ========================= */
-.absenceScale {
-  display: inline-block;
-  font-size: 28px;
-  color: #555;
-  text-align: center; /* 文字を中央寄せ */
-  vertical-align: middle; /* 文字を縦中央寄せ */
-  margin: 0 2px; /* 上下 左右　の順 */
-}
-
 .absence {
   background-color: #fff;
   margin-top: 20px; /* 上の余白 */
