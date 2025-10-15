@@ -471,28 +471,28 @@ function todayAbsence(absenceData, absence2Data){
     }
 
     // 新しい欠時情報
-    const newabsenceDoc = {};
+    const newAbsenceDoc = {};
     for (let i = 0; i < timetableData.length; i++){
       // 何欠つけるのか調べる
       const classData = await getData('timetable_name', timetableData[i]);
       const credit = classData.credit;
       const addNumber = `${'21'[credit%2]}`;
       // 新規欠時代入
-      newabsenceDoc[timetableData[i]] =
+      newAbsenceDoc[timetableData[i]] =
       Number(absenceDoc[timetableData[i]]) + Number(addNumber);
     }
 
     // DB更新
     if (checkHalf()){
       const docRef = doc(db, userId, 'absence');
-      await updateDoc(docRef, newabsenceData);
+      await updateDoc(docRef, newAbsenceDoc);
     }else{
       const docRef = doc(db, userId, 'absence2');
-      await updateDoc(docRef, newAbsenceData);
+      await updateDoc(docRef, newAbsenceDoc);
     }
 
     // マージン
-    Object.assign(absenceDoc, newAbsenceData);
+    Object.assign(absenceDoc, newAbsenceDoc);
 
     // ローカル変数更新
     if (checkHalf()){
