@@ -99,13 +99,13 @@ function setButton(timetableData, absenceData, absence2Data){
         // 要素を入れるコンテナ
         const wrapper = document.createElement("div");
         wrapper.className = "absence-wrapper";
-        
+
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
         btnUp.onclick = () => changeAbsence(className, absenceData, absence2Data, timetableData, btnDown, btnUp, 1);
 
-        // 欠時数(span)
+        // 欠時数(span)前期
         const span = document.createElement("span");
         span.className = "absence-count";
         if (checkHalf()){
@@ -114,20 +114,35 @@ function setButton(timetableData, absenceData, absence2Data){
           span.textContent = `${absence2Data[className]} (${absenceData[className]})`;
         }
 
+        // 欠時数(span)後期
+        const span2 = document.createElement("span");
+        span2.className = "absence-count";
+        if (checkHalf()){
+          span2.textContent = '(0)';
+        }else{
+          span2.textContent = `(${absenceData[className]})`;
+        }
+
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
         btnDown.onclick = () => changeAbsence(className, absenceData, absence2Data, timetableData, btnDown, btnUp, -1);
 
-        // ボタン2つをまとめる小さい縦並びコンテナ
+        // ボタン2つをまとめる縦並びコンテナ
         const buttonGroup = document.createElement("div");
         buttonGroup.className = "button-group";
         buttonGroup.appendChild(btnUp);
         buttonGroup.appendChild(btnDown);
 
+        // 欠時数2つをまとめる縦並びコンテナ
+        const buttonGroup2 = document.createElement("div");
+        buttonGroup2.className = "absence-group";
+        buttonGroup2.appendChild(span);
+        buttonGroup2.appendChild(span2);
+
         // 最初のコンテナの中で、ボタンコンテナの右に欠時数を配置
         wrapper.appendChild(buttonGroup);
-        wrapper.appendChild(span);
+        wrapper.appendChild(buttonGroup2);
 
         // セルに入れる
         cell.appendChild(wrapper);
@@ -146,10 +161,16 @@ function setButton(timetableData, absenceData, absence2Data){
 async function changeAbsence(className, absenceData, absence2Data, timetableData, btnDown, btnUp, operation){
   // 現在のローカル欠時数を取得
   const current = absenceData[className];
+  const current2 = absence2Data[className];
   // 欠時数増減倍率取得(name="absenceScale" のラジオボタンのうち、チェックされているものを取得)
   const scale = Number(document.querySelector('input[name="absenceScale"]:checked').value);
   // 0以下なら変更しない
-  if (current - scale < 0 && operation == -1) return;
+  if (checkHalf()){
+    if (current - scale < 0 && operation == -1) return;
+  }else{
+    if (current2 - scale < 0 && operation == -1) return;
+  }
+
   // ローカルで新しい欠時数を定義
   const newValue = current + scale*operation;
 
