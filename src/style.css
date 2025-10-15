@@ -222,7 +222,8 @@ th.todayHeader {
   gap: 2px; /* ボタン同士の隙間 */
 }
 
-.absence .absence-count {
+.absence .absence-count,
+.absence .absence2-count {
   font-size: 35px;
   font-weight: 600;
 }

@@ -120,7 +120,7 @@ function setButton(timetableData, absenceData, absence2Data){
         if (checkHalf()){
           span2.textContent = '(0)';
         }else{
-          span2.textContent = `(${absenceData[className]}`;
+          span2.textContent = `(${absenceData[className]})`;
         }
 
         // 減ボタン
