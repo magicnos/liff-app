@@ -123,8 +123,8 @@ td {
   flex-wrap: wrap; /* 複数行に折り返す */
   justify-content: center; /* 横中央寄せ */
   align-items: center; /* 縦中央揃え */
-  gap: 7px; /* 要素間の間隔 */
-  margin-bottom: 14px; /* 下の余白 */
+  gap: 10px; /* 要素間の間隔 */
+  margin-bottom: 18px; /* 下の余白 */
 }
 
 .radio-group h2.absenceScale {
@@ -134,22 +134,25 @@ td {
   text-align: center;
 }
 
-.radio-group label {
+.radio-group label,
+.radio-group2 label {
   display: flex;
   align-items: center;
   gap: 4px;
   background: #f3f3f3;
   border-radius: 20px;
   padding: 6px 10px;
-  font-size: 27px;
+  font-size: 30px;
   transition: background-color 0.2s ease;
 }
 
-.radio-group label:hover {
+.radio-group label:hover,
+.radio-group2 label:hover {
   background: #e0e0e0;
 }
 
-.radio-group input {
+.radio-group input,
+.radio-group2 input {
   accent-color: #06C755;
   width: 27px;
   height: 27px;
