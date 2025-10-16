@@ -233,7 +233,6 @@ function initModal(){
 
 // セルをタップしたらモーダルを開く
 function attachCellEvents(){
-  // timetableテーブルだけ取得
   const timetable = document.getElementById('timetable');
   const cells = timetable.querySelectorAll('.cellText');
 
