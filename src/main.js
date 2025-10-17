@@ -457,7 +457,8 @@ function todayAbsence(absenceData, absence2Data){
   saveButton.addEventListener("click", async () => {
     // 曜日取得
     const now = new Date();
-    const day = Number(now.getDay()) - 1; // 0=日曜, 1=月曜, ... 6=土曜
+    let day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
+    day = 5
 
     // 土日は授業がない
     if (day == 0 || day == 6){
