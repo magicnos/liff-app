@@ -12,7 +12,7 @@ body {
   scroll-behavior: smooth; /* スムーススクロール */
 }
 
-p.level1 {
+.level1 {
   font-size: 15px;
   font-weight: 400;
 }
