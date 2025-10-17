@@ -588,24 +588,35 @@ function checkHalf(){
 }
 
 
+// 本日欠席の説明を作成
+function todayExplanation(){
+  if (checkHalf()){
+    document.getElementById("absenceTitle").textContent = '前期の欠時数が増えます';
+  }else{
+    document.getElementById("absenceTitle").textContent = '後期の欠時数が増えます';
+  }
+}
+
+
+// userId表示
+function setUserId(){
+  const userIdElem = document.getElementById("userId");
+  userIdElem.textContent = userId;
+  userIdElem.style.fontSize = "8px";
+}
+
+
 // 最初の読み込み時にliffを完成させる
 function firstChange(){
-  // userId表示
-    const userIdElem = document.getElementById("userId");
-    userIdElem.textContent = userId;
-    userIdElem.style.fontSize = "8px";
-  // 前期後期表示
+  setUserId();
   changeHalf();
-  // 時間割に時間割を表示
+  todayExplanation();
   setTimetable();
-  // 欠時数時間割に欠時数と欠時変更ボタンを設置
-  if (checkHalf()){
+  if (checkHalf()){ // 欠時数時間割に欠時数と欠時変更ボタンを設置
     setButton(absenceData, absence2Data);
   }else{
     setButton(absence2Data, absenceData);
   }
-  
-  // 今日の曜日に赤枠をつける
   highlightToday();
 }
 
