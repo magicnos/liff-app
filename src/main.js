@@ -153,12 +153,10 @@ function setAbsenceAll(){
 
       // 空きコマじゃないとき、ボタンと欠時数を設置
       if (className != '空きコマ'){
-        // 欠時数
         const span = document.createElement("span");
         span.className = "absence-count";
-
-        // セルに入れる
-        cell.textContent = Number(absenceData[className]) + Number(absence2Data[className]);
+        span.textContent = Number(absenceData[className]) + Number(absence2Data[className]);
+        cell.appendChild(span);
       }else{
         cell.textContent = "-";
       }
