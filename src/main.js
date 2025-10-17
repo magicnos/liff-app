@@ -602,7 +602,6 @@ function todayExplanation(){
 function setUserId(){
   const userIdElem = document.getElementById("userId");
   userIdElem.textContent = userId;
-  userIdElem.style.fontSize = "15px";
 }
 
 
