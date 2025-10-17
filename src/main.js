@@ -602,6 +602,9 @@ function todayExplanation(){
 function setUserId(){
   const userIdElem = document.getElementById("userId");
   userIdElem.textContent = userId;
+
+  console.log(getComputedStyle(document.getElementById("userId")).fontSize);
+  console.log(getComputedStyle(document.getElementById("a")).fontSize);
 }
 
 
