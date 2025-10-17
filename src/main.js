@@ -12,7 +12,7 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 
 let db, userId;
 
-const changeMonth = 11;
+const changeMonth = 10;
 const changeDay = 9;
 
 // ユーザーの時間割
@@ -457,8 +457,7 @@ function todayAbsence(){
   saveButton.addEventListener("click", async () => {
     // 曜日取得
     const now = new Date();
-    let day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
-    day = 5;
+    const day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
 
     // 土日は授業がない
     if (day == 0 || day == 6){
