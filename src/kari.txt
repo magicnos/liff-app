@@ -1,0 +1,69 @@
+// 欠時数時間割にボタン設置,総欠時変更
+// (上に書きたい欠時数, ()内に書きたい欠時数)
+function setButton(ansenceDoc, ansence2Doc){
+  const table = document.getElementById("absence");
+
+  for (let k = 1; k <= 5; k++){
+    for (let i = 1; i <= 12; i += 2){
+      const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
+
+      // ここでクリアして、空きコマにした場所にボタンが残るのを防ぐ
+      const cell = table.rows[i].cells[k];
+      cell.textContent = ""; // クリア
+
+      // 空きコマじゃないとき、ボタンと欠時数を設置
+      if (className != '空きコマ'){
+        // 要素を入れるコンテナ
+        const wrapper = document.createElement("div");
+        wrapper.className = "absence-wrapper";
+
+        // 増ボタン
+        const btnUp = document.createElement("button");
+        btnUp.textContent = "△";
+        btnUp.onclick = () => changeAbsence(className, ansenceDoc, ansence2Doc, 1);
+
+        // 減ボタン
+        const btnDown = document.createElement("button");
+        btnDown.textContent = "▽";
+        btnDown.onclick = () => changeAbsence(className, ansenceDoc, ansence2Doc, -1);
+
+        // 欠時数(span)上
+        const span = document.createElement("span");
+        span.className = "absence-count";
+        span.textContent = ansenceDoc[className];
+
+        // 欠時数(span)()内
+        const span2 = document.createElement("span");
+        span2.className = "absence2-count";
+        span2.textContent = `(${ansence2Doc[className]})`;
+
+
+        // ボタン2つをまとめる縦並びコンテナ
+        const buttonGroup = document.createElement("div");
+        buttonGroup.className = "button-group";
+        buttonGroup.appendChild(btnUp);
+        buttonGroup.appendChild(btnDown);
+
+        // 欠時数2つをまとめる縦並びコンテナ
+        const buttonGroup2 = document.createElement("div");
+        buttonGroup2.className = "absence-group";
+        buttonGroup2.appendChild(span);
+        buttonGroup2.appendChild(span2);
+
+        // 最初のコンテナの中で、ボタンコンテナの右に欠時数を配置
+        wrapper.appendChild(buttonGroup);
+        wrapper.appendChild(buttonGroup2);
+
+        // セルに入れる
+        cell.appendChild(wrapper);
+      }else{
+        cell.textContent = "-";
+      }
+    }
+  }
+
+  // 総欠時数変更
+  allAbsence();
+}
+
+.button-groupに.absence-groupを追加

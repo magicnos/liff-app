@@ -227,8 +227,7 @@ th.todayHeader {
  margin-left: 15px;
 }
 
-.button-group,
-.absence-group {
+.button-group {
   display: flex;
   flex-direction: column; /* 縦並び */
   align-items: center; /* ボタンを中央寄せ */

@@ -116,27 +116,16 @@ function setButton(ansenceDoc, ansence2Doc){
         span.className = "absence-count";
         span.textContent = ansenceDoc[className];
 
-        // 欠時数(span)()内
-        const span2 = document.createElement("span");
-        span2.className = "absence2-count";
-        span2.textContent = `(${ansence2Doc[className]})`;
-
-
         // ボタン2つをまとめる縦並びコンテナ
         const buttonGroup = document.createElement("div");
         buttonGroup.className = "button-group";
         buttonGroup.appendChild(btnUp);
         buttonGroup.appendChild(btnDown);
 
-        // 欠時数2つをまとめる縦並びコンテナ
-        const buttonGroup2 = document.createElement("div");
-        buttonGroup2.className = "absence-group";
-        buttonGroup2.appendChild(span);
-        buttonGroup2.appendChild(span2);
 
         // 最初のコンテナの中で、ボタンコンテナの右に欠時数を配置
         wrapper.appendChild(buttonGroup);
-        wrapper.appendChild(buttonGroup2);
+        wrapper.appendChild(span);
 
         // セルに入れる
         cell.appendChild(wrapper);
