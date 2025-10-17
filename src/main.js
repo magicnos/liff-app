@@ -83,8 +83,8 @@ function setTimetable(){
 
 
 // 欠時数時間割にボタン設置,総欠時変更
-// (上に書きたい欠時数, ()内に書きたい欠時数)
-function setButton(ansenceDoc, ansence2Doc){
+// (書きたい欠時数, もう片方の欠時数)
+function setButton(absenceDoc, absence2Doc){
   const table = document.getElementById("absence");
 
   for (let k = 1; k <= 5; k++){
@@ -104,24 +104,23 @@ function setButton(ansenceDoc, ansence2Doc){
         // 増ボタン
         const btnUp = document.createElement("button");
         btnUp.textContent = "△";
-        btnUp.onclick = () => changeAbsence(className, ansenceDoc, ansence2Doc, 1);
+        btnUp.onclick = () => changeAbsence(className, absenceDoc, absence2Doc, 1);
 
         // 減ボタン
         const btnDown = document.createElement("button");
         btnDown.textContent = "▽";
-        btnDown.onclick = () => changeAbsence(className, ansenceDoc, ansence2Doc, -1);
+        btnDown.onclick = () => changeAbsence(className, absenceDoc, absence2Doc, -1);
 
-        // 欠時数(span)上
+        // 欠時数(span)
         const span = document.createElement("span");
         span.className = "absence-count";
-        span.textContent = ansenceDoc[className];
+        span.textContent = absenceDoc[className];
 
         // ボタン2つをまとめる縦並びコンテナ
         const buttonGroup = document.createElement("div");
         buttonGroup.className = "button-group";
         buttonGroup.appendChild(btnUp);
         buttonGroup.appendChild(btnDown);
-
 
         // 最初のコンテナの中で、ボタンコンテナの右に欠時数を配置
         wrapper.appendChild(buttonGroup);
@@ -140,11 +139,43 @@ function setButton(ansenceDoc, ansence2Doc){
 }
 
 
+// 欠時数テーブルを総合表示にする
+function setAbsenceAll(){
+  const table = document.getElementById("absence");
+
+  for (let k = 1; k <= 5; k++){
+    for (let i = 1; i <= 12; i += 2){
+      const className = timetableData[(k-1)*6 + (i-1)/2 + 101];
+
+      // ここでクリアして、空きコマにした場所にボタンが残るのを防ぐ
+      const cell = table.rows[i].cells[k];
+      cell.textContent = ""; // クリア
+
+      // 空きコマじゃないとき、ボタンと欠時数を設置
+      if (className != '空きコマ'){
+        // 欠時数
+        const span = document.createElement("span");
+        span.className = "absence-count";
+        span.textContent = Number(absenceData[className]) + Number(absence2Data[className]);
+
+        // セルに入れる
+        cell.appendChild(span);
+      }else{
+        cell.textContent = "-";
+      }
+    }
+  }
+
+  // 総欠時数変更
+  allAbsence();
+}
+
+
 // 欠時数を変える
 // (*, 変える欠時数, 変えない欠時数, *)
-async function changeAbsence(className, ansenceDoc, ansence2Doc, operation){
+async function changeAbsence(className, absenceDoc, absence2Doc, operation){
   // 現在のローカル欠時数を取得
-  const current = ansenceDoc[className];
+  const current = absenceDoc[className];
   // 欠時数増減倍率取得(name="absenceScale" のラジオボタンのうち、チェックされているものを取得)
   const scale = Number(document.querySelector('input[name="absenceScale"]:checked').value);
   // 0以下なら変更しない
@@ -155,10 +186,10 @@ async function changeAbsence(className, ansenceDoc, ansence2Doc, operation){
   newValue = current + scale*operation;
 
   // ローカル欠時数変更
-  ansenceDoc[className] = newValue;
+  absenceDoc[className] = newValue;
 
   // UI欠時数を変更
-  setButton(ansenceDoc, ansence2Doc)
+  setButton(absenceDoc, absence2Doc)
 
   // DB更新
   if (document.querySelector('input[name="semester"]:checked').value == 'first'){
@@ -211,8 +242,10 @@ function initModal(){
       setTimetable();
       if (document.querySelector('input[name="semester"]:checked').value == 'first'){
         setButton(absenceData, absence2Data);
-      }else{
+      }else if(document.querySelector('input[name="semester"]:checked').value == 'second'){
         setButton(absence2Data, absenceData);
+      }else{
+        setAbsenceAll();
       }
       modal.style.display = 'none';
     }
@@ -497,8 +530,10 @@ function todayAbsence(){
     // UI更新
     if (document.querySelector('input[name="semester"]:checked').value == 'first'){  
       setButton(absenceData, absence2Data);
-    }else{
+    }else if(document.querySelector('input[name="semester"]:checked').value == 'second'){
       setButton(absence2Data, absenceData);
+    }else{
+      setAbsenceAll();
     }
 
     alert("本日の欠席を登録しました。");
@@ -522,8 +557,10 @@ function setupHalfRadio(){
     radio.addEventListener('change', async () => {
       if (radio.value == 'first'){
         setButton(absenceData, absence2Data);
-      }else{
+      }else if(radio.value == 'second'){
         setButton(absence2Data, absenceData);
+      }else{
+        setAbsenceAll();
       }
     });
   });
