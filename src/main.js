@@ -156,10 +156,9 @@ function setAbsenceAll(){
         // 欠時数
         const span = document.createElement("span");
         span.className = "absence-count";
-        span.textContent = Number(absenceData[className]) + Number(absence2Data[className]);
 
         // セルに入れる
-        cell.appendChild(span);
+        cell.textContent = Number(absenceData[className]) + Number(absence2Data[className]);
       }else{
         cell.textContent = "-";
       }
