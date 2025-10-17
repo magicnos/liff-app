@@ -476,13 +476,10 @@ function todayAbsence(){
 
     // 欠時数取得
     const absenceDoc = {};
-    const absence2Doc = {};
     if (checkHalf()){
       Object.assign(absenceDoc, absenceData);
-      Object.assign(absence2Doc, absence2Data);
     }else{
       Object.assign(absenceDoc, absence2Data);
-      Object.assign(absence2Doc, absenceData);
     }
 
     // 新しい欠時情報
@@ -498,37 +495,29 @@ function todayAbsence(){
       Number(absenceDoc[timetableDoc[i]]) + Number(addNumber);
     }
 
-    // DB更新
+    // DB,ローカル変数更新
     if (checkHalf()){
       const docRef = doc(db, userId, 'absence');
       await updateDoc(docRef, newAbsenceDoc);
+      Object.assign(absenceData, newAbsenceDoc);
     }else{
       const docRef = doc(db, userId, 'absence2');
       await updateDoc(docRef, newAbsenceDoc);
-    }
-
-    // マージン
-    Object.assign(absenceDoc, newAbsenceDoc);
-
-    // ローカル変数更新
-    if (checkHalf()){
-      Object.assign(absenceData, absenceDoc);
-    }else{
-      Object.assign(absence2Data, absenceDoc);
+      Object.assign(absence2Data, newAbsenceDoc);
     }
 
     // UI更新
     if (document.querySelector('input[name="semester"]:checked').value == 'first'){
       if (checkHalf()){
-        setButton(absenceDoc, absence2Doc);
+        setButton(absenceData, absence2Data);
       }else{
-        setButton(absence2Doc, absenceDoc);
+        setButton(absence2Data, absenceData);
       }
     }else{
       if (checkHalf()){
-        setButton(absence2Doc, absenceDoc);
+        setButton(absence2Data, absenceData);
       }else{
-        setButton(absenceDoc, absence2Doc);
+        setButton(absenceData, absence2Data);
       }
     }
 
