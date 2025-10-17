@@ -507,18 +507,10 @@ function todayAbsence(){
     }
 
     // UI更新
-    if (document.querySelector('input[name="semester"]:checked').value == 'first'){
-      if (checkHalf()){
-        setButton(absenceData, absence2Data);
-      }else{
-        setButton(absence2Data, absenceData);
-      }
+    if (document.querySelector('input[name="semester"]:checked').value == 'first'){  
+      setButton(absenceData, absence2Data);
     }else{
-      if (checkHalf()){
-        setButton(absence2Data, absenceData);
-      }else{
-        setButton(absenceData, absence2Data);
-      }
+      setButton(absence2Data, absenceData);
     }
 
     alert("本日の欠席を登録しました。");
