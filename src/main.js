@@ -12,7 +12,7 @@ import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/1
 
 let db, userId;
 
-const changeMonth = 10;
+const changeMonth = 11;
 const changeDay = 9;
 
 // ユーザーの時間割
