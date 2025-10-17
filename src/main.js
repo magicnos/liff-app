@@ -449,7 +449,7 @@ function highlightToday(){
 
 
 // 本日欠席機能
-function todayAbsence(absenceData, absence2Data){
+function todayAbsence(){
   // ボタンを取得
   const saveButton = document.getElementById("todayAbsence");
 
@@ -458,7 +458,7 @@ function todayAbsence(absenceData, absence2Data){
     // 曜日取得
     const now = new Date();
     let day = now.getDay(); // 0=日曜, 1=月曜, ... 6=土曜
-    day = 5
+    day = 5;
 
     // 土日は授業がない
     if (day == 0 || day == 6){
