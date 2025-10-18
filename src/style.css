@@ -96,10 +96,10 @@ td {
 }
 
 .tableText {
-  font-size: 30px;
+  font-size: 25px;
   font-weight: 600;
   text-align: center;
-  margin: 5px 0; /* 上下 左右　の順 */
+  margin: 0; /* 上下 左右　の順 */
 }
 
 .tableText2 {
