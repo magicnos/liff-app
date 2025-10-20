@@ -224,6 +224,7 @@ function allAbsence(){
 }
 
 
+
 // 時間割モーダルの初期化
 function initModal(){
   const modal = document.getElementById('modal');
