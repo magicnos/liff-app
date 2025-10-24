@@ -224,7 +224,6 @@ function allAbsence(){
 }
 
 
-
 // 時間割モーダルの初期化
 function initModal(){
   const modal = document.getElementById('modal');
@@ -468,7 +467,6 @@ function highlightToday(){
     const thsT = document.querySelectorAll("#timetable thead th");
     const thsA = document.querySelectorAll("#absence thead th");
 
-    // 例: 月なら1番目（0は「時限」）
     const targetThT = thsT[dayOfWeek];
     targetThT.classList.add("todayHeader");
     const targetThA = thsA[dayOfWeek];
@@ -574,14 +572,7 @@ function setupHalfRadio(){
 }
 
 
-// 前期後期を表示
-function changeHalf(){
-  if (checkHalf()){
-    document.getElementById("halfC").textContent = '前期期間(~10/9)';
-  }else{
-    document.getElementById("halfC").textContent = '後期期間(10/10~)';
-  }
-}
+
 
 
 // 前期後期判定
@@ -598,31 +589,23 @@ function checkHalf(){
 }
 
 
-// 本日欠席の説明を作成
-function todayExplanation(){
+// 最初のテキスト完成
+function setText(){
+  // 本日欠席の説明
+  // 前期後期を表示
   if (checkHalf()){
     document.getElementById("absenceTitle").textContent = '前期の欠時数が増えます';
+    document.getElementById("halfC").textContent = '前期期間(~10/9)';
   }else{
     document.getElementById("absenceTitle").textContent = '後期の欠時数が増えます';
+    document.getElementById("halfC").textContent = '後期期間(10/10~)';
   }
-}
-
-
-// userId表示
-function setUserId(){
-  const userIdElem = document.getElementById("userId");
-  userIdElem.textContent = userId;
-
-  console.log(getComputedStyle(document.getElementById("userId")).fontSize);
-  console.log(getComputedStyle(document.getElementById("a")).fontSize);
 }
 
 
 // 最初の読み込み時にliffを完成させる
 function firstChange(){
-  setUserId();
-  changeHalf();
-  todayExplanation();
+  setText();
   setTimetable();
   if (checkHalf()){ // 欠時数時間割に欠時数と欠時変更ボタンを設置
     setButton(absenceData, absence2Data);
