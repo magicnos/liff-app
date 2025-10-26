@@ -572,9 +572,6 @@ function setupHalfRadio(){
 }
 
 
-
-
-
 // 前期後期判定
 function checkHalf(){
   const now = new Date();
@@ -625,12 +622,10 @@ async function main(){
   userId = await firstLiff();
 
   // ユーザーの時間割情報と欠時数情報を取得
-  [timetableData, absenceData, absence2Data] = await Promise.all([
-    getData(userId, 'timetable'),
-    getData(userId, 'absence'),
-    getData(userId, 'absence2')
-  ]);
-
+  const doc = await getData('users', userId);
+  timetableData = doc['timetable'];
+  absenceData = doc['absence']['firstSemester'];
+  absence2Data = doc['absence']['secondSemester'];
 
   // liff画面を完成させる
   firstChange();
