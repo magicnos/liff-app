@@ -387,8 +387,7 @@ async function changeTimetable(id){
     for (let k = 0; k < 30; k++){
       timetables[k+101] = currentTimetable[k];
     }
-    const data = {timetable: timetables};
-    await updateDoc(Ref, data);
+    await updateDoc(Ref, { timetable: timetables });
   }else{
     // 同じ授業なら既存オブジェクトをそのまま返す
     for (let k = 0; k < 30; k++){
@@ -412,39 +411,30 @@ async function changeTimetable(id){
           delete absenceData[de2];
           delete absence2Data[de2];
         }
-        await Promise.all([
-          updateDoc(Ref, { absence: {firstSemester: absenceData} }),
-          updateDoc(Ref, { absence: {secondSemester: absence2Data} })
-        ]);
       }else{
         if (de1 != '空きコマ'){
           delete absenceData[de1];
           delete absence2Data[de1];
-          await Promise.all([
-            updateDoc(Ref, { absence: {firstSemester: absenceData} }),
-            updateDoc(Ref, { absence: {secondSemester: absence2Data} })
-          ]);
-
         }
       }
     }else{
       if (currentCredit != 0){
         delete absenceData[currentClassName];
         delete absence2Data[currentClassName];
-        await Promise.all([
-          updateDoc(Ref, { absence: {firstSemester: absenceData} }),
-          updateDoc(Ref, { absence: {secondSemester: absence2Data} })
-        ]);
       }
     }
+    await Promise.all([
+      updateDoc(Ref, { [`absence.firstSemester`]: absenceData }),
+      updateDoc(Ref, { [`absence.secondSemester`]: absence2Data })
+    ]);
 
     // 欠時追加
     if (newClassName != '空きコマ'){
-      const newAbsence = { [newClassName]: 0 };
       await Promise.all([
         updateDoc(Ref, { [`absence.firstSemester.${newClassName}`]: 0 }),
         updateDoc(Ref, { [`absence.secondSemester.${newClassName}`]: 0 })
       ]);
+      const newAbsence = { [newClassName]: 0 };
       Object.assign(absenceData, newAbsence);
       Object.assign(absence2Data, newAbsence);
     }
