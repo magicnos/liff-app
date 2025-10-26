@@ -199,11 +199,11 @@ async function changeAbsence(className, absenceDoc, absence2Doc, operation){
 
   // DB更新
   if (document.querySelector('input[name="semester"]:checked').value == 'first'){
-    const docRef = doc(db, userId, 'absence');
-    await updateDoc(docRef, { [className]: newValue });
+    const docRef = doc(db, 'users', userId);
+    await updateDoc(docRef, { [`absence.firstSemester.${className}`]: newValue });
   }else{
-    const docRef = doc(db, userId, 'absence2');
-    await updateDoc(docRef, { [className]: newValue });
+    const docRef = doc(db, 'users', userId);
+    await updateDoc(docRef, { [`absence.secondSemester.${className}`]: newValue });
   }
 
   // 総欠時数表示
@@ -300,9 +300,7 @@ async function changeTimetable(id){
   const btnId = id.slice(1).split(',');
 
   // DBに触ってる
-  const timetableDocRef = doc(db, userId, 'timetable');
-  const absenceDocRef = doc(db, userId, 'absence');
-  const absence2DocRef = doc(db, userId, 'absence2');
+  const Ref = doc(db, 'users', userId);
 
   // -- 新規追加授業名取得 --
   // 曜日別時間割データ取得
@@ -355,7 +353,7 @@ async function changeTimetable(id){
 
     // 配列操作
     if (newCredit == 4){
-      // 新規授業が4単位の時、両方の場所を保存しておく
+      // 新規授業が4単位の時、両方の授業名を保存しておく
       de1 = currentTimetable[newDoc.week1*6 + newDoc.hour];
       de2 = currentTimetable[newDoc.week2*6 + newDoc.hour];
 
@@ -389,7 +387,8 @@ async function changeTimetable(id){
     for (let k = 0; k < 30; k++){
       timetables[k+101] = currentTimetable[k];
     }
-    await updateDoc(timetableDocRef, timetables);
+    const data = {timetable: timetables};
+    await updateDoc(Ref, data);
   }else{
     // 同じ授業なら既存オブジェクトをそのまま返す
     for (let k = 0; k < 30; k++){
@@ -406,39 +405,36 @@ async function changeTimetable(id){
     if (newCredit == 4){
       if (de1 != de2){
         if (de1 != '空きコマ'){
-          await Promise.all([
-            updateDoc(absenceDocRef, { [de1]: deleteField() }),
-            updateDoc(absence2DocRef, { [de1]: deleteField() })
-          ]);
           delete absenceData[de1];
           delete absence2Data[de1];
         }
         if (de2 != '空きコマ'){
-          await Promise.all([
-            updateDoc(absenceDocRef, { [de2]: deleteField() }),
-            updateDoc(absence2DocRef, { [de2]: deleteField() })
-          ]);
           delete absenceData[de2];
           delete absence2Data[de2];
         }
+        await Promise.all([
+          updateDoc(Ref, { absence: {firstSemester: absenceData} }),
+          updateDoc(Ref, { absence: {secondSemester: absence2Data} })
+        ]);
       }else{
         if (de1 != '空きコマ'){
-          await Promise.all([
-            updateDoc(absenceDocRef, { [de1]: deleteField() }),
-            updateDoc(absence2DocRef, { [de1]: deleteField() })
-          ]);
           delete absenceData[de1];
           delete absence2Data[de1];
+          await Promise.all([
+            updateDoc(Ref, { absence: {firstSemester: absenceData} }),
+            updateDoc(Ref, { absence: {secondSemester: absence2Data} })
+          ]);
+
         }
       }
     }else{
       if (currentCredit != 0){
-        await Promise.all([
-          updateDoc(absenceDocRef, { [currentClassName]: deleteField() }),
-          updateDoc(absence2DocRef, { [currentClassName]: deleteField() })
-        ]);
         delete absenceData[currentClassName];
         delete absence2Data[currentClassName];
+        await Promise.all([
+          updateDoc(Ref, { absence: {firstSemester: absenceData} }),
+          updateDoc(Ref, { absence: {secondSemester: absence2Data} })
+        ]);
       }
     }
 
@@ -446,8 +442,8 @@ async function changeTimetable(id){
     if (newClassName != '空きコマ'){
       const newAbsence = { [newClassName]: 0 };
       await Promise.all([
-        updateDoc(absenceDocRef, newAbsence),
-        updateDoc(absence2DocRef, newAbsence)
+        updateDoc(Ref, { [`absence.firstSemester.${newClassName}`]: 0 }),
+        updateDoc(Ref, { [`absence.secondSemester.${newClassName}`]: 0 })
       ]);
       Object.assign(absenceData, newAbsence);
       Object.assign(absence2Data, newAbsence);
@@ -523,12 +519,12 @@ function todayAbsence(){
 
     // DB,ローカル変数更新
     if (checkHalf()){
-      const docRef = doc(db, userId, 'absence');
-      await updateDoc(docRef, newAbsenceDoc);
+      const docRef = doc(db, 'users', userId);
+      await updateDoc(docRef, { absence: {firstSemester: newAbsenceDoc } });
       Object.assign(absenceData, newAbsenceDoc);
     }else{
-      const docRef = doc(db, userId, 'absence2');
-      await updateDoc(docRef, newAbsenceDoc);
+      const docRef = doc(db, 'users', userId);
+      await updateDoc(docRef, { absence: {secondSemester: newAbsenceDoc } });
       Object.assign(absence2Data, newAbsenceDoc);
     }
 
