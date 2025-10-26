@@ -424,8 +424,8 @@ async function changeTimetable(id){
       }
     }
     await Promise.all([
-      updateDoc(Ref, { [`absence.firstSemester`]: absenceData }),
-      updateDoc(Ref, { [`absence.secondSemester`]: absence2Data })
+      updateDoc(Ref, { ['absence.firstSemester']: absenceData }),
+      updateDoc(Ref, { ['absence.secondSemester']: absence2Data })
     ]);
 
     // 欠時追加
