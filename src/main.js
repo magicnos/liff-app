@@ -4,8 +4,7 @@ import {
   getFirestore,
   getDoc,
   doc,
-  updateDoc,
-  deleteField
+  updateDoc
 } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
 import { getAuth, signInAnonymously } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-auth.js";
 
@@ -510,11 +509,11 @@ function todayAbsence(){
     // DB,ローカル変数更新
     if (checkHalf()){
       const docRef = doc(db, 'users', userId);
-      await updateDoc(docRef, { absence: {firstSemester: newAbsenceDoc } });
+      await updateDoc(docRef, { ['absence.firstSemester']: newAbsenceDoc });
       Object.assign(absenceData, newAbsenceDoc);
     }else{
       const docRef = doc(db, 'users', userId);
-      await updateDoc(docRef, { absence: {secondSemester: newAbsenceDoc } });
+      await updateDoc(docRef, { ['absence.secondSemester']: newAbsenceDoc });
       Object.assign(absence2Data, newAbsenceDoc);
     }
 
