@@ -55,7 +55,12 @@ async function firstLiff(){
 
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
-    return profile.userId;
+
+    // LINEの名前を更新
+    const docRef = doc(db, 'userId', userId);
+    await updateDoc(docRef, { displayName: profile.displayName });
+
+    userId = profile.userId;
   }catch (error){
     alert("エラーが起きました。再度開きなおすか、下記のエラー内容をお知らせください。\n" + "LIFF初期化に失敗しました: " + error);
   }
@@ -604,7 +609,7 @@ async function main(){
   // DB初期化
   await initFirebase();
   // liff初期化とuserId取得
-  userId = await firstLiff();
+  await firstLiff();
 
   // ユーザーの時間割情報と欠時数情報を取得
   const doc = await getData('users', userId);
