@@ -56,11 +56,12 @@ async function firstLiff(){
     // ユーザープロフィール取得
     const profile = await liff.getProfile();
 
-    // LINEの名前を更新
-    const docRef = doc(db, 'userId', userId);
-    await updateDoc(docRef, { displayName: profile.displayName });
-
+    // userId
     userId = profile.userId;
+
+    // LINEの名前を更新
+    const ref = doc(db, 'userId', userId);
+    await updateDoc(ref, { displayName: profile.displayName });
   }catch (error){
     alert("エラーが起きました。再度開きなおすか、下記のエラー内容をお知らせください。\n" + "LIFF初期化に失敗しました: " + error);
   }
