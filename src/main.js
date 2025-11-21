@@ -515,11 +515,11 @@ function todayAbsence(){
     // DB,ローカル変数更新
     const docRef = doc(db, 'users', userId);
     if (checkHalf()){
-      await updateDoc(docRef, { ['absence.firstSemester']: newAbsenceDoc });
       Object.assign(absenceData, newAbsenceDoc);
+      await updateDoc(docRef, { ['absence.firstSemester']: absenceData });
     }else{
-      await updateDoc(docRef, { ['absence.secondSemester']: newAbsenceDoc });
       Object.assign(absence2Data, newAbsenceDoc);
+      await updateDoc(docRef, { ['absence.secondSemester']: absence2Data });
     }
 
     // UI更新
