@@ -506,19 +506,18 @@ function todayAbsence(){
     const classDatas = await Promise.all(promises);
     for (let i = 0; i < timetableDoc.length; i++){
       const credit = classDatas[i].credit;
-      const addNumber = `${'21'[credit%2]}`;
+      const addNumber = '21'[credit%2];
       // 新規欠時代入
       newAbsenceDoc[timetableDoc[i]] =
       Number(absenceDoc[timetableDoc[i]]) + Number(addNumber);
     }
 
     // DB,ローカル変数更新
+    const docRef = doc(db, 'users', userId);
     if (checkHalf()){
-      const docRef = doc(db, 'users', userId);
       await updateDoc(docRef, { ['absence.firstSemester']: newAbsenceDoc });
       Object.assign(absenceData, newAbsenceDoc);
     }else{
-      const docRef = doc(db, 'users', userId);
       await updateDoc(docRef, { ['absence.secondSemester']: newAbsenceDoc });
       Object.assign(absence2Data, newAbsenceDoc);
     }
